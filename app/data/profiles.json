@@ -1,0 +1,91 @@
+{
+  "default": {
+    "name": "default",
+    "label": "Ingredients first",
+    "blurb": "The default. Short, recognisable ingredient lists lead; nutrition is shown as banners.",
+    "weights": {
+      "ingredient_simplicity": 0.24,
+      "flagged_ingredients": 0.34,
+      "nutrition": 0.1,
+      "whole_food_processing": 0.1,
+      "external_processing": 0.12
+    },
+    "nutrition_emphasis": {
+      "sodium": 1,
+      "added_sugar": 1,
+      "saturated_fat": 1
+    }
+  },
+  "low_sodium": {
+    "name": "low_sodium",
+    "label": "Low sodium",
+    "blurb": "Sodium counts for much more; ingredients still lead.",
+    "coverage_note": "Sodium is on 79% of products - the best-covered nutrient we have.",
+    "weights": {
+      "ingredient_simplicity": 0.2,
+      "flagged_ingredients": 0.28,
+      "nutrition": 0.28,
+      "whole_food_processing": 0.1,
+      "external_processing": 0.12
+    },
+    "nutrition_emphasis": {
+      "sodium": 4,
+      "added_sugar": 1,
+      "saturated_fat": 1
+    }
+  },
+  "low_sugar": {
+    "name": "low_sugar",
+    "label": "Low sugar",
+    "blurb": "Added sugar counts for much more, and flagged sweeteners still bite.",
+    "coverage_note": "Added sugar is on 65% of products; absent values are never read as zero.",
+    "weights": {
+      "ingredient_simplicity": 0.2,
+      "flagged_ingredients": 0.28,
+      "nutrition": 0.28,
+      "whole_food_processing": 0.1,
+      "external_processing": 0.12
+    },
+    "nutrition_emphasis": {
+      "sodium": 1,
+      "added_sugar": 4,
+      "saturated_fat": 1
+    }
+  },
+  "heart": {
+    "name": "heart",
+    "label": "Heart",
+    "blurb": "Saturated fat and sodium together, the way heart-health guidance frames it.",
+    "coverage_note": "Saturated fat is on 63% and sodium on 79% of products.",
+    "weights": {
+      "ingredient_simplicity": 0.2,
+      "flagged_ingredients": 0.26,
+      "nutrition": 0.3,
+      "whole_food_processing": 0.1,
+      "external_processing": 0.12
+    },
+    "nutrition_emphasis": {
+      "sodium": 2.5,
+      "added_sugar": 1,
+      "saturated_fat": 3
+    }
+  },
+  "nutrition_first": {
+    "name": "nutrition_first",
+    "label": "Nutrition first",
+    "blurb": "The Yuka/EWG ordering - the nutrition panel leads and ingredients support it.",
+    "coverage_note": "Closest to how mainstream food scores work; included so you can compare.",
+    "weights": {
+      "ingredient_simplicity": 0.15,
+      "flagged_ingredients": 0.22,
+      "nutrition": 0.4,
+      "whole_food_processing": 0.1,
+      "external_processing": 0.1
+    },
+    "nutrition_emphasis": {
+      "sodium": 1,
+      "added_sugar": 1,
+      "saturated_fat": 1
+    }
+  }
+}

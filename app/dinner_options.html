@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinner picker options</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#FAF6EE; --card:#fff; --ink:#22302A; --soft:#56625C; --faint:#8A938D; --line:#E6DFD1; --brand:#0F5A43; --cream:#F3EBDC; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:'DM Sans',sans-serif; }
+  .top { background:var(--brand); color:#fff; padding:14px 16px; }
+  .top b { font-family:Fraunces,serif; font-weight:600; font-size:20px; }
+  .top p { margin:4px 0 0; font-size:13px; opacity:.85; }
+  .switch { position:sticky; top:0; z-index:5; background:var(--bg); border-bottom:1px solid var(--line); display:flex; gap:6px; overflow-x:auto; padding:10px 16px; scrollbar-width:none; }
+  .switch button { flex:0 0 auto; border:1px solid var(--line); background:#fff; border-radius:999px; padding:9px 14px; font:600 13.5px 'DM Sans'; color:var(--ink); cursor:pointer; min-height:40px; }
+  .switch button.on { background:var(--brand); border-color:var(--brand); color:#fff; }
+  .switch small { font-weight:500; opacity:.75; }
+  main { max-width:960px; margin:0 auto; padding:18px 16px 60px; }
+  .about { font-size:13.5px; color:var(--soft); margin:0 0 16px; padding:10px 12px; background:var(--cream); border-radius:10px; }
+  h2.q { font-family:Fraunces,serif; font-weight:600; font-size:28px; line-height:1.15; margin:6px 0 14px; }
+  .prog { display:flex; align-items:center; gap:10px; font-size:12px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--brand); }
+  .bars { display:flex; gap:5px; } .bars i { width:28px; height:5px; border-radius:3px; background:var(--line); } .bars i.d { background:var(--brand); opacity:.45; } .bars i.n { background:var(--brand); }
+  .foot { display:flex; gap:16px; flex-wrap:wrap; margin-top:16px; }
+  .link { background:none; border:none; padding:10px 0; font:600 14px 'DM Sans'; color:var(--soft); text-decoration:underline; cursor:pointer; }
+  /* results */
+  .res-head { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin:6px 0 12px; }
+  .res-head h2 { font-family:Fraunces,serif; font-weight:600; font-size:24px; margin:0; }
+  .btn { border:none; border-radius:999px; background:var(--brand); color:#fff; padding:11px 18px; font:700 14px 'DM Sans'; cursor:pointer; min-height:44px; }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; margin:0 0 12px; }
+  .chip { border:1px solid var(--line); background:#fff; border-radius:999px; padding:7px 12px; font:600 13px 'DM Sans'; cursor:pointer; color:var(--ink); }
+  .chip:after { content:" \00d7"; color:var(--faint); }
+  .meals { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
+  .meal { position:relative; aspect-ratio:16/10; border-radius:16px; overflow:hidden; background:var(--brand); color:#fff; }
+  .meal img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .meal::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.72)); }
+  .meal span { position:absolute; left:14px; right:14px; bottom:12px; z-index:1; }
+  .meal b { display:block; font-family:Fraunces,serif; font-weight:600; font-size:20px; line-height:1.1; }
+  .meal small { font-size:12.5px; opacity:.9; }
+  .tag { display:inline-block; font-size:11px; font-weight:700; padding:2px 7px; border-radius:999px; background:rgba(255,255,255,.22); margin-right:4px; }
+
+  /* ---------- 1: photo tiles ---------- */
+  .tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .tile { position:relative; aspect-ratio:4/3; border:none; border-radius:16px; overflow:hidden; padding:0; background:var(--brand); color:#fff; text-align:left; cursor:pointer; font-family:'DM Sans'; }
+  .tile img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .3s; }
+  .tile:hover img { transform:scale(1.04); }
+  .tile::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.75)); }
+  .tile span { position:absolute; left:14px; right:12px; bottom:12px; z-index:1; }
+  .tile b { display:block; font-family:Fraunces,serif; font-weight:600; font-size:21px; line-height:1.1; }
+  .tile small { display:block; font-size:12.5px; opacity:.9; margin-top:2px; }
+  .peek { display:flex; align-items:center; gap:10px; margin-top:16px; font-size:13px; color:var(--soft); }
+  .peek img { width:34px; height:34px; border-radius:50%; object-fit:cover; border:2px solid var(--bg); margin-left:-10px; }
+  .peek img:first-child { margin-left:0; }
+
+  /* ---------- 2: photo rows ---------- */
+  .rows { display:grid; gap:10px; }
+  .row { display:flex; align-items:center; gap:14px; border:1px solid var(--line); background:#fff; border-radius:16px; padding:8px; text-align:left; cursor:pointer; font-family:'DM Sans'; color:var(--ink); min-height:88px; }
+  .row:hover { border-color:var(--brand); }
+  .row .ph { flex:0 0 auto; width:96px; height:72px; border-radius:11px; overflow:hidden; display:grid; grid-template-columns:1fr 1fr; background:var(--cream); }
+  .row .ph img { width:100%; height:100%; object-fit:cover; }
+  .row .ph.one { grid-template-columns:1fr; }
+  .row .tx { flex:1; min-width:0; }
+  .row .tx b { display:block; font-size:16.5px; font-weight:700; }
+  .row .tx small { display:block; font-size:13px; color:var(--soft); margin-top:2px; }
+  .row .n { flex:0 0 auto; font-size:12.5px; font-weight:700; color:var(--brand); background:#E7F1EC; border-radius:999px; padding:5px 10px; margin-right:6px; }
+
+  /* ---------- 3: one screen ---------- */
+  .fgroup { margin:0 0 16px; }
+  .fgroup h3 { font-size:13px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--soft); margin:0 0 8px; }
+  .seg { display:flex; gap:7px; flex-wrap:wrap; }
+  .seg button { border:1px solid var(--line); background:#fff; border-radius:999px; padding:10px 15px; font:600 14px 'DM Sans'; color:var(--ink); cursor:pointer; min-height:42px; }
+  .seg button.on { background:var(--brand); border-color:var(--brand); color:#fff; }
+  .seg button[disabled] { opacity:.35; cursor:default; }
+  .seg button small { font-weight:500; opacity:.7; margin-left:3px; }
+  .count { font-family:Fraunces,serif; font-weight:600; font-size:22px; margin:20px 0 10px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .list { display:grid; gap:0; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff; }
+  .li { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:13px 14px; border-top:1px solid var(--line); }
+  .li:first-child { border-top:none; }
+  .li b { font-size:15.5px; } .li small { display:block; font-size:12.5px; color:var(--soft); margin-top:2px; }
+  .li .ar { color:var(--faint); font-size:20px; }
+
+  /* ---------- 4: big words ---------- */
+  .big { display:grid; gap:10px; }
+  .bw { display:block; width:100%; text-align:left; border:1px solid var(--line); background:#fff; border-radius:18px; padding:18px 20px; cursor:pointer; font-family:'DM Sans'; color:var(--ink); }
+  .bw:hover { border-color:var(--brand); background:#FCFAF5; }
+  .bw b { display:flex; justify-content:space-between; align-items:baseline; gap:10px; font-family:Fraunces,serif; font-weight:600; font-size:24px; }
+  .bw b em { font-style:normal; font-family:'DM Sans'; font-size:13px; font-weight:700; color:var(--brand); white-space:nowrap; }
+  .bw small { display:block; font-size:14px; color:var(--soft); margin-top:4px; line-height:1.4; }
+  .bw.any { background:transparent; border-style:dashed; }
+  .left { margin-top:14px; font-size:14px; color:var(--soft); }
+  .left b { color:var(--ink); }
+
+  @media (max-width:600px) {
+    h2.q { font-size:24px; }
+    .tiles { grid-template-columns:1fr 1fr; gap:10px; }
+    .tile b { font-size:17px; } .tile small { font-size:12px; }
+    .meals { grid-template-columns:1fr; }
+    .row .ph { width:82px; height:64px; }
+    .bw b { font-size:21px; } .bw { padding:16px; }
+  }
+</style></head><body>
+<div class="top"><b>What's for dinner? &mdash; 4 options</b><p>Same new questions in each: mood &rarr; protein &rarr; spice &rarr; time. Tap through them and pick the one you like.</p></div>
+<div class="switch" id="switch"></div>
+<main id="main"><p class="about">Loading meals...</p></main>
+<script>
+const esc = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// Spice isn't in meals.json yet - a first pass by hand for the mockup.
+const SPICE = { chili:'hot', beanchili:'hot', curry:'hot', crispytacos:'hot', shrimpricebowl:'hot',
+  tacos:'kick', fajitas:'kick', burritobowl:'kick', fishtacos:'kick', quesadillas:'kick', shakshuka:'kick', peanutnoodles:'kick', sausage:'kick', stuffedpeppers:'kick' };
+const Q = [
+  { key:'mood', q:"What are you craving?", opts:[
+      ['cozy','Comfort food','Warm, cheesy, saucy - a cold-night dinner'],
+      ['light','Fresh & light','Bright, crunchy, won\'t weigh you down'],
+      ['hearty','Big & hearty','Filling plates for a real appetite']] },
+  { key:'protein', q:"Any protein in mind?", opts:[
+      ['poultry','Chicken or turkey','The weeknight standby'], ['beef','Beef','Burgers, stews, steak'], ['pork','Pork','Chops, sausage, pulled pork'],
+      ['fish','Fish & seafood','Salmon, shrimp, fish tacos'], ['veg','Meat-free','Beans, eggs, cheese, tofu']] },
+  { key:'spice', q:"How spicy?", opts:[
+      ['mild','Keep it mild','No heat at all'], ['kick','A little kick','Some warmth, nothing wild'], ['hot','Bring the heat','Chili, curry, hot sauce']] },
+  { key:'time', q:"How much time do you have?", opts:[
+      ['quick','30 minutes or less','Fast weeknight dinners'], ['medium','About an hour','A little more hands-on'], ['long','Plenty of time','Slow cooker, oven, low and slow']] },
+];
+let MEALS = [], V = 0, S = null;
+const fresh = () => ({ answers:{}, step:0, trail:[] });
+const match = a => MEALS.filter(m => Object.entries(a).every(([k, v]) => v == null || m[k] === v));
+const live = (st, i) => Q[i].opts.filter(([v]) => match({ ...st.answers, [Q[i].key]: v }).length);
+function advance(st) { while (st.step < Q.length && live(st, st.step).length <= 1) st.step++; }
+function pick(val) { const k = Q[S.step].key; S.answers[k] = val === '__any' ? null : val; S.trail.push(S.step); S.step++; advance(S); render(); }
+function back() { if (!S.trail.length) return; S.step = S.trail.pop(); delete S.answers[Q[S.step].key]; for (let i = S.step + 1; i < Q.length; i++) delete S.answers[Q[i].key]; render(); }
+const spiceLabel = { mild:'Mild', kick:'A little kick', hot:'Spicy' };
+function photoOf(list, used) { const m = list.find(x => x.image && !used.has(x.image)) || list[0]; if (m) used.add(m.image); return m ? m.image : ''; }
+function results() {
+  const left = match(S.answers);
+  const chips = Q.filter(q => S.answers[q.key] != null).map(q => `<button class="chip" data-undo="${q.key}">${esc(q.opts.find(o => o[0] === S.answers[q.key])[1])}</button>`).join('');
+  return `<div class="res-head"><h2>${left.length} dinner${left.length === 1 ? '' : 's'} for you</h2>${left.length > 1 ? '<button class="btn" data-surprise>Surprise me</button>' : ''}</div>
+    ${chips ? `<div class="chips">${chips}</div>` : ''}
+    <div class="meals">${left.map(m => `<div class="meal">${m.image ? `<img src="${esc(m.image)}" alt="" loading="lazy">` : ''}<span><b>${esc(m.title)}</b>
+      <small><i class="tag">${spiceLabel[m.spice]}</i><i class="tag">${m.items.length} ingredients</i></small></span></div>`).join('')}</div>
+    <div class="foot"><button class="link" data-reset>Start over</button></div>`;
+}
+const progress = () => `<div class="prog"><span class="bars">${Q.map((_, i) => `<i class="${i < S.step ? 'd' : i === S.step ? 'n' : ''}"></i>`).join('')}</span>${match(S.answers).length} dinners left</div>`;
+const foot = () => `<div class="foot">${S.trail.length ? '<button class="link" data-back>&larr; Back</button>' : ''}<button class="link" data-show>Just show me all ${match(S.answers).length}</button>${S.trail.length ? '<button class="link" data-reset>Start over</button>' : ''}</div>`;
+
+const VARIANTS = [
+  { name:'Photo tiles', note:'with photos', about:'Big photo tiles, one question at a time - what the app has now, with the new questions. A strip below shows a peek of the dinners still in play.',
+    render() {
+      if (S.step >= Q.length || match(S.answers).length <= 1) return results();
+      const q = Q[S.step], used = new Set(), left = match(S.answers);
+      const tiles = live(S, S.step).map(([v, label, d]) => { const hits = match({ ...S.answers, [q.key]: v }); return `<button class="tile" data-pick="${v}"><img src="${esc(photoOf(hits, used))}" alt="" loading="lazy"><span><b>${esc(label)}</b><small>${hits.length} meals</small></span></button>`; }).join('');
+      const peek = left.slice(0, 6).map(m => `<img src="${esc(m.image)}" alt="">`).join('');
+      return `${progress()}<h2 class="q">${q.q}</h2><div class="tiles">${tiles}<button class="tile" data-pick="__any" style="background:#0F5A43"><span><b>Anything works</b><small>all ${left.length}</small></span></button></div>
+        <div class="peek">${peek}<span>${left.length} dinners still in the running</span></div>${foot()}`;
+    } },
+  { name:'Photo rows', note:'with photos', about:'Wide rows: a small photo pair, the choice, one line on what it means, and how many dinners it leaves. Easier to read than tiles, still visual.',
+    render() {
+      if (S.step >= Q.length || match(S.answers).length <= 1) return results();
+      const q = Q[S.step], used = new Set(), left = match(S.answers);
+      const rows = live(S, S.step).map(([v, label, d]) => { const hits = match({ ...S.answers, [q.key]: v });
+        const a = photoOf(hits, used), b = photoOf(hits.filter(h => h.image !== a), used);
+        return `<button class="row" data-pick="${v}"><span class="ph ${b && b !== a ? '' : 'one'}"><img src="${esc(a)}" alt="">${b && b !== a ? `<img src="${esc(b)}" alt="">` : ''}</span>
+          <span class="tx"><b>${esc(label)}</b><small>${esc(d)}</small></span><span class="n">${hits.length}</span></button>`; }).join('');
+      return `${progress()}<h2 class="q">${q.q}</h2><div class="rows">${rows}<button class="row" data-pick="__any"><span class="tx" style="padding-left:8px"><b>No preference</b><small>Keep all ${left.length}</small></span></button></div>${foot()}`;
+    } },
+  { name:'All on one screen', note:'no photos', about:'Every question at once as quick pill buttons; the list underneath updates as you tap. Fastest - nothing to step through, change any answer any time.',
+    render() {
+      const groups = Q.map((q, i) => {
+        const btns = q.opts.map(([v, label]) => { const others = { ...S.answers }; delete others[q.key]; const n = match({ ...others, [q.key]: v }).length;
+          return `<button data-set="${q.key}|${v}" class="${S.answers[q.key] === v ? 'on' : ''}" ${n ? '' : 'disabled'}>${esc(label)}<small>${n}</small></button>`; }).join('');
+        return `<div class="fgroup"><h3>${q.q}</h3><div class="seg"><button data-set="${q.key}|" class="${S.answers[q.key] == null ? 'on' : ''}">Any</button>${btns}</div></div>`; }).join('');
+      const left = match(S.answers);
+      return `${groups}<div class="count">${left.length} dinner${left.length === 1 ? '' : 's'}${left.length > 1 ? '<button class="btn" data-surprise>Surprise me</button>' : ''}</div>
+        <div class="list">${left.map(m => `<div class="li"><span><b>${esc(m.title)}</b><small>${esc(spiceLabel[m.spice])} &middot; ${{ quick:'30 min', medium:'about an hour', long:'slow' }[m.time] || ''} &middot; ${m.items.length} ingredients</small></span><span class="ar">&rsaquo;</span></div>`).join('') || '<div class="li">Nothing matches - try "Any" on one of the questions.</div>'}</div>`;
+    } },
+  { name:'Big words', note:'no photos', about:'One question at a time with large type and a short description under each choice. Calm, readable, works anywhere - no photos to load in a store.',
+    render() {
+      if (S.step >= Q.length || match(S.answers).length <= 1) return results();
+      const q = Q[S.step], left = match(S.answers);
+      const btns = live(S, S.step).map(([v, label, d]) => { const n = match({ ...S.answers, [q.key]: v }).length;
+        return `<button class="bw" data-pick="${v}"><b>${esc(label)}<em>${n} dinner${n === 1 ? '' : 's'}</em></b><small>${esc(d)}</small></button>`; }).join('');
+      return `${progress()}<h2 class="q">${q.q}</h2><div class="big">${btns}<button class="bw any" data-pick="__any"><b>Doesn't matter<em>all ${left.length}</em></b><small>Skip this question</small></button></div>${foot()}`;
+    } },
+];
+function render() {
+  document.getElementById('switch').innerHTML = VARIANTS.map((v, i) => `<button class="${i === V ? 'on' : ''}" data-v="${i}">${i + 1}. ${v.name} <small>${v.note}</small></button>`).join('');
+  document.getElementById('main').innerHTML = `<p class="about">${VARIANTS[V].about}</p>` + VARIANTS[V].render();
+}
+document.addEventListener('click', e => {
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.v != null) { V = +t.dataset.v; S = fresh(); advance(S); render(); scrollTo(0, 0); return; }
+  if (t.dataset.pick != null) return pick(t.dataset.pick);
+  if (t.dataset.set != null) { const [k, v] = t.dataset.set.split('|'); if (v) S.answers[k] = v; else delete S.answers[k]; return render(); }
+  if (t.hasAttribute('data-back')) return back();
+  if (t.hasAttribute('data-reset')) { S = fresh(); advance(S); return render(); }
+  if (t.hasAttribute('data-show')) { S.step = Q.length; return render(); }
+  if (t.dataset.undo) { const i = Q.findIndex(q => q.key === t.dataset.undo); Q.slice(i).forEach(q => delete S.answers[q.key]); S.trail = S.trail.filter(x => x < i); S.step = i; advance(S); return render(); }
+  if (t.hasAttribute('data-surprise')) { const left = match(S.answers); const m = left[Math.floor(Math.random() * left.length)]; alert('Tonight: ' + m.title); }
+});
+fetch('data/meals.json').then(r => r.json()).then(d => {
+  MEALS = d.meals.filter(m => m.course === 'dinner').map(m => ({ ...m, spice: SPICE[m.id] || 'mild' }));
+  S = fresh(); advance(S); render();
+});
+</script>
+</body></html>

@@ -1,0 +1,2207 @@
+{
+ "_note": "Our own short method for each meal (written 2026-10-02), for two people, matched to the meal's items and rough amounts in meals.json. `pantry` items are assumed on hand and never go on the list. `draft: true` marks the user's own meals - written as a starting point until they say how they actually make them.",
+ "recipes": {
+  "crispytacos": {
+   "prep_min": 10,
+   "cook_min": 20,
+   "servings": "2 people",
+   "intro": "Spiced chicken thighs seared in cast iron, shredded, then crisped in the same pan and piled into charred corn tortillas.",
+   "pantry": [
+    "2 tbsp olive oil, divided",
+    "1 tsp chili powder",
+    "1 tsp ground cumin",
+    "1 tsp smoked paprika",
+    "1/2 tsp garlic powder",
+    "1/2 tsp onion powder",
+    "Salt and pepper",
+    "Hot sauce to serve"
+   ],
+   "steps": [
+    "Stir the spices with 1 tbsp oil and a good pinch of salt, and rub it all over the thighs. If you have 20 minutes, let them sit in the fridge - they take on more flavor.",
+    "Heat a cast-iron skillet over medium-high. Cook the thighs about 5 minutes per side, until deeply browned and 165°F in the thickest part.",
+    "Move them to a board, rest 5 minutes, then shred with two forks.",
+    "Add the remaining oil to the hot pan, spread the chicken in a flat layer and leave it alone for 2-3 minutes until the bottom crisps. Flip in sections and crisp another minute.",
+    "Warm the tortillas in a dry skillet for 20-30 seconds a side, or over a gas flame, until lightly charred.",
+    "Fill with chicken, cheddar and sliced avocado, squeeze lime over, and add hot sauce at the table."
+   ],
+   "tips": [
+    "Thighs stay juicy even if you cook them a little long - that is why they beat breasts here.",
+    "If corn tortillas crack, stack two per taco."
+   ],
+   "draft": true,
+   "based_on": [
+    {
+     "name": "Alphafoodie",
+     "url": "https://www.alphafoodie.com/shredded-chicken-tacos/"
+    },
+    {
+     "name": "Completely Delicious",
+     "url": "https://www.completelydelicious.com/shredded-chicken-street-tacos/"
+    }
+   ]
+  },
+  "shrimpricebowl": {
+   "prep_min": 10,
+   "cook_min": 20,
+   "servings": "2 people",
+   "intro": "Garlicky seared shrimp over white rice with cool cucumber, avocado, a squeeze of lemon and sriracha (or any hot sauce you like).",
+   "pantry": [
+    "1 tbsp neutral oil",
+    "2 cloves garlic, minced",
+    "Optional: 1 tbsp butter",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Rinse the rice until the water runs clear, then cook it with a pinch of salt as the package says (usually covered, low heat, 15-18 minutes). Rest 5 minutes and fluff.",
+    "Pat the shrimp completely dry - dry shrimp brown, wet shrimp steam. Season with salt and pepper.",
+    "Heat the oil in a large skillet over medium-high. Lay the shrimp in a single layer and cook 1-2 minutes per side, just until pink. Do it in two batches if the pan is crowded.",
+    "Turn the heat to medium, add the garlic (and butter, if using) and toss everything for 30 seconds. Take the pan off the heat.",
+    "Slice the cucumber and avocado and cut the lemon into wedges.",
+    "Build bowls: rice, shrimp, cucumber and avocado. Squeeze lemon over the top and finish with sriracha or your hot sauce of choice."
+   ],
+   "tips": [
+    "Shrimp go from done to rubbery fast - pull them as soon as they curl into a C."
+   ],
+   "draft": true,
+   "based_on": [
+    {
+     "name": "Cooked & Loved",
+     "url": "https://www.cookedandloved.com/recipes/shrimp-poke-bowl/"
+    }
+   ]
+  },
+  "chickenalfredo": {
+   "prep_min": 10,
+   "cook_min": 20,
+   "servings": "2 people",
+   "intro": "Thin-sliced chicken seared golden, then tossed with fettuccine in warm jarred alfredo and finished with parmesan.",
+   "pantry": [
+    "1 tbsp olive oil or butter",
+    "Salt and pepper",
+    "Optional: parsley to finish"
+   ],
+   "steps": [
+    "Bring a large pot of salted water to a boil.",
+    "Slice the chicken into thin strips (about 1/4 inch) and season with salt and pepper.",
+    "Cook the fettuccine as the box says. Before draining, save about half a cup of the pasta water.",
+    "Meanwhile, heat the oil in a large skillet over medium-high. Cook the chicken 1-2 minutes per side until browned and cooked through - in two batches if needed.",
+    "Turn the heat to low and pour the alfredo sauce over the chicken. Warm it gently; don't let it boil.",
+    "Add the drained pasta to the skillet and toss, loosening with a splash of pasta water if it's thick. Top with the parmesan."
+   ],
+   "tips": [
+    "Thin strips cook in minutes and stay tender - no need to sear whole breasts.",
+    "A splash of pasta water keeps jarred sauce from turning gluey."
+   ],
+   "draft": true,
+   "based_on": [
+    {
+     "name": "Bertolli",
+     "url": "https://bertolli.com/recipes/chicken-fettuccine-alfredo/"
+    }
+   ]
+  },
+  "meatballpasta": {
+   "prep_min": 5,
+   "cook_min": 25,
+   "servings": "2 people",
+   "intro": "Turkey meatballs simmered straight from frozen in tomato sauce, with spinach wilted in and red lentil pasta for extra protein.",
+   "pantry": [
+    "Salt",
+    "Optional: red pepper flakes, grated parmesan"
+   ],
+   "steps": [
+    "Bring a large pot of salted water to a boil.",
+    "Pour the pasta sauce into a deep skillet with a quarter cup of water and bring it to a gentle simmer over medium.",
+    "Add the meatballs straight from the bag, cover, and simmer on medium-low for 15-20 minutes, stirring once or twice, until hot all the way through (check the bag for its time).",
+    "Meanwhile, cook the red lentil pasta as the box says, tasting a minute or two early - it goes soft fast. Drain.",
+    "Stir the spinach into the sauce a handful at a time until it wilts, 1-2 minutes.",
+    "Add the pasta, toss, and serve right away."
+   ],
+   "tips": [
+    "Lentil pasta keeps softening as it sits, so toss it with the sauce and eat."
+   ],
+   "draft": true,
+   "based_on": [
+    {
+     "name": "Momsdish",
+     "url": "https://momsdish.com/recipe/easy-one-pan-meatball-pasta-recipe"
+    }
+   ]
+  },
+  "sliders": {
+   "prep_min": 10,
+   "cook_min": 20,
+   "servings": "2 people",
+   "intro": "One big sheet-pan patty, cut into a dozen cheeseburger sliders with pickles - every one the same, nothing falls apart.",
+   "pantry": [
+    "1/2 tsp garlic powder",
+    "Salt and pepper",
+    "Optional: ketchup and mustard"
+   ],
+   "steps": [
+    "Heat the oven to 375°F and line a rimmed sheet pan with parchment.",
+    "Press the beef into a thin, even rectangle a little bigger than the slab of buns - it shrinks as it cooks. Season with salt, pepper and garlic powder.",
+    "Bake 10 minutes, then blot off the grease with paper towels.",
+    "Slice the whole slab of buns in half sideways, keeping the rolls joined. Set the bottoms in a baking dish and layer half the cheese, the pickles, the beef (two spatulas help), the rest of the cheese, then the tops.",
+    "Cover with foil and bake 10 more minutes, until the cheese melts.",
+    "Cut into sliders and add ketchup or mustard if you like."
+   ],
+   "tips": [
+    "Make the beef rectangle slightly larger than the buns so it still covers them after shrinking."
+   ],
+   "draft": true,
+   "based_on": [
+    {
+     "name": "Caroline Chambers",
+     "url": "https://carolinechambers.com/recipes/meat/sheet-pan-sliders"
+    }
+   ]
+  },
+  "chickenricveg": {
+   "prep_min": 15,
+   "cook_min": 45,
+   "servings": "2 people",
+   "intro": "The weeknight standard: herby chicken and roasted broccoli and carrots off one sheet pan, over brown rice.",
+   "pantry": [
+    "2 tbsp olive oil, divided",
+    "1 tsp garlic powder",
+    "1 tsp dried oregano or Italian seasoning",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Start the rice first: rinse it, then simmer covered in 2 cups of water with a pinch of salt for 40-45 minutes until the water is absorbed. Rest 5 minutes and fluff.",
+    "Heat the oven to 425°F. Cut the broccoli into bite-size florets and the carrots into coins, toss with 1 tbsp oil, salt and pepper, and roast for 20 minutes, stirring halfway.",
+    "Meanwhile, cut the chicken into chunks about 1 1/2 inches, and toss with the remaining oil, garlic powder, oregano, salt and pepper.",
+    "Add the chicken to the pan and roast 20 minutes more, stirring once, until the chicken reaches 165°F.",
+    "Serve over the rice."
+   ],
+   "tips": [
+    "Giving the vegetables a 20-minute head start means they and the chicken finish at the same time."
+   ],
+   "draft": true,
+   "based_on": [
+    {
+     "name": "Spirited and Then Some",
+     "url": "https://www.spiritedandthensome.com/sheet-pan-roasted-chicken-vegetables/"
+    }
+   ]
+  },
+  "chili": {
+   "prep_min": 20,
+   "cook_min": 480,
+   "servings": "2 people",
+   "intro": "Browned beef, onion, two kinds of beans and tomatoes, left to go low and slow all day.",
+   "pantry": [
+    "1 tsp ground cumin",
+    "1 tsp salt",
+    "2 cloves garlic, minced",
+    "Optional: cheddar or sour cream to top"
+   ],
+   "steps": [
+    "Brown the beef in a large skillet over medium-high, breaking it up, 6-8 minutes. Spoon off most of the fat.",
+    "Add the diced onion and garlic and cook 4-5 minutes, until soft. Stir in the chili powder, cumin and salt for 30 seconds.",
+    "Scrape everything into the slow cooker. Add the drained and rinsed beans and the tomatoes with their juice, and stir.",
+    "Cover and cook on low for 7-8 hours, or high for 3-4 hours.",
+    "Taste, add salt if it needs it, and serve topped with cheddar or sour cream."
+   ],
+   "tips": [
+    "Browning the beef and onion first is the step that makes slow-cooker chili taste deep rather than boiled.",
+    "Too thick? Stir in a splash of water or broth near the end."
+   ],
+   "storage": "Keeps 4 days in the fridge and freezes well for 3 months - it is better the next day.",
+   "based_on": [
+    {
+     "name": "Cooking Classy",
+     "url": "https://www.cookingclassy.com/slow-cooker-chili/"
+    },
+    {
+     "name": "Skinnytaste",
+     "url": "https://www.skinnytaste.com/slow-cooker-chili/"
+    }
+   ]
+  },
+  "sheetpan": {
+   "prep_min": 15,
+   "cook_min": 40,
+   "servings": "2 people",
+   "intro": "Garlicky paprika chicken thighs with crispy potatoes and roasted broccoli, all off one pan.",
+   "pantry": [
+    "1 tsp salt",
+    "Pepper",
+    "1 tsp paprika"
+   ],
+   "steps": [
+    "Heat the oven to 425°F. Cut the potatoes into 1-inch chunks, toss with 1 tbsp of the oil, half the salt and some pepper, and roast for 15 minutes.",
+    "Meanwhile, mince the garlic and rub it over the thighs with 1 tbsp oil, the paprika, the rest of the salt and pepper. Cut the broccoli into florets.",
+    "Push the potatoes to the edges, put the chicken in the middle, and roast 10 minutes.",
+    "Toss the broccoli with the last of the oil, scatter it around the chicken, and roast 15 minutes more, until the chicken reaches 165°F and the potatoes are golden."
+   ],
+   "tips": [
+    "The potatoes take longest, so they go in first - everything finishes at once.",
+    "Thighs are even better taken to 175°F; they stay juicy and get more tender."
+   ],
+   "based_on": [
+    {
+     "name": "Slender Kitchen",
+     "url": "https://www.slenderkitchen.com/recipe/roasted-chicken-and-potatoes-with-broccoli"
+    },
+    {
+     "name": "Cheerful Cook",
+     "url": "https://cheerfulcook.com/sheet-pan-chicken-thighs/"
+    }
+   ]
+  },
+  "oats": {
+   "prep_min": 5,
+   "cook_min": 0,
+   "servings": "2 people",
+   "intro": "Rolled oats soaked overnight in milk and Greek yogurt until thick and creamy, topped with blueberries.",
+   "pantry": [
+    "Pinch of salt",
+    "Optional: 1 tsp honey or maple syrup, a pinch of cinnamon"
+   ],
+   "steps": [
+    "In a jar or container, stir together the oats, milk, yogurt and a pinch of salt (plus honey and cinnamon, if using).",
+    "Cover and refrigerate at least 6 hours, or overnight.",
+    "In the morning, stir, loosen with a splash of milk if it is too thick, and top with the blueberries."
+   ],
+   "tips": [
+    "The ratio to remember: equal parts oats and milk, plus half as much yogurt.",
+    "Keeps 4 days in the fridge - make several jars at once."
+   ],
+   "based_on": [
+    {
+     "name": "Eating Bird Food",
+     "url": "https://www.eatingbirdfood.com/overnight-oats-with-yogurt/"
+    },
+    {
+     "name": "The Kitchn",
+     "url": "https://www.thekitchn.com/overnight-oats-268370"
+    }
+   ]
+  },
+  "tacos": {
+   "prep_min": 10,
+   "cook_min": 20,
+   "servings": "2 people",
+   "intro": "Seasoned ground turkey simmered until saucy, in warm corn tortillas with salsa, lettuce, cheddar and avocado.",
+   "pantry": [
+    "1 tbsp olive oil",
+    "1 tbsp chili powder",
+    "1 tsp ground cumin",
+    "1/2 tsp smoked paprika",
+    "1/2 tsp dried oregano",
+    "1/2 tsp garlic powder",
+    "Salt"
+   ],
+   "steps": [
+    "Heat the oil in a large skillet over medium-high. Add the turkey and cook 6-8 minutes, breaking it up, until no pink remains.",
+    "Stir in the spices and a good pinch of salt and cook 30 seconds, until fragrant.",
+    "Add half a cup of water (or a few spoonfuls of the salsa) and simmer 5-10 minutes, until it thickens and coats the meat.",
+    "Meanwhile, shred the lettuce and slice the avocado. Warm the tortillas in a dry skillet for 20-30 seconds a side.",
+    "Fill the tortillas with turkey, cheddar, lettuce, avocado and salsa."
+   ],
+   "tips": [
+    "Turkey is leaner than beef, so the short simmer with a little liquid is what keeps it juicy."
+   ],
+   "based_on": [
+    {
+     "name": "Two Peas & Their Pod",
+     "url": "https://www.twopeasandtheirpod.com/turkey-tacos/"
+    },
+    {
+     "name": "Skinnytaste",
+     "url": "https://www.skinnytaste.com/ground-turkey-tacos/"
+    }
+   ]
+  },
+  "salmon": {
+   "prep_min": 10,
+   "cook_min": 45,
+   "servings": "2 people",
+   "intro": "Lemony roasted salmon over brown rice with garlicky wilted spinach.",
+   "pantry": [
+    "Salt and pepper",
+    "Optional: 1 clove garlic"
+   ],
+   "steps": [
+    "Start the rice first: rinse it, then simmer covered in 2 cups of water with a pinch of salt for 40-45 minutes. Rest 5 minutes and fluff.",
+    "Heat the oven to 400°F. Set the salmon on a lined sheet pan, rub with 1 tbsp of the olive oil, season with salt and pepper and grate a little lemon zest over it.",
+    "Roast 12-15 minutes, until it flakes easily (145°F in the thickest part).",
+    "Meanwhile, warm the rest of the oil in a skillet over medium (with the garlic, sliced, if using). Add the spinach and a pinch of salt and stir 1-2 minutes, just until wilted.",
+    "Build bowls: rice, spinach, then the salmon broken into big pieces. Squeeze lemon over everything."
+   ],
+   "tips": [
+    "Salmon keeps cooking a little after it comes out - pull it when the center is just barely opaque."
+   ],
+   "based_on": [
+    {
+     "name": "Food.com",
+     "url": "https://www.food.com/recipe/asian-salmon-bowl-with-lime-drizzle-504572"
+    }
+   ]
+  },
+  "pasta": {
+   "prep_min": 5,
+   "cook_min": 15,
+   "servings": "2 people",
+   "intro": "Whole wheat spaghetti in jarred marinara warmed with fresh garlic and olive oil, finished with parmesan.",
+   "pantry": [
+    "Salt",
+    "Optional: red pepper flakes, basil"
+   ],
+   "steps": [
+    "Bring a large pot of salted water to a boil and cook the pasta as the box says. Save half a cup of the pasta water before draining.",
+    "Meanwhile, warm the olive oil in a large skillet over medium-low. Add the sliced garlic (and pepper flakes, if using) and cook 1-2 minutes until fragrant and barely golden.",
+    "Pour in the pasta sauce and simmer 5 minutes.",
+    "Add the drained pasta and toss, loosening with a splash of pasta water.",
+    "Serve with the parmesan (and torn basil, if you have it)."
+   ],
+   "tips": [
+    "Warming the garlic in oil first makes jarred sauce taste homemade."
+   ],
+   "based_on": [
+    {
+     "name": "iFoodReal",
+     "url": "https://ifoodreal.com/spaghetti-with-tomato-sauce-recipe/"
+    }
+   ]
+  },
+  "scramble": {
+   "prep_min": 5,
+   "cook_min": 10,
+   "servings": "2 people",
+   "intro": "Soft, creamy scrambled eggs with wilted spinach and sharp cheddar, with whole wheat toast.",
+   "pantry": [
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Whisk the eggs with a pinch of salt and pepper.",
+    "Melt the butter in a nonstick skillet over medium until it foams, then turn the heat to low.",
+    "Add the eggs and stir slowly with a spatula until soft curds start to form, 1 1/2-2 minutes.",
+    "Add the spinach and cheddar and keep folding gently 2-3 minutes more, just until the eggs are set but still soft.",
+    "Serve with the toast."
+   ],
+   "tips": [
+    "Low heat is the whole trick - high heat makes eggs rubbery and dry."
+   ],
+   "based_on": [
+    {
+     "name": "Williams Sonoma",
+     "url": "https://www.williams-sonoma.com/recipe/scrambled-eggs-with-spinach-and-white-cheddar.html"
+    }
+   ]
+  },
+  "stirfry": {
+   "prep_min": 15,
+   "cook_min": 45,
+   "servings": "2 people",
+   "intro": "Thin-sliced chicken and crisp broccoli and peppers in a quick garlic-soy sauce, over brown rice.",
+   "pantry": [
+    "2 tbsp olive or avocado oil, divided",
+    "2 tsp cornstarch, divided",
+    "1 tsp honey",
+    "Salt"
+   ],
+   "steps": [
+    "Start the rice first: rinse it, then simmer covered in 2 cups of water with a pinch of salt for 40-45 minutes. Rest 5 minutes and fluff.",
+    "Slice the chicken thinly against the grain and toss it with a pinch of salt and 1 tsp cornstarch.",
+    "Whisk the sauce: soy sauce, honey, the other 1 tsp cornstarch, a quarter cup of water and the minced garlic.",
+    "Heat 1 tbsp oil in a large skillet or wok over high. Spread the chicken in one layer and cook 3-4 minutes, turning once, until browned and cooked through. Move it to a plate.",
+    "Add the rest of the oil, then the broccoli and sliced peppers. Stir-fry about 4 minutes, until they start to brown but still have crunch. If the broccoli is still hard, add a splash of water and cover for a minute.",
+    "Return the chicken, pour in the sauce and stir 1-2 minutes until it turns glossy and thick. Serve over the rice."
+   ],
+   "tips": [
+    "A crowded pan steams instead of sears - cook the chicken in two batches if it doesn't fit in one layer."
+   ],
+   "based_on": [
+    {
+     "name": "Inspired Taste",
+     "url": "https://www.inspiredtaste.net/52752/garlic-chicken-broccoli-stir-fry/"
+    },
+    {
+     "name": "The Modern Proper",
+     "url": "https://themodernproper.com/chicken-stir-fry"
+    }
+   ]
+  },
+  "burgers": {
+   "prep_min": 10,
+   "cook_min": 15,
+   "servings": "2 people",
+   "intro": "Thin diner-style patties smashed onto a screaming-hot skillet for crisp, browned edges, stacked two to a bun.",
+   "pantry": [
+    "Salt and pepper",
+    "1 tsp oil"
+   ],
+   "steps": [
+    "Divide the beef into 8 loose balls of about 2 ounces each. Don't season or pack them yet.",
+    "Heat a cast-iron skillet over medium-high for 3-5 minutes until very hot, and wipe it with the oil. Toast the buns cut-side down, then set aside.",
+    "Put 2-3 balls in the pan and press each one as thin as you can with a sturdy spatula (a square of parchment between them stops sticking). Season the tops with salt and pepper.",
+    "Cook 2-3 minutes, until the edges are deeply browned. Scrape under each patty to keep the crust and flip.",
+    "Lay cheese on half the patties and cook 1 minute more. Repeat with the rest.",
+    "Stack two patties (one with cheese) on each bun with lettuce and tomato."
+   ],
+   "tips": [
+    "Smash in the first 30 seconds only - pressing later squeezes the juice out."
+   ],
+   "based_on": [
+    {
+     "name": "Lodge Cast Iron",
+     "url": "https://www.lodgecastiron.com/blogs/recipe/diner-style-smash-burgers"
+    },
+    {
+     "name": "America's Test Kitchen",
+     "url": "https://www.americastestkitchen.com/recipes/12825-smashed-burgers"
+    }
+   ]
+  },
+  "fajitas": {
+   "prep_min": 15,
+   "cook_min": 20,
+   "servings": "2 people",
+   "intro": "Spiced chicken strips and charred peppers and onions from one hot skillet, wrapped in warm tortillas.",
+   "pantry": [
+    "2 tbsp olive oil, divided",
+    "2 tsp chili powder",
+    "1 tsp ground cumin",
+    "1/2 tsp smoked paprika",
+    "1/2 tsp garlic powder",
+    "Salt",
+    "Optional: lime"
+   ],
+   "steps": [
+    "Slice the chicken into thin strips and toss with 1 tbsp oil, the spices and a good pinch of salt.",
+    "Slice the peppers and onion into strips.",
+    "Heat a cast-iron or heavy skillet over medium-high until very hot. Cook the chicken in a single layer 6-8 minutes, turning, until browned and 165°F. Move it to a plate.",
+    "Add the rest of the oil, then the peppers and onion with a pinch of salt. Cook 8-10 minutes, stirring now and then, until soft with charred edges.",
+    "Return the chicken, squeeze lime over, and toss.",
+    "Warm the tortillas and serve with the sour cream."
+   ],
+   "tips": [
+    "Leave the vegetables alone for a minute or two at a time - that is how they char instead of steaming."
+   ],
+   "based_on": [
+    {
+     "name": "Simply Home Cooked",
+     "url": "https://simplyhomecooked.com/cast-iron-fajitas/"
+    },
+    {
+     "name": "Dizzy Busy and Hungry",
+     "url": "https://dizzybusyandhungry.com/skillet-chicken-fajitas/"
+    }
+   ]
+  },
+  "bakedsalmon": {
+   "prep_min": 10,
+   "cook_min": 35,
+   "servings": "2 people",
+   "intro": "Lemony salmon, tender asparagus and crispy little potatoes roasted together on one sheet pan.",
+   "pantry": [
+    "Salt and pepper",
+    "1 clove garlic (optional)"
+   ],
+   "steps": [
+    "Heat the oven to 400°F. Halve the potatoes, toss with 1 tbsp oil, salt and pepper, and roast for 15-20 minutes.",
+    "Snap the woody ends off the asparagus. Slice half the lemon into rounds.",
+    "Push the potatoes to one side. Put the salmon in the middle and the asparagus alongside. Drizzle both with the rest of the oil, season, add the garlic if using, and lay the lemon slices on the salmon.",
+    "Roast 12-15 minutes, until the salmon flakes easily (145°F) and the asparagus is tender.",
+    "Squeeze the other half of the lemon over everything."
+   ],
+   "tips": [
+    "Thin asparagus cooks faster - if yours is pencil-thin, add it for only the last 8 minutes."
+   ],
+   "based_on": [
+    {
+     "name": "I Heart Naptime",
+     "url": "https://www.iheartnaptime.net/sheet-pan-salmon/"
+    },
+    {
+     "name": "Creme De La Crumb",
+     "url": "https://www.lecremedelacrumb.com/sheet-pan-salmon-asparagus-potatoes/"
+    }
+   ]
+  },
+  "scampi": {
+   "prep_min": 10,
+   "cook_min": 15,
+   "servings": "2 people",
+   "intro": "Shrimp in garlicky lemon butter, tossed through linguine - restaurant food in about 20 minutes.",
+   "pantry": [
+    "1 tbsp olive oil",
+    "Salt and pepper",
+    "Optional: red pepper flakes, parsley"
+   ],
+   "steps": [
+    "Bring a large pot of salted water to a boil and cook the linguine as the box says. Save half a cup of the pasta water before draining.",
+    "Pat the shrimp dry and season with salt and pepper.",
+    "Heat the oil and 1 tbsp of the butter in a large skillet over medium-high. Cook the shrimp 1-2 minutes per side, just until pink. Move them to a plate.",
+    "Turn the heat to medium-low. Add the rest of the butter, the minced garlic and pepper flakes if using, and stir 30-60 seconds until fragrant - don't let it brown.",
+    "Add the juice and zest of the lemon and a quarter cup of the pasta water, and simmer 1-2 minutes.",
+    "Return the shrimp, add the linguine and toss, adding more pasta water if it looks dry. Finish with parsley."
+   ],
+   "tips": [
+    "Many versions add a splash of dry white wine with the lemon - nice, but not needed."
+   ],
+   "based_on": [
+    {
+     "name": "Tastes Better From Scratch",
+     "url": "https://tastesbetterfromscratch.com/shrimp-scampi-linguine/"
+    },
+    {
+     "name": "Modern Honey",
+     "url": "https://www.modernhoney.com/shrimp-scampi-linguine/"
+    }
+   ]
+  },
+  "chickensoup": {
+   "prep_min": 15,
+   "cook_min": 40,
+   "servings": "2 people",
+   "intro": "Chicken poached right in the broth, so the soup tastes like it simmered all day, with carrots, celery and egg noodles.",
+   "pantry": [
+    "1 tbsp olive oil",
+    "1 tsp dried thyme",
+    "Salt and pepper",
+    "1 bay leaf (optional)"
+   ],
+   "steps": [
+    "Dice the carrots and celery. Heat the oil in a large pot over medium and cook them 8-10 minutes, until they start to soften.",
+    "Add the broth, thyme, bay leaf and the whole chicken breasts. Bring to a boil, then turn down to a gentle simmer, cover, and cook 15-17 minutes until the chicken is cooked through (165°F).",
+    "Lift out the chicken and shred it with two forks.",
+    "Bring the broth back to a simmer, add the noodles and cook them as the bag says, usually 6-8 minutes.",
+    "Return the chicken, take out the bay leaf, and season with salt and pepper to taste."
+   ],
+   "tips": [
+    "Poaching the chicken in the broth flavors both - the broth gets richer and the chicken stays tender."
+   ],
+   "storage": "Keeps 4 days in the fridge. The noodles soak up broth as it sits, so add a splash of broth or water when you reheat.",
+   "based_on": [
+    {
+     "name": "Once Upon a Chef",
+     "url": "https://www.onceuponachef.com/recipes/chicken-noodle-soup.html"
+    },
+    {
+     "name": "Inspired Taste",
+     "url": "https://www.inspiredtaste.net/37475/homemade-chicken-noodle-soup-recipe/"
+    }
+   ]
+  },
+  "beefstew": {
+   "prep_min": 20,
+   "cook_min": 150,
+   "servings": "2 people",
+   "intro": "Seared chuck simmered until spoon-tender in rich broth, with potatoes and carrots added late so they hold their shape.",
+   "pantry": [
+    "2 tbsp olive oil",
+    "2 tbsp flour",
+    "1 tbsp tomato paste (optional)",
+    "1 tsp thyme",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Cut the chuck into 1 1/2-inch cubes, pat dry, season with salt and pepper, and toss with the flour.",
+    "Heat the oil in a Dutch oven or heavy pot over medium-high. Brown the beef in batches, 4-5 minutes each, without crowding. Set it aside.",
+    "Add the chopped onion and cook 3-4 minutes. Stir in the tomato paste for a minute, then pour in the broth, scraping up the browned bits from the bottom.",
+    "Return the beef, add the thyme, bring to a boil, then cover and simmer on low for 1 1/2 hours.",
+    "Add the potatoes and carrots, cut into big chunks, and simmer covered another 30-40 minutes until everything is fork-tender.",
+    "If it's thin, simmer uncovered for 10 minutes. Taste and add salt before serving."
+   ],
+   "tips": [
+    "Vegetables added at the start turn to mush - they only need the last 40 minutes.",
+    "Browning in batches matters: a crowded pot steams the beef grey."
+   ],
+   "storage": "Keeps 4 days in the fridge and freezes for 3 months; like most stews it's better the next day.",
+   "based_on": [
+    {
+     "name": "Cooking Classy",
+     "url": "https://www.cookingclassy.com/beef-stew/"
+    },
+    {
+     "name": "The Toasty Kitchen",
+     "url": "https://thetoastykitchen.com/easy-beef-stew-from-scratch/"
+    }
+   ]
+  },
+  "meatballs": {
+   "prep_min": 15,
+   "cook_min": 30,
+   "servings": "2 people",
+   "intro": "Tender oven-baked beef meatballs finished in tomato sauce, over spaghetti with plenty of parmesan.",
+   "pantry": [
+    "1 egg",
+    "2 tbsp water or milk",
+    "1 tsp salt",
+    "1/2 tsp garlic powder",
+    "1 tbsp olive oil"
+   ],
+   "steps": [
+    "Heat the oven to 400°F and line a sheet pan with parchment (or brush it with the oil).",
+    "In a bowl, mix the bread crumbs, egg, water, salt, garlic powder and a quarter cup of the parmesan. Add the beef and mix gently with your hands, just until combined.",
+    "Roll into about 16 balls, 1 1/2 inches across, and bake 18-20 minutes, until browned and 160°F inside.",
+    "Meanwhile, bring a pot of salted water to a boil for the spaghetti, and warm the pasta sauce in a large pot over medium-low.",
+    "Cook the spaghetti as the box says. Add the baked meatballs to the sauce and simmer 5-10 minutes.",
+    "Serve the meatballs and sauce over the spaghetti with the rest of the parmesan."
+   ],
+   "tips": [
+    "Mix the meat as little as possible - overworked meatballs turn out tough."
+   ],
+   "based_on": [
+    {
+     "name": "Family Spice",
+     "url": "https://familyspice.com/spaghetti-meatballs-family-style-3/"
+    }
+   ]
+  },
+  "tofu": {
+   "prep_min": 25,
+   "cook_min": 45,
+   "servings": "2 people",
+   "intro": "Pressed, cornstarch-crisped tofu with broccoli and carrots in a garlicky soy glaze, over brown rice.",
+   "pantry": [
+    "2 tbsp olive or avocado oil",
+    "1 tbsp cornstarch",
+    "1 clove garlic",
+    "Optional: 1 tsp honey, sesame seeds"
+   ],
+   "steps": [
+    "Start the rice first: rinse it, then simmer covered in 2 cups of water with a pinch of salt for 40-45 minutes.",
+    "Press the tofu: wrap it in paper towels, set something heavy on top (a pan or a few cans) and leave it 20 minutes. Cut into cubes and toss with 2 tsp of the cornstarch.",
+    "Whisk the sauce: soy sauce, a quarter cup of water, the minced garlic, honey if using, and the last tsp of cornstarch.",
+    "Heat 1 tbsp oil in a large nonstick skillet over medium-high. Add the tofu in one layer and leave it 3-4 minutes before turning; cook until golden on most sides, about 10 minutes. Move it to a plate.",
+    "Add the rest of the oil, the broccoli florets and sliced carrots, and stir-fry 4-5 minutes until crisp-tender (a splash of water and a lid for 1 minute helps).",
+    "Return the tofu, pour in the sauce and toss 1-2 minutes until glossy. Serve over the rice with sesame seeds."
+   ],
+   "tips": [
+    "Pressing out the water is what lets tofu crisp instead of steam."
+   ],
+   "based_on": [
+    {
+     "name": "Fork in the Kitchen",
+     "url": "https://www.forkinthekitchen.com/tofu-stir-fry-with-broccoli/"
+    },
+    {
+     "name": "Dinner at the Zoo",
+     "url": "https://www.dinneratthezoo.com/tofu-stir-fry/"
+    }
+   ]
+  },
+  "quesadillas": {
+   "prep_min": 10,
+   "cook_min": 15,
+   "servings": "2 people",
+   "intro": "Half-mashed black beans with cumin and cheddar, crisped in a skillet and served with salsa and avocado.",
+   "pantry": [
+    "1 tsp cumin",
+    "Salt"
+   ],
+   "steps": [
+    "Drain and rinse the beans. Mash about half of them in a bowl with a fork, then stir in the rest with the cumin, a pinch of salt and a couple of spoonfuls of salsa.",
+    "Spread the beans over half of each tortilla, top with cheddar and fold over.",
+    "Heat a skillet over medium. Cook the quesadillas 2-3 minutes per side, until golden and the cheese has melted.",
+    "Cut into wedges and serve with salsa and sliced avocado."
+   ],
+   "tips": [
+    "Medium heat, not high - the tortilla browns while the cheese has time to melt."
+   ],
+   "based_on": [
+    {
+     "name": "Lodge Cast Iron",
+     "url": "https://www.lodgecastiron.com/blogs/recipe/cheesy-black-bean-quesadillas"
+    },
+    {
+     "name": "Isabel Eats",
+     "url": "https://www.isabeleats.com/black-bean-quesadillas/"
+    }
+   ]
+  },
+  "caesar": {
+   "prep_min": 10,
+   "cook_min": 15,
+   "servings": "2 people",
+   "intro": "Golden pan-seared chicken sliced over crisp romaine with Caesar dressing, parmesan and croutons.",
+   "pantry": [
+    "1 tbsp olive oil",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Pound the chicken to an even thickness if it is thick at one end, and season with salt and pepper.",
+    "Heat the oil in a skillet over medium-high. Cook the chicken 5-6 minutes per side, until browned and 165°F inside.",
+    "Rest it 5 minutes, then slice.",
+    "Meanwhile, chop the romaine and toss it with dressing to taste.",
+    "Top with the sliced chicken, parmesan and croutons."
+   ],
+   "tips": [
+    "Even thickness means the thin end doesn't dry out while the thick end finishes."
+   ],
+   "based_on": [
+    {
+     "name": "Spend With Pennies",
+     "url": "https://www.spendwithpennies.com/chicken-caesar-salad/"
+    },
+    {
+     "name": "T-fal",
+     "url": "https://www.t-fal.com/blog/post/chicken-caesar-salad"
+    }
+   ]
+  },
+  "porkchops": {
+   "prep_min": 10,
+   "cook_min": 35,
+   "servings": "2 people",
+   "intro": "Paprika-garlic pork chops roasted on one pan with crispy little potatoes and green beans.",
+   "pantry": [
+    "Salt and pepper",
+    "1 tsp paprika"
+   ],
+   "steps": [
+    "Heat the oven to 400°F. Halve the potatoes, toss with 1 tbsp oil, salt and pepper, and roast 20 minutes.",
+    "Meanwhile, mince the garlic and mix with the rest of the oil, the paprika, salt and pepper. Rub most of it over the chops and toss the trimmed green beans with the rest.",
+    "Push the potatoes aside, add the chops and green beans, and roast 12-18 minutes more, until the pork reaches 145°F.",
+    "Rest the chops 5 minutes before serving."
+   ],
+   "tips": [
+    "Boneless chops dry out fast - start checking with a thermometer a few minutes early and pull them at 145°F."
+   ],
+   "based_on": [
+    {
+     "name": "Slender Kitchen",
+     "url": "https://www.slenderkitchen.com/recipe/sheet-pan-pork-chops-potatoes-and-green-beans"
+    },
+    {
+     "name": "Lamberts Lately",
+     "url": "https://www.lambertslately.com/sheet-pan-pork-chops"
+    }
+   ]
+  },
+  "sausage": {
+   "prep_min": 10,
+   "cook_min": 25,
+   "servings": "2 people",
+   "intro": "Browned Italian sausage with soft, sweet peppers and onions piled into hoagie rolls.",
+   "pantry": [
+    "1 tbsp olive oil",
+    "Salt"
+   ],
+   "steps": [
+    "Heat the oil in a large skillet over medium. Add the sausages and brown them on all sides, about 8-10 minutes.",
+    "Add a quarter cup of water, cover, and cook 8-10 minutes until the sausages are cooked through (160°F). Move them to a plate and slice if you like.",
+    "Add the sliced peppers and onion with a pinch of salt and cook 8-10 minutes, stirring now and then, until soft with some browned edges.",
+    "Return the sausage, toss, and pile into the split rolls."
+   ],
+   "tips": [
+    "The covered steam step cooks thick sausages through without burning the outside."
+   ],
+   "based_on": [
+    {
+     "name": "Food Network (Rachael Ray)",
+     "url": "https://www.foodnetwork.com/recipes/rachael-ray/sausage-pepper-and-onion-hoagies-recipe-1941240"
+    },
+    {
+     "name": "The Comfort of Cooking",
+     "url": "https://www.thecomfortofcooking.com/2017/10/skillet-italian-sausage-peppers-and-onions.html"
+    }
+   ]
+  },
+  "lentil": {
+   "prep_min": 10,
+   "cook_min": 40,
+   "servings": "2 people",
+   "intro": "A thick one-pot soup of lentils, carrots, celery and tomatoes with cumin, brightened with lemon at the end.",
+   "pantry": [
+    "2 tbsp olive oil",
+    "2 cloves garlic",
+    "1 tsp cumin",
+    "Salt and pepper",
+    "Squeeze of lemon (optional)"
+   ],
+   "steps": [
+    "Rinse the lentils and pick out any small stones.",
+    "Heat the oil in a large pot over medium. Add the diced carrots and celery and cook 6-8 minutes until starting to soften; add the garlic for the last minute.",
+    "Stir in the cumin, then the tomatoes with their juice, the lentils and the broth.",
+    "Bring to a boil, then cover and simmer gently 25-30 minutes, until the lentils are tender.",
+    "Season with salt and pepper, and squeeze in lemon just before serving."
+   ],
+   "tips": [
+    "Green or brown lentils hold their shape; red lentils melt into a smoother soup."
+   ],
+   "storage": "Keeps 5 days in the fridge and freezes well. It thickens as it sits - thin with a little broth or water.",
+   "based_on": [
+    {
+     "name": "Once Upon a Chef",
+     "url": "https://www.onceuponachef.com/recipes/lentil-soup.html"
+    },
+    {
+     "name": "Love and Lemons",
+     "url": "https://www.loveandlemons.com/lentil-soup/"
+    }
+   ]
+  },
+  "greekbowl": {
+   "prep_min": 15,
+   "cook_min": 45,
+   "servings": "2 people",
+   "intro": "Lemon-oregano chicken over brown rice with hummus, cucumber, tomatoes and feta.",
+   "pantry": [
+    "1 tbsp olive oil",
+    "1 tsp dried oregano",
+    "Juice of 1/2 lemon",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Start the rice first: rinse it, then simmer covered in 2 cups of water with a pinch of salt for 40-45 minutes.",
+    "Toss the chicken with the oil, lemon juice, oregano, salt and pepper. If you have time, let it sit 30 minutes.",
+    "Cook the chicken in a skillet over medium-high 5-6 minutes per side, until 165°F. Rest 5 minutes and slice.",
+    "Dice the cucumber and halve the tomatoes.",
+    "Build bowls: rice, chicken, cucumber and tomatoes, a big spoonful of hummus and crumbled feta."
+   ],
+   "tips": [
+    "Makes great lunches: keep the hummus and vegetables separate from the warm rice and chicken."
+   ],
+   "based_on": [
+    {
+     "name": "Two Peas & Their Pod",
+     "url": "https://www.twopeasandtheirpod.com/greek-chicken-bowls/"
+    },
+    {
+     "name": "Eating Bird Food",
+     "url": "https://www.eatingbirdfood.com/greek-chicken-bowls/"
+    }
+   ]
+  },
+  "macbroc": {
+   "prep_min": 10,
+   "cook_min": 20,
+   "servings": "2 people",
+   "intro": "Creamy stovetop mac and cheese made with a quick butter-flour sauce and sharp cheddar, with broccoli cooked right in with the pasta.",
+   "pantry": [
+    "2 tbsp butter",
+    "2 tbsp flour",
+    "Salt",
+    "1/2 tsp mustard powder (optional)"
+   ],
+   "steps": [
+    "Bring a large pot of salted water to a boil. Cook the macaroni as the box says, adding the broccoli florets for the last 3 minutes. Drain.",
+    "In the same pot, melt the butter over medium. Whisk in the flour and cook about 1 minute, until it smells a little toasty.",
+    "Slowly whisk in the milk and simmer 3-4 minutes, whisking, until it thickens enough to coat a spoon.",
+    "Turn the heat to low and stir in the cheddar a handful at a time (and the mustard powder, if using) until smooth. Season with salt.",
+    "Fold in the pasta and broccoli and serve right away."
+   ],
+   "tips": [
+    "Sharp cheddar matters - mild cheddar's flavor mostly disappears in the sauce.",
+    "Add the cheese off high heat, or it can turn grainy."
+   ],
+   "based_on": [
+    {
+     "name": "Feel Good Foodie",
+     "url": "https://feelgoodfoodie.net/recipe/broccoli-mac-and-cheese/"
+    },
+    {
+     "name": "Cook's Country",
+     "url": "https://www.americastestkitchen.com/cookscountry/recipes/7367-skillet-broccoli-macaroni-and-cheese"
+    }
+   ]
+  },
+  "fishtacos": {
+   "prep_min": 15,
+   "cook_min": 10,
+   "servings": "2 people",
+   "intro": "Chili-rubbed cod seared in a skillet, flaked into warm corn tortillas with crunchy lime cabbage and salsa.",
+   "pantry": [
+    "1 tbsp olive oil",
+    "1 tsp chili powder",
+    "Salt"
+   ],
+   "steps": [
+    "Thinly slice the cabbage and toss it with the juice of 1 lime and a pinch of salt. Let it sit while you cook.",
+    "Pat the cod dry and season both sides with the chili powder and salt.",
+    "Heat the oil in a nonstick skillet over medium-high. Cook the cod 3-4 minutes per side, until it flakes easily (145°F).",
+    "Warm the tortillas in a dry skillet for 20-30 seconds a side.",
+    "Break the fish into chunks and fill the tortillas with fish, cabbage and salsa. Serve with lime wedges."
+   ],
+   "tips": [
+    "Cod is delicate - flip it once, gently, with a wide spatula."
+   ],
+   "based_on": [
+    {
+     "name": "All the Healthy Things",
+     "url": "https://allthehealthythings.com/cod-fish-tacos/"
+    },
+    {
+     "name": "Little Spice Jar",
+     "url": "https://www.littlespicejar.com/cod-fish-tacos/"
+    }
+   ]
+  },
+  "chickenparm": {
+   "prep_min": 15,
+   "cook_min": 30,
+   "servings": "2 people",
+   "intro": "Thin breaded chicken cutlets pan-fried until crisp, then baked with marinara and mozzarella, over spaghetti.",
+   "pantry": [
+    "1 egg",
+    "2 tbsp olive oil",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Heat the oven to 425°F. Put a pot of salted water on for the spaghetti.",
+    "Slice each breast in half sideways or pound it to about 1/2 inch thick. Season with salt and pepper.",
+    "Beat the egg in a shallow bowl and put the bread crumbs in another. Dip each cutlet in egg, then press into the crumbs.",
+    "Heat the oil in a large skillet over medium-high. Fry the cutlets about 3-4 minutes per side, until golden. Move them to a sheet pan.",
+    "Spoon a little sauce on each, leaving the edges bare so they stay crisp, and top with mozzarella. Bake 10-14 minutes, until the cheese is bubbly and the chicken is 165°F.",
+    "Meanwhile, cook the spaghetti and warm the rest of the sauce. Serve the chicken on the spaghetti."
+   ],
+   "tips": [
+    "Thin cutlets cook through in the oven before the breading burns."
+   ],
+   "based_on": [
+    {
+     "name": "Natasha's Kitchen",
+     "url": "https://natashaskitchen.com/chicken-parmesan-recipe/"
+    },
+    {
+     "name": "Preppy Kitchen",
+     "url": "https://preppykitchen.com/chicken-parmesan/"
+    }
+   ]
+  },
+  "bfastdinner": {
+   "prep_min": 5,
+   "cook_min": 20,
+   "servings": "2 people",
+   "intro": "Oven-crisped bacon, eggs the way you like them and buttered toast - breakfast, at dinner time.",
+   "pantry": [
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Heat the oven to 400°F. Lay the bacon in a single layer on a parchment-lined sheet pan.",
+    "Bake 15-20 minutes, until as crisp as you like (no flipping needed). Drain on paper towels.",
+    "While it bakes, melt half the butter in a nonstick skillet over medium-low and cook the eggs - scrambled, fried or over easy - seasoning with salt and pepper.",
+    "Toast the bread and spread with the rest of the butter."
+   ],
+   "tips": [
+    "Bacon keeps crisping as it cools, so pull it a minute early."
+   ],
+   "based_on": [
+    {
+     "name": "Downshiftology",
+     "url": "https://downshiftology.com/recipes/how-to-cook-bacon-in-the-oven/"
+    },
+    {
+     "name": "Cook's Country",
+     "url": "https://www.americastestkitchen.com/cookscountry/recipes/7545-oven-cooked-bacon"
+    }
+   ]
+  },
+  "pulledpork": {
+   "prep_min": 15,
+   "cook_min": 480,
+   "servings": "2 people",
+   "intro": "Spice-rubbed pork shoulder cooked low all day until it falls apart, tossed with barbecue sauce and piled on buns with slaw.",
+   "pantry": [
+    "1 tbsp brown sugar (optional)",
+    "1 tbsp paprika",
+    "1 tsp salt",
+    "1 tsp garlic powder"
+   ],
+   "steps": [
+    "Mix the paprika, salt, garlic powder and brown sugar (if using) and rub it all over the pork.",
+    "Put the pork in the slow cooker with half a cup of the barbecue sauce and a quarter cup of water.",
+    "Cover and cook on low for 8 hours, until it shreds easily with a fork.",
+    "Lift out the pork, shred it with two forks and discard any big pieces of fat. Skim the fat off the juices.",
+    "Return the meat with a splash of the juices and as much barbecue sauce as you like.",
+    "Serve on the buns topped with coleslaw."
+   ],
+   "tips": [
+    "Low and slow is the point - high heat makes it stringy instead of tender."
+   ],
+   "storage": "Keeps 4 days in the fridge and freezes well with some of its juices.",
+   "based_on": [
+    {
+     "name": "Downshiftology",
+     "url": "https://downshiftology.com/recipes/slow-cooker-pulled-pork/"
+    },
+    {
+     "name": "Dinner at the Zoo",
+     "url": "https://www.dinneratthezoo.com/slow-cooker-pulled-pork/"
+    }
+   ]
+  },
+  "frenchtoast": {
+   "prep_min": 5,
+   "cook_min": 15,
+   "servings": "2 people",
+   "intro": "Whole wheat bread soaked in a cinnamon-vanilla custard and browned in butter, with maple syrup.",
+   "pantry": [
+    "Pinch of salt",
+    "1 tsp vanilla (optional)"
+   ],
+   "steps": [
+    "Whisk the eggs, milk, cinnamon, vanilla (if using) and a pinch of salt in a shallow dish.",
+    "Heat a skillet over medium and melt a little of the butter.",
+    "Dip each slice of bread in the egg mixture for about 15 seconds per side, let the extra drip off, and lay it in the pan.",
+    "Cook 2-3 minutes per side, until golden. Add more butter between batches.",
+    "Serve with the maple syrup."
+   ],
+   "tips": [
+    "Slightly stale bread soaks up the custard without falling apart."
+   ],
+   "based_on": [
+    {
+     "name": "Love and Lemons",
+     "url": "https://www.loveandlemons.com/french-toast/"
+    },
+    {
+     "name": "RecipeTin Eats",
+     "url": "https://www.recipetineats.com/french-toast/"
+    }
+   ]
+  },
+  "pancakes": {
+   "prep_min": 5,
+   "cook_min": 15,
+   "servings": "2 people",
+   "intro": "Fluffy pancakes from the box, with fresh blueberries dropped onto each one on the griddle.",
+   "pantry": [
+    "Butter or oil for the pan"
+   ],
+   "steps": [
+    "Whisk the pancake mix with the eggs and milk as the box directs - stop while it is still a little lumpy. Let it rest 2-3 minutes.",
+    "Heat a griddle or nonstick skillet over medium and brush it with a little butter or oil.",
+    "Pour about 1/4 cup of batter per pancake and scatter blueberries over each.",
+    "Flip once, when bubbles cover the top and the bottom is golden, about 1-2 minutes, then cook 1 minute more.",
+    "Serve with maple syrup."
+   ],
+   "tips": [
+    "Dropping the berries onto the batter (instead of stirring them in) keeps the pancakes from turning blue.",
+    "Wipe the pan between batches so blueberry juice doesn't burn."
+   ],
+   "based_on": [
+    {
+     "name": "Culinary Hill",
+     "url": "https://www.culinaryhill.com/blueberry-pancakes/"
+    },
+    {
+     "name": "Spend With Pennies",
+     "url": "https://www.spendwithpennies.com/blueberry-pancakes/"
+    }
+   ]
+  },
+  "parfait": {
+   "prep_min": 5,
+   "cook_min": 0,
+   "servings": "2 people",
+   "intro": "Layers of Greek yogurt, fresh strawberries and honey, with granola added at the last minute so it stays crunchy.",
+   "pantry": [],
+   "steps": [
+    "Slice the strawberries.",
+    "In two glasses or jars, layer half the yogurt, half the strawberries and a drizzle of honey, then repeat.",
+    "Add the granola on top right before eating."
+   ],
+   "tips": [
+    "Making them ahead? Keep the granola separate until you eat, or it goes soft."
+   ],
+   "based_on": [
+    {
+     "name": "Jersey Girl Cooks",
+     "url": "https://www.jerseygirlcooks.com/strawberry-yogurt-breakfast-parfaits/"
+    },
+    {
+     "name": "Simply Home Cooked",
+     "url": "https://simplyhomecooked.com/greek-yogurt-berry-parfait/"
+    }
+   ]
+  },
+  "avotoast": {
+   "prep_min": 5,
+   "cook_min": 10,
+   "servings": "2 people",
+   "intro": "Smashed avocado with lemon and salt on whole wheat toast, topped with an egg and cherry tomatoes.",
+   "pantry": [
+    "Salt and pepper",
+    "Optional: red pepper flakes"
+   ],
+   "steps": [
+    "Toast the bread.",
+    "Mash the avocados with a squeeze of lemon, a pinch of salt and red pepper flakes if you like.",
+    "Fry the eggs in a lightly oiled nonstick skillet over medium-low for 3-4 minutes, until the whites are set and the yolks still runny.",
+    "Spread the avocado on the toast, top each with an egg and halved cherry tomatoes, and finish with salt and pepper."
+   ],
+   "tips": [
+    "Season the avocado well - lemon and salt are what make it taste like something."
+   ],
+   "based_on": [
+    {
+     "name": "Cookie and Kate",
+     "url": "https://cookieandkate.com/avocado-toast-recipe/"
+    },
+    {
+     "name": "America's Test Kitchen",
+     "url": "https://www.americastestkitchen.com/recipes/11693-avocado-toast-with-fried-eggs"
+    }
+   ]
+  },
+  "bfastsandwich": {
+   "prep_min": 5,
+   "cook_min": 15,
+   "servings": "2 people",
+   "intro": "Crisp bacon, a fried egg and melted cheddar on a toasted English muffin.",
+   "pantry": [
+    "Butter",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Cook the bacon in a skillet over medium, turning, until crisp, 8-10 minutes. Drain on paper towels and wipe most of the fat from the pan.",
+    "Split and toast the English muffins, and butter them lightly.",
+    "Fry the eggs in the same pan over medium-low, breaking the yolks if you like them firm. Season with salt and pepper.",
+    "Lay a slice of cheddar on each egg for the last minute so it melts.",
+    "Stack egg, cheese and bacon on each muffin."
+   ],
+   "tips": [
+    "Make-ahead: cook a batch, wrap each sandwich in foil and refrigerate; reheat in the oven or microwave."
+   ],
+   "based_on": [
+    {
+     "name": "Joyous Apron",
+     "url": "https://www.joyousapron.com/breakfast-sandwich/"
+    },
+    {
+     "name": "Scratch Pantry",
+     "url": "https://www.scratchpantry.com/recipes/bacon-english-muffin-breakfast-sandwich"
+    }
+   ]
+  },
+  "bfastburrito": {
+   "prep_min": 10,
+   "cook_min": 15,
+   "servings": "2 people",
+   "intro": "Soft scrambled eggs, black beans, cheddar and salsa rolled into warm tortillas - and they freeze well.",
+   "pantry": [
+    "1 tbsp butter",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Drain and rinse the beans and warm them in a small pot or the microwave with a pinch of salt.",
+    "Whisk the eggs with salt and pepper. Melt the butter in a nonstick skillet over medium-low and scramble them gently until just set.",
+    "Warm the tortillas so they fold without cracking (a few seconds in a dry pan or the microwave).",
+    "Down the middle of each tortilla, spoon eggs, beans, cheddar and a little salsa. Don't overfill.",
+    "Fold in the ends and roll up tightly. Serve with more salsa."
+   ],
+   "tips": [
+    "To freeze: cool the fillings first, wrap each burrito tightly in foil and freeze up to 3 months. Reheat in the microwave about 90 seconds, then crisp in a hot pan for a few minutes."
+   ],
+   "based_on": [
+    {
+     "name": "The Toasty Kitchen",
+     "url": "https://thetoastykitchen.com/freezer-black-bean-breakfast-burritos/"
+    },
+    {
+     "name": "Good Life Eats",
+     "url": "https://www.goodlifeeats.com/black-bean-breakfast-burritos/"
+    }
+   ]
+  },
+  "greensmoothie": {
+   "prep_min": 5,
+   "cook_min": 0,
+   "servings": "2 people",
+   "intro": "Banana, strawberries, Greek yogurt and a big handful of spinach blended with almond milk - tastes like fruit.",
+   "pantry": [
+    "Optional: a few ice cubes"
+   ],
+   "steps": [
+    "Pour the almond milk into the blender, add the spinach and blend until no leafy bits are left.",
+    "Add the banana, strawberries and yogurt (and a few ice cubes if your fruit isn't frozen).",
+    "Blend until smooth, adding a splash more milk if it's too thick."
+   ],
+   "tips": [
+    "Blending the spinach with the milk first is what gets rid of the green flecks.",
+    "Frozen banana makes it thick and cold without ice."
+   ],
+   "based_on": [
+    {
+     "name": "Inspired Taste",
+     "url": "https://www.inspiredtaste.net/19911/quick-and-easy-green-smoothie-recipe/"
+    },
+    {
+     "name": "Simple Green Smoothies",
+     "url": "https://simplegreensmoothies.com/healthy-strawberry-banana-smoothie/"
+    }
+   ]
+  },
+  "hotoats": {
+   "prep_min": 2,
+   "cook_min": 10,
+   "servings": "2 people",
+   "intro": "Creamy stovetop oats cooked in milk with mashed banana and cinnamon, topped with walnuts.",
+   "pantry": [
+    "Pinch of salt",
+    "Optional: honey or maple syrup"
+   ],
+   "steps": [
+    "Bring the milk and a pinch of salt to a gentle boil in a small pot over medium.",
+    "Stir in the oats and half the banana, mashed. Lower the heat and simmer 5-7 minutes, stirring often, until thick and creamy.",
+    "Stir in the cinnamon (and honey or maple syrup, if using).",
+    "Top with the rest of the banana, sliced, and the walnuts."
+   ],
+   "tips": [
+    "Toast the walnuts for 3 minutes in a dry pan first - they taste twice as nutty."
+   ],
+   "based_on": [
+    {
+     "name": "Life Made Sweeter",
+     "url": "https://lifemadesweeter.com/banana-oatmeal/"
+    },
+    {
+     "name": "University of Illinois Extension",
+     "url": "https://extension.illinois.edu/lmw/recipes/banana-cinnamon-oatmeal"
+    }
+   ]
+  },
+  "chia": {
+   "prep_min": 5,
+   "cook_min": 0,
+   "servings": "2 people",
+   "intro": "Chia seeds soaked in almond milk and honey until thick and spoonable, topped with blueberries.",
+   "pantry": [],
+   "steps": [
+    "Whisk the chia seeds, almond milk and honey in a bowl or jar.",
+    "Let it sit 10 minutes, then whisk again to break up any clumps - this is the step that keeps it from setting lumpy.",
+    "Cover and refrigerate at least 2 hours, or overnight.",
+    "Stir and top with the blueberries."
+   ],
+   "tips": [
+    "Ratio to remember: 1/4 cup chia per cup of milk; use a little less chia if you like it thinner.",
+    "Keeps 5 days in the fridge."
+   ],
+   "based_on": [
+    {
+     "name": "Eating Bird Food",
+     "url": "https://www.eatingbirdfood.com/basic-chia-seed-pudding/"
+    },
+    {
+     "name": "Love and Lemons",
+     "url": "https://www.loveandlemons.com/chia-seed-pudding/"
+    }
+   ]
+  },
+  "omelet": {
+   "prep_min": 5,
+   "cook_min": 10,
+   "servings": "2 people",
+   "intro": "A tender folded omelet filled with sauteed mushrooms, spinach and salty feta.",
+   "pantry": [
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Heat half the oil in a nonstick skillet over medium-high. Cook the sliced mushrooms 2-3 minutes until golden, add the spinach and stir until wilted. Season and set aside.",
+    "Whisk the eggs with a pinch of salt and pepper (2 per omelet).",
+    "Lower the heat to medium-low, add the rest of the oil and half the eggs. Let them set at the edges 1-2 minutes, lifting the edges so the runny egg flows underneath.",
+    "When almost set on top, spoon half the filling and half the feta over one side and fold the other half over.",
+    "Turn off the heat and cover for 30 seconds so the center finishes. Repeat for the second omelet."
+   ],
+   "tips": [
+    "Cook the filling first - raw mushrooms and spinach release water and make the omelet soggy."
+   ],
+   "based_on": [
+    {
+     "name": "Land O'Lakes",
+     "url": "https://www.landolakes.com/recipe/9683/spinach-mushroom-omelet/"
+    },
+    {
+     "name": "Live Simply",
+     "url": "https://livesimply.me/spinach-feta-omelette/"
+    }
+   ]
+  },
+  "pbbanana": {
+   "prep_min": 3,
+   "cook_min": 3,
+   "servings": "2 people",
+   "intro": "Whole wheat toast with peanut butter, sliced banana, a drizzle of honey and a pinch of cinnamon.",
+   "pantry": [
+    "Optional: cinnamon"
+   ],
+   "steps": [
+    "Toast the bread.",
+    "Spread the peanut butter edge to edge while the toast is warm.",
+    "Top with banana slices, drizzle with honey and sprinkle with cinnamon (and a tiny pinch of salt)."
+   ],
+   "tips": [
+    "A pinch of salt on top makes the peanut butter and banana taste sweeter."
+   ],
+   "based_on": [
+    {
+     "name": "40 Aprons",
+     "url": "https://40aprons.com/peanut-butter-banana-toast/"
+    }
+   ]
+  },
+  "sphash": {
+   "prep_min": 10,
+   "cook_min": 25,
+   "servings": "2 people",
+   "intro": "Crispy diced sweet potato with onion and pepper in one skillet, with eggs cooked right on top.",
+   "pantry": [
+    "1 tsp paprika",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Heat the oil in a large skillet over medium. Cook the diced onion and bell pepper about 5 minutes, until softened.",
+    "Add the sweet potatoes, cut into small even cubes, with the paprika, salt and pepper. Cook 15-20 minutes, stirring now and then, until tender and browned (cover for the first 5 minutes to speed it up).",
+    "Make 4 wells in the hash and crack an egg into each.",
+    "Turn the heat to medium-low, cover, and cook 3-5 minutes, until the eggs are done the way you like."
+   ],
+   "tips": [
+    "Small, even cubes cook through before the outside burns."
+   ],
+   "based_on": [
+    {
+     "name": "Jessica Gavin",
+     "url": "https://www.jessicagavin.com/sweet-potato-hash-with-eggs/"
+    },
+    {
+     "name": "Jo Cooks",
+     "url": "https://www.jocooks.com/recipes/sweet-potato-hash-with-eggs/"
+    }
+   ]
+  },
+  "turkeysand": {
+   "prep_min": 5,
+   "cook_min": 0,
+   "servings": "2 people",
+   "intro": "Deli turkey and Swiss on whole wheat with crisp romaine, tomato and mustard or mayo.",
+   "pantry": [
+    "Mustard or mayo"
+   ],
+   "steps": [
+    "Toast the bread if you like.",
+    "Spread mustard or mayo on each slice.",
+    "Layer the Swiss, turkey, romaine and tomato slices (season the tomato with a pinch of salt and pepper).",
+    "Close and cut in half."
+   ],
+   "tips": [
+    "Put the cheese against the bread and the lettuce between the tomato and bread - it keeps the bread from going soggy in a packed lunch."
+   ],
+   "based_on": [
+    {
+     "name": "The Kitchn",
+     "url": "https://www.thekitchn.com/turkey-sandwich-recipe-23581301"
+    }
+   ]
+  },
+  "chickensalsand": {
+   "prep_min": 10,
+   "cook_min": 0,
+   "servings": "2 people",
+   "intro": "Quick canned-chicken salad with mayo and celery, on whole wheat bread.",
+   "pantry": [
+    "Salt and pepper",
+    "Optional: squeeze of lemon"
+   ],
+   "steps": [
+    "Drain the chicken very well and flake it with a fork.",
+    "Dice the celery small.",
+    "Mix the chicken, celery and mayonnaise; season with salt, pepper and a squeeze of lemon if you like.",
+    "Spread on the bread."
+   ],
+   "tips": [
+    "Squeeze the excess water out of canned chicken - it keeps the salad from turning watery."
+   ],
+   "based_on": [
+    {
+     "name": "Laura Fuentes",
+     "url": "https://www.laurafuentes.com/canned-chicken-salad/"
+    },
+    {
+     "name": "Hip2Save",
+     "url": "https://hip2save.com/recipes/canned-chicken-salad/"
+    }
+   ]
+  },
+  "tunasand": {
+   "prep_min": 10,
+   "cook_min": 0,
+   "servings": "2 people",
+   "intro": "Classic tuna salad with crunchy celery and a squeeze of lemon, on whole wheat bread.",
+   "pantry": [
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Drain the tuna well, pressing out the water.",
+    "Dice the celery small.",
+    "Mix the mayonnaise, lemon juice, salt and pepper in a bowl, then add the tuna and celery and break it up gently with a fork.",
+    "Spread on the bread."
+   ],
+   "tips": [
+    "Well-drained tuna is the difference between creamy and soggy.",
+    "Keeps 3 days in the fridge."
+   ],
+   "based_on": [
+    {
+     "name": "Spend With Pennies",
+     "url": "https://www.spendwithpennies.com/classic-tuna-salad/"
+    },
+    {
+     "name": "Culinary Hill",
+     "url": "https://www.culinaryhill.com/classic-tuna-salad-sandwich/"
+    }
+   ]
+  },
+  "grilledcheese": {
+   "prep_min": 5,
+   "cook_min": 10,
+   "servings": "2 people",
+   "intro": "Golden, buttery grilled cheese with sharp cheddar, cooked low and slow, with tomato soup for dipping.",
+   "pantry": [],
+   "steps": [
+    "Warm the tomato soup in a small pot over medium-low.",
+    "Butter one side of each slice of bread. Lay 2 slices butter-side down in a skillet, add the cheese, and top with the other slices butter-side up.",
+    "Cook over medium-low 3-5 minutes, until the bottom is golden.",
+    "Flip and cook 2-4 minutes more, until golden and the cheese has melted.",
+    "Cut in half and serve with the soup."
+   ],
+   "tips": [
+    "Low heat is what lets the cheese melt before the bread burns."
+   ],
+   "based_on": [
+    {
+     "name": "Natasha's Kitchen",
+     "url": "https://natashaskitchen.com/grilled-cheese-sandwich/"
+    },
+    {
+     "name": "America's Test Kitchen",
+     "url": "https://www.americastestkitchen.com/recipes/3782-classic-grilled-cheese-sandwiches-for-two"
+    }
+   ]
+  },
+  "blt": {
+   "prep_min": 5,
+   "cook_min": 15,
+   "servings": "2 people",
+   "intro": "Crisp bacon, cold lettuce and thick salted tomato on toasted bread with mayo.",
+   "pantry": [
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Bake the bacon on a parchment-lined sheet pan at 400°F for 15-20 minutes until crisp (or fry it in a skillet). Drain on paper towels.",
+    "Slice the tomato thickly and season the slices with salt and pepper.",
+    "Toast the bread and spread each slice with mayonnaise.",
+    "Layer lettuce, tomato and bacon, and close the sandwiches."
+   ],
+   "tips": [
+    "Salting the tomato is the small step that makes a BLT taste like a BLT."
+   ],
+   "based_on": [
+    {
+     "name": "Spend With Pennies",
+     "url": "https://www.spendwithpennies.com/how-to-make-the-perfect-blt/"
+    },
+    {
+     "name": "Jo Cooks",
+     "url": "https://www.jocooks.com/recipes/blt-sandwich/"
+    }
+   ]
+  },
+  "hummuswrap": {
+   "prep_min": 10,
+   "cook_min": 0,
+   "servings": "2 people",
+   "intro": "Hummus spread on a tortilla with spinach, crisp cucumber and feta, rolled up tight.",
+   "pantry": [
+    "Optional: squeeze of lemon"
+   ],
+   "steps": [
+    "Spread about 1/4 cup hummus over each tortilla, leaving a 2-inch border.",
+    "Slice the cucumber into thin strips.",
+    "Scatter the spinach, cucumber and feta over the hummus and add a squeeze of lemon if you like.",
+    "Fold in the sides and roll up tightly. Cut in half."
+   ],
+   "tips": [
+    "Leaving a border keeps the filling from squeezing out the ends."
+   ],
+   "based_on": [
+    {
+     "name": "Kristine's Kitchen",
+     "url": "https://kristineskitchenblog.com/veggie-wrap/"
+    },
+    {
+     "name": "Foodie Crush",
+     "url": "https://www.foodiecrush.com/hummus-veggie-wrap-plus-10-heavenly-hummus-recipes-to-make-at-home/"
+    }
+   ]
+  },
+  "pbj": {
+   "prep_min": 3,
+   "cook_min": 0,
+   "servings": "2 people",
+   "intro": "The classic: peanut butter and strawberry jam on whole wheat.",
+   "pantry": [],
+   "steps": [
+    "Spread peanut butter on both slices of bread, all the way to the edges.",
+    "Spread the jam on one slice, over the peanut butter.",
+    "Close and cut."
+   ],
+   "tips": [
+    "Peanut butter on both slices seals the bread so the jam doesn't soak through - good for packed lunches."
+   ],
+   "based_on": [
+    {
+     "name": "Tasting Table",
+     "url": "https://www.tastingtable.com/1042903/the-foolproof-method-for-preventing-soggy-pbjs/"
+    }
+   ]
+  },
+  "eggsalad": {
+   "prep_min": 10,
+   "cook_min": 12,
+   "servings": "2 people",
+   "intro": "Creamy classic egg salad with a little Dijon, on whole wheat bread.",
+   "pantry": [
+    "Salt and pepper",
+    "Optional: paprika"
+   ],
+   "steps": [
+    "Put the eggs in a pot, cover with an inch of cold water, and bring to a boil. Turn off the heat, cover, and let stand 12 minutes.",
+    "Move the eggs to cold water for a few minutes, then peel.",
+    "Chop the eggs and mix with the mayonnaise, mustard, salt and pepper.",
+    "Spread on the bread and dust with paprika if you like."
+   ],
+   "tips": [
+    "The covered-pot method gives tender whites and no grey ring around the yolk."
+   ],
+   "based_on": [
+    {
+     "name": "Add a Pinch",
+     "url": "https://addapinch.com/classic-egg-salad-sandwich-recipe/"
+    },
+    {
+     "name": "The Seasoned Mom",
+     "url": "https://www.theseasonedmom.com/egg-salad-sandwich/"
+    }
+   ]
+  },
+  "chickenwrap": {
+   "prep_min": 10,
+   "cook_min": 12,
+   "servings": "2 people",
+   "intro": "Seared chicken, crisp romaine, parmesan and Caesar dressing rolled into a tortilla.",
+   "pantry": [
+    "1 tsp olive oil",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Season the chicken with salt and pepper and cook it in the oil in a skillet over medium-high, 5-6 minutes per side, until 165°F. Rest 5 minutes and slice.",
+    "Chop the romaine and toss with the dressing and parmesan.",
+    "Warm the tortillas so they fold without cracking.",
+    "Lay the salad and chicken down the middle, fold in the sides and roll up tightly."
+   ],
+   "tips": [
+    "Toss the lettuce with the dressing right before rolling so it stays crisp."
+   ],
+   "based_on": [
+    {
+     "name": "The Mom 100",
+     "url": "https://themom100.com/recipe/grilled-chicken-caesar-salad-wraps/"
+    },
+    {
+     "name": "Favorite Family Recipes",
+     "url": "https://www.favfamilyrecipes.com/chicken-caesar-wraps/"
+    }
+   ]
+  },
+  "pestopasta": {
+   "prep_min": 5,
+   "cook_min": 12,
+   "servings": "2 people",
+   "intro": "Whole wheat pasta tossed with pesto, burst cherry tomatoes and parmesan, loosened with starchy pasta water.",
+   "pantry": [
+    "Salt",
+    "1 tsp olive oil"
+   ],
+   "steps": [
+    "Bring a pot of salted water to a boil and cook the pasta as the box says. Save half a cup of the pasta water before draining.",
+    "Meanwhile, warm the oil in a skillet over medium and cook the cherry tomatoes with a pinch of salt 6-8 minutes, until they soften and start to burst.",
+    "Add the drained pasta and the pesto to the tomatoes and toss, adding pasta water a little at a time until glossy.",
+    "Stir in the parmesan."
+   ],
+   "tips": [
+    "The starchy pasta water is what makes jarred pesto cling instead of sliding off."
+   ],
+   "based_on": [
+    {
+     "name": "Well Plated",
+     "url": "https://www.wellplated.com/pesto-pasta/"
+    },
+    {
+     "name": "Foodie Crush",
+     "url": "https://www.foodiecrush.com/pesto-pasta-recipe/"
+    }
+   ]
+  },
+  "pastasalad": {
+   "prep_min": 15,
+   "cook_min": 10,
+   "servings": "2 people",
+   "intro": "Rotini with cherry tomatoes, cucumber and mozzarella in Italian dressing - a make-ahead lunch.",
+   "pantry": [
+    "Salt"
+   ],
+   "steps": [
+    "Cook the rotini in salted water as the box says. Drain and rinse with cold water so it stops cooking, then drain well.",
+    "Halve the tomatoes, dice the cucumber and cube the mozzarella (or use mini mozzarella balls).",
+    "Toss the cooled pasta with the vegetables, cheese and dressing, and season with salt.",
+    "Chill at least 30 minutes so the pasta soaks up the dressing."
+   ],
+   "tips": [
+    "Pasta soaks up dressing as it sits - keep a little extra to add before serving."
+   ],
+   "storage": "Keeps 4 days in the fridge.",
+   "based_on": [
+    {
+     "name": "Love and Lemons",
+     "url": "https://www.loveandlemons.com/italian-pasta-salad/"
+    },
+    {
+     "name": "I Heart Naptime",
+     "url": "https://www.iheartnaptime.net/delicious-and-easy-pasta-salad/"
+    }
+   ]
+  },
+  "greeksalad": {
+   "prep_min": 10,
+   "cook_min": 0,
+   "servings": "2 people",
+   "intro": "A traditional village salad - cucumber, tomatoes, red onion, kalamata olives and feta, no lettuce - in oregano vinaigrette.",
+   "pantry": [
+    "1 tbsp red wine vinegar",
+    "1 tsp dried oregano",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Cut the cucumbers into thick half-moons, halve the tomatoes and thinly slice the red onion.",
+    "Toss them in a bowl with the olives.",
+    "Drizzle with the olive oil and vinegar, sprinkle with the oregano, salt and pepper, and toss.",
+    "Top with the feta in big chunks."
+   ],
+   "tips": [
+    "Dried oregano is right here - fresh is too strong."
+   ],
+   "based_on": [
+    {
+     "name": "A Couple Cooks",
+     "url": "https://www.acouplecooks.com/greek-salad/"
+    },
+    {
+     "name": "The Lemon Bowl",
+     "url": "https://thelemonbowl.com/traditional-greek-salad/"
+    }
+   ]
+  },
+  "chickpeasalad": {
+   "prep_min": 10,
+   "cook_min": 0,
+   "servings": "2 people",
+   "intro": "Chickpeas marinated in lemon and olive oil with cucumber, cherry tomatoes and feta.",
+   "pantry": [
+    "Salt and pepper",
+    "Optional: fresh parsley"
+   ],
+   "steps": [
+    "Drain, rinse and pat the chickpeas dry.",
+    "Whisk the lemon juice, olive oil, salt and pepper in a bowl. Add the chickpeas and let them sit while you chop - they soak up the dressing.",
+    "Dice the cucumber and halve the tomatoes, and add them to the bowl.",
+    "Toss, then top with feta (and parsley, if you have it)."
+   ],
+   "tips": [
+    "Keeps 3 days in the fridge - add the tomatoes the day you eat it so they don't go soft."
+   ],
+   "based_on": [
+    {
+     "name": "Natasha's Kitchen",
+     "url": "https://natashaskitchen.com/chickpea-salad-recipe/"
+    },
+    {
+     "name": "Gimme Delicious",
+     "url": "https://gimmedelicious.com/mediterranean-cucumber-salad/"
+    }
+   ]
+  },
+  "burritobowl": {
+   "prep_min": 10,
+   "cook_min": 45,
+   "servings": "2 people",
+   "intro": "Brown rice with cumin-warmed black beans and corn, salsa, avocado and cheddar.",
+   "pantry": [
+    "1 tsp cumin",
+    "Salt",
+    "Optional: lime"
+   ],
+   "steps": [
+    "Start the rice first: rinse it, then simmer covered in 2 cups of water with a pinch of salt for 40-45 minutes.",
+    "Drain and rinse the beans. Warm them with the corn and cumin in a skillet over medium 3-4 minutes, seasoning with salt.",
+    "Dice the avocado.",
+    "Build bowls: rice, beans and corn, salsa, avocado and cheddar. Squeeze lime over if you have it."
+   ],
+   "tips": [
+    "Cook a double batch of rice - it makes the next few lunches take five minutes."
+   ],
+   "based_on": [
+    {
+     "name": "Healthy Fitness Meals",
+     "url": "https://healthyfitnessmeals.com/vegetarian-burrito-bowl/"
+    },
+    {
+     "name": "America's Test Kitchen",
+     "url": "https://www.americastestkitchen.com/recipes/12179-vegan-brown-rice-burrito-bowl"
+    }
+   ]
+  },
+  "minestrone": {
+   "prep_min": 15,
+   "cook_min": 30,
+   "servings": "2 people",
+   "intro": "Italian vegetable soup with carrots, celery, tomatoes, white beans and small pasta.",
+   "pantry": [
+    "2 tbsp olive oil",
+    "2 cloves garlic",
+    "1 tsp Italian seasoning",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Heat the oil in a large pot over medium. Cook the diced carrots and celery 5 minutes, adding the garlic for the last minute.",
+    "Add the tomatoes with their juice, the broth, the drained beans and the Italian seasoning. Bring to a simmer and cook 15 minutes.",
+    "Add the pasta and simmer until tender, about 10 minutes.",
+    "Season with salt and pepper."
+   ],
+   "tips": [
+    "If you're making it ahead, cook the pasta separately - it keeps soaking up broth in the pot."
+   ],
+   "storage": "Keeps 4 days in the fridge (store the pasta separately if you can) and freezes well without the pasta.",
+   "based_on": [
+    {
+     "name": "Two Peas & Their Pod",
+     "url": "https://www.twopeasandtheirpod.com/easy-minestrone-soup/"
+    },
+    {
+     "name": "Skinnytaste",
+     "url": "https://www.skinnytaste.com/minestrone-soup/"
+    }
+   ]
+  },
+  "teriyaki": {
+   "prep_min": 10,
+   "cook_min": 45,
+   "servings": "2 people",
+   "intro": "Bite-size chicken thighs browned and glazed in teriyaki sauce with crisp-tender broccoli, over brown rice.",
+   "pantry": [
+    "1 tbsp oil"
+   ],
+   "steps": [
+    "Start the rice first: rinse it, then simmer covered in 2 cups of water with a pinch of salt for 40-45 minutes.",
+    "Cut the chicken into bite-size pieces. If you have time, toss with a quarter cup of the teriyaki sauce and let sit 30 minutes.",
+    "Heat the oil in a large skillet over medium-high. Cook the chicken 7-8 minutes, turning, until browned and cooked through.",
+    "Add the broccoli florets and a splash of water, cover, and cook 2-3 minutes until bright green.",
+    "Pour in more teriyaki sauce and toss 1-2 minutes until it thickens and coats everything. Serve over the rice."
+   ],
+   "tips": [
+    "Bottled teriyaki is sweet - start with a little and add more to taste."
+   ],
+   "based_on": [
+    {
+     "name": "Easy Chicken Recipes",
+     "url": "https://easychickenrecipes.com/teriyaki-chicken-thighs-recipe/"
+    },
+    {
+     "name": "The Wooden Skillet",
+     "url": "https://thewoodenskillet.com/easy-weeknight-teriyaki-chicken-broccoli/"
+    }
+   ]
+  },
+  "friedrice": {
+   "prep_min": 15,
+   "cook_min": 15,
+   "servings": "2 people",
+   "intro": "Takeout-style fried rice with seared shrimp, eggs, peas and carrots - best made with day-old rice.",
+   "pantry": [
+    "2 tbsp oil",
+    "2 cloves garlic",
+    "Optional: green onions"
+   ],
+   "steps": [
+    "Cook the rice ahead (ideally the day before) and refrigerate it - cold, dry rice fries instead of turning mushy.",
+    "Heat 1 tbsp oil in a large skillet or wok over medium-high. Cook the shrimp 1-2 minutes per side until pink; set aside.",
+    "Add the diced carrots and cook 2-3 minutes, then the garlic for 30 seconds.",
+    "Push everything to the side, add the beaten eggs and scramble until just set.",
+    "Add the remaining oil and the cold rice, breaking up clumps, and stir-fry 3-4 minutes until hot. Add the peas.",
+    "Stir in the soy sauce and the shrimp, toss 1 minute, and top with green onions."
+   ],
+   "tips": [
+    "No day-old rice? Spread freshly cooked rice on a sheet pan and chill it 30 minutes."
+   ],
+   "based_on": [
+    {
+     "name": "Feel Good Foodie",
+     "url": "https://feelgoodfoodie.net/recipe/shrimp-fried-rice/"
+    },
+    {
+     "name": "Jo Cooks",
+     "url": "https://www.jocooks.com/recipes/easy-shrimp-fried-rice/"
+    }
+   ]
+  },
+  "stuffedpeppers": {
+   "prep_min": 15,
+   "cook_min": 45,
+   "servings": "2 people",
+   "intro": "Bell peppers filled with seasoned turkey, rice and tomatoes, baked under foil and finished with melted cheddar.",
+   "pantry": [
+    "1 tbsp olive oil",
+    "1 tsp Italian seasoning",
+    "Salt"
+   ],
+   "steps": [
+    "Cook the rice (or use leftover rice). Heat the oven to 375°F.",
+    "Cut the tops off the peppers and pull out the seeds. Stand them in a baking dish.",
+    "Heat the oil in a skillet over medium-high and brown the turkey 6-8 minutes. Stir in the Italian seasoning, salt, the tomatoes and the cooked rice.",
+    "Pack the filling into the peppers and spoon any extra around them.",
+    "Cover with foil and bake 30 minutes. Uncover, top with cheddar and bake 10 minutes more, until the peppers are tender and the cheese has melted."
+   ],
+   "tips": [
+    "Peppers that won't stand up? Shave a thin slice off the bottom - without cutting through."
+   ],
+   "based_on": [
+    {
+     "name": "The Seasoned Mom",
+     "url": "https://www.theseasonedmom.com/ground-turkey-stuffed-peppers/"
+    },
+    {
+     "name": "Spend With Pennies",
+     "url": "https://www.spendwithpennies.com/ground-turkey-stuffed-peppers/"
+    }
+   ]
+  },
+  "steak": {
+   "prep_min": 10,
+   "cook_min": 35,
+   "servings": "2 people",
+   "intro": "Cast-iron sirloin with a deep crust and garlic-butter baste, with roasted little potatoes and asparagus.",
+   "pantry": [
+    "1 tbsp oil",
+    "Salt and pepper",
+    "1 clove garlic (optional)"
+   ],
+   "steps": [
+    "Take the steak out of the fridge 30 minutes ahead, pat it dry and season generously with salt and pepper.",
+    "Heat the oven to 425°F. Halve the potatoes, toss with half the oil and some salt, and roast 25-30 minutes. Add the trimmed asparagus for the last 10-12 minutes.",
+    "Heat a cast-iron skillet over high until smoking hot and add the rest of the oil. Sear the steak 3-4 minutes per side without moving it.",
+    "Turn the heat to medium, add the butter and crushed garlic, and spoon the foaming butter over the steak for 1-2 minutes, until 130°F inside for medium-rare.",
+    "Rest the steak 5-10 minutes, then slice against the grain and serve with the potatoes and asparagus."
+   ],
+   "tips": [
+    "A dry steak and a very hot pan are what make the crust.",
+    "Resting keeps the juices in the meat instead of on the board."
+   ],
+   "based_on": [
+    {
+     "name": "Natasha's Kitchen",
+     "url": "https://natashaskitchen.com/pan-seared-steak/"
+    },
+    {
+     "name": "What's in the Pan",
+     "url": "https://whatsinthepan.com/sirloin-steak/"
+    }
+   ]
+  },
+  "bakedziti": {
+   "prep_min": 15,
+   "cook_min": 30,
+   "servings": "2 people",
+   "intro": "Ziti tossed with marinara, layered with creamy ricotta and baked under melted mozzarella until bubbling.",
+   "pantry": [
+    "Salt"
+   ],
+   "steps": [
+    "Heat the oven to 375°F. Cook the ziti 2 minutes less than the box says, and drain.",
+    "Toss the ziti with most of the sauce.",
+    "Spread a little sauce in a baking dish. Add half the ziti, dot with spoonfuls of ricotta and half the mozzarella, then the rest of the ziti, the last of the sauce and the remaining mozzarella.",
+    "Bake uncovered 25-30 minutes, until bubbling and lightly browned on top.",
+    "Rest 5-10 minutes before scooping."
+   ],
+   "tips": [
+    "Undercooking the pasta keeps it from going soft in the oven."
+   ],
+   "storage": "Keeps 4 days in the fridge. Can be assembled a day ahead and baked cold - add 10 minutes.",
+   "based_on": [
+    {
+     "name": "Spend With Pennies",
+     "url": "https://www.spendwithpennies.com/baked-ziti/"
+    },
+    {
+     "name": "Sip and Feast",
+     "url": "https://www.sipandfeast.com/baked-ziti/"
+    }
+   ]
+  },
+  "curry": {
+   "prep_min": 10,
+   "cook_min": 45,
+   "servings": "2 people",
+   "intro": "Chicken thighs simmered in a creamy coconut-tomato curry sauce, over brown rice.",
+   "pantry": [
+    "1 tbsp oil",
+    "1 onion (optional)",
+    "2 cloves garlic",
+    "Salt"
+   ],
+   "steps": [
+    "Start the rice first: rinse it, then simmer covered in 2 cups of water with a pinch of salt for 40-45 minutes.",
+    "Heat the oil in a large skillet over medium. Cook the chopped onion 5 minutes until soft, then the garlic for 1 minute.",
+    "Stir in the curry powder and cook 1 minute until fragrant.",
+    "Add the chicken, cut into bite-size pieces, and stir to coat. Add the tomatoes and the coconut milk and a good pinch of salt.",
+    "Bring to a gentle boil, then simmer 15-20 minutes, stirring now and then, until the chicken is cooked through and the sauce has thickened.",
+    "Taste for salt and serve over the rice."
+   ],
+   "tips": [
+    "Toasting the curry powder in the oil for a minute brings out much more flavor."
+   ],
+   "storage": "Keeps 4 days in the fridge and freezes well; tastes even better the next day.",
+   "based_on": [
+    {
+     "name": "RecipeTin Eats",
+     "url": "https://www.recipetineats.com/chicken-curry/"
+    },
+    {
+     "name": "Wholesome Yum",
+     "url": "https://www.wholesomeyum.com/chicken-curry/"
+    }
+   ]
+  },
+  "beanchili": {
+   "prep_min": 10,
+   "cook_min": 40,
+   "servings": "2 people",
+   "intro": "A meat-free chili of kidney, black and pinto beans in a spiced tomato base - half the black beans mashed so it eats hearty.",
+   "pantry": [
+    "2 tbsp olive oil",
+    "1 tsp cumin",
+    "2 cloves garlic",
+    "Salt"
+   ],
+   "steps": [
+    "Heat the oil in a large pot over medium. Cook the diced onion 5 minutes until soft, then the garlic for 1 minute.",
+    "Stir in the chili powder and cumin for 30 seconds.",
+    "Drain and rinse all the beans. Mash the black beans roughly with a fork.",
+    "Add the beans and the tomatoes with their juice (plus a cup of water if you like it looser) and a good pinch of salt.",
+    "Bring to a simmer, cover, and cook 25-30 minutes, stirring now and then. Taste and adjust the salt."
+   ],
+   "tips": [
+    "Mashing some of the beans gives the chili body without any meat."
+   ],
+   "storage": "Keeps 5 days in the fridge and freezes for 3 months.",
+   "based_on": [
+    {
+     "name": "Budget Bytes",
+     "url": "https://www.budgetbytes.com/vegetarian-chili/"
+    },
+    {
+     "name": "Peas and Crayons",
+     "url": "https://peasandcrayons.com/three-bean-chili/"
+    }
+   ]
+  },
+  "bakedpotato": {
+   "prep_min": 10,
+   "cook_min": 60,
+   "servings": "2 people",
+   "intro": "Crisp-skinned, fluffy baked russets loaded with steamed broccoli, cheddar and sour cream.",
+   "pantry": [
+    "Oil",
+    "Salt and pepper"
+   ],
+   "steps": [
+    "Heat the oven to 425°F. Scrub and dry the potatoes, prick each 3-4 times with a fork, and rub with oil and salt.",
+    "Bake directly on the rack 45-60 minutes, until a knife slides in easily and the skin is crisp.",
+    "In the last 10 minutes, steam the broccoli florets until tender (5 minutes in a covered pot with an inch of water, or in the microwave).",
+    "Split the potatoes, fluff the insides with a fork, and season with salt and pepper.",
+    "Load with broccoli, cheddar and a spoonful of sour cream."
+   ],
+   "tips": [
+    "Don't wrap them in foil - foil steams the skin soft."
+   ],
+   "based_on": [
+    {
+     "name": "Love and Lemons",
+     "url": "https://www.loveandlemons.com/baked-potato/"
+    },
+    {
+     "name": "Feasting at Home",
+     "url": "https://www.feastingathome.com/baked-potato/"
+    }
+   ]
+  },
+  "turkeyburgers": {
+   "prep_min": 10,
+   "cook_min": 12,
+   "servings": "2 people",
+   "intro": "Garlicky turkey burgers cooked in a skillet until juicy, on buns with lettuce, tomato and avocado.",
+   "pantry": [
+    "1 tsp garlic powder",
+    "Salt and pepper",
+    "1 tbsp oil"
+   ],
+   "steps": [
+    "Gently mix the turkey with the garlic powder, salt and pepper - don't overwork it. Shape 4 patties a little wider than the buns, with a slight dip in the middle.",
+    "Heat the oil in a skillet over medium. Cook the patties 5-6 minutes per side, until 165°F in the center.",
+    "Rest 3-5 minutes while you toast the buns and slice the tomato and avocado.",
+    "Build the burgers with lettuce, tomato and avocado."
+   ],
+   "tips": [
+    "Use 93% lean turkey if you can - 99% lean turns out dry.",
+    "Medium heat lets the middle cook through before the outside burns."
+   ],
+   "based_on": [
+    {
+     "name": "Skinnytaste",
+     "url": "https://www.skinnytaste.com/turkey-burger-recipe/"
+    },
+    {
+     "name": "Fit Foodie Finds",
+     "url": "https://fitfoodiefinds.com/turkey-burger-recipe/"
+    }
+   ]
+  },
+  "lemonchicken": {
+   "prep_min": 10,
+   "cook_min": 50,
+   "servings": "2 people",
+   "intro": "Seared lemon-oregano chicken finished right on top of garlicky brown rice cooked in chicken broth - one pan.",
+   "pantry": [
+    "1 tbsp olive oil",
+    "Salt and pepper",
+    "1 tsp dried oregano"
+   ],
+   "steps": [
+    "Season the chicken with salt, pepper and oregano. Heat the oil in a deep, lidded skillet over medium-high and brown it 3-4 minutes per side (it won't be cooked through). Set aside.",
+    "Lower the heat to medium, add the minced garlic for 30 seconds, then the rinsed rice, stirring 1 minute.",
+    "Add the broth, the zest of 1 lemon and the juice of half, and half a cup of water. Bring to a boil, cover, and simmer on low 25 minutes.",
+    "Nestle the chicken on top of the rice, cover again and cook 15-20 minutes more, until the rice is tender and the chicken reaches 165°F.",
+    "Rest 5 minutes, squeeze the rest of the lemon over and serve."
+   ],
+   "tips": [
+    "Brown rice needs a head start - the chicken only goes back in for the last 15-20 minutes so it doesn't dry out."
+   ],
+   "based_on": [
+    {
+     "name": "Downshiftology",
+     "url": "https://downshiftology.com/recipes/one-pan-chicken-and-rice/"
+    },
+    {
+     "name": "Joyous Apron",
+     "url": "https://www.joyousapron.com/baked-lemon-chicken-and-rice/"
+    }
+   ]
+  },
+  "peanutnoodles": {
+   "prep_min": 15,
+   "cook_min": 15,
+   "servings": "2 people",
+   "intro": "Spaghetti and chicken tossed in a quick peanut-soy-honey sauce with crunchy cucumber and carrots.",
+   "pantry": [
+    "1 tbsp oil",
+    "1 tbsp honey",
+    "1 tbsp rice vinegar or lime juice",
+    "Optional: sriracha"
+   ],
+   "steps": [
+    "Bring a pot of salted water to a boil. Season the chicken and cook it in the oil in a skillet over medium-high, 5-6 minutes per side, until 165°F. Rest and slice or shred.",
+    "Cook the spaghetti as the box says. Save a few spoonfuls of the water, then drain and rinse briefly.",
+    "Whisk the sauce: peanut butter, soy sauce, honey, rice vinegar or lime juice, and enough pasta water to make it pourable. Add sriracha to taste.",
+    "Cut the cucumber and carrots into thin matchsticks.",
+    "Toss the warm noodles with the sauce, then add the chicken and vegetables. Serve warm or cold."
+   ],
+   "tips": [
+    "Toss the noodles while still a little warm so they soak up the sauce.",
+    "Leftovers make a good cold lunch; loosen with a splash of water."
+   ],
+   "based_on": [
+    {
+     "name": "Budget Bytes",
+     "url": "https://www.budgetbytes.com/peanut-noodles-with-chicken/"
+    },
+    {
+     "name": "Skinnytaste",
+     "url": "https://www.skinnytaste.com/asian-peanut-noodles-with-chicken/"
+    }
+   ]
+  },
+  "shakshuka": {
+   "prep_min": 10,
+   "cook_min": 25,
+   "servings": "2 people",
+   "intro": "Eggs gently poached in a cumin-paprika tomato and pepper sauce, finished with feta - with bread for dipping.",
+   "pantry": [
+    "2 tbsp olive oil",
+    "2 cloves garlic",
+    "1 tsp cumin, 1 tsp paprika",
+    "Salt",
+    "Bread to serve"
+   ],
+   "steps": [
+    "Heat the oil in a large skillet over medium. Cook the diced onion and bell pepper 6-8 minutes, until soft.",
+    "Add the garlic, cumin and paprika and cook 1 minute until fragrant.",
+    "Pour in the tomatoes with a pinch of salt and simmer 8-10 minutes, until thickened.",
+    "Make 6 small wells with a spoon and crack an egg into each. Cover and cook on low 5-7 minutes, until the whites are set and the yolks still runny.",
+    "Scatter the feta over the top and serve straight from the pan with bread."
+   ],
+   "tips": [
+    "Take it off the heat a minute before the eggs look done - they keep cooking in the hot sauce."
+   ],
+   "based_on": [
+    {
+     "name": "Cookie and Kate",
+     "url": "https://cookieandkate.com/foolproof-shakshuka-recipe/"
+    },
+    {
+     "name": "Love and Lemons",
+     "url": "https://www.loveandlemons.com/shakshuka-recipe/"
+    }
+   ]
+  },
+  "potroast": {
+   "prep_min": 20,
+   "cook_min": 210,
+   "servings": "2 people",
+   "intro": "Chuck roast seared and braised low and slow until it pulls apart, with carrots and potatoes added for the last hour and a half.",
+   "pantry": [
+    "2 tbsp oil",
+    "1 tsp thyme",
+    "Salt and pepper",
+    "2 cloves garlic"
+   ],
+   "steps": [
+    "Heat the oven to 325°F. Pat the roast dry and season all over with salt and pepper.",
+    "Heat the oil in a Dutch oven over medium-high and sear the roast 4-5 minutes per side until deeply browned. Set it aside.",
+    "Add the onion, cut into wedges, and cook 3-4 minutes; add the garlic for 30 seconds. Pour in the broth, scraping up the browned bits, and add the thyme.",
+    "Return the roast, cover, and braise in the oven for 2 hours.",
+    "Nestle the carrots and potatoes, cut into big chunks, into the liquid around the roast. Cover and cook 1 1/2 hours more, until the meat pulls apart easily and the vegetables are tender.",
+    "Rest 10 minutes, then pull the meat into chunks and spoon the juices over everything."
+   ],
+   "tips": [
+    "If it isn't falling apart yet, it isn't done - give it another 20-30 minutes.",
+    "Vegetables added at the start turn to mush."
+   ],
+   "storage": "Keeps 4 days in the fridge in its juices; reheats well.",
+   "based_on": [
+    {
+     "name": "Sip and Feast",
+     "url": "https://www.sipandfeast.com/classic-pot-roast/"
+    },
+    {
+     "name": "The Kitchn",
+     "url": "https://www.thekitchn.com/easy-dutch-oven-pot-roast-recipe-23105460"
+    }
+   ]
+  }
+ }
+}

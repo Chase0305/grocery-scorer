@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recipe · GroceryScorer</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<!--
+  Full-screen recipe page for the "Buy it or make it" items (data/makeable.json -> recipe).
+  Laid out like a good recipe blog's card - summary, times, ingredients, numbered steps,
+  tips, storage - without the ads and the life story. recipe.html?id=granola
+  "Add ingredients to my list" goes back to the app (home.html#make=<id>), which owns the list.
+-->
+<style>
+  :root { --bg:#FAF6EE; --card:#fff; --line:#E7DFCF; --ink:#22302A; --ink-soft:#56625C; --ink-faint:#8A938D;
+    --brand:#0F5A43; --brand-dark:#0A4433; --brand-soft:#E4EFE8; --display:'Fraunces',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  .bar { background: var(--brand); color: #fff; }
+  .bar-in { max-width: 1000px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; gap: 14px; }
+  .back { color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,.45); border-radius: 999px;
+    padding: 0 14px; min-height: 40px; display: inline-flex; align-items: center; font-weight: 700; font-size: 13.5px; white-space: nowrap; flex: 0 0 auto; }
+  .logo { font-family: var(--display); font-weight: 650; font-size: 22px; color: #fff; text-decoration: none; min-height: 40px; display: inline-flex; align-items: center; }
+  .logo span { color: #F3D9A4; }
+  main { max-width: 1000px; margin: 0 auto; padding: 28px 20px 70px; }
+  .eyebrow { font-size: 11.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--brand); }
+  h1 { font-family: var(--display); font-weight: 650; font-size: 46px; line-height: 1.05; margin: 8px 0 12px; letter-spacing: -.01em; }
+  .intro { font-size: 17px; line-height: 1.55; color: var(--ink-soft); max-width: 680px; margin: 0 0 20px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 18px; }
+  .chip { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; min-width: 96px; }
+  .chip small { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+  .chip b { font-size: 15px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 28px; }
+  .btn { min-height: 44px; border-radius: 999px; padding: 0 18px; font: inherit; font-weight: 700; font-size: 14px;
+    cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--ink); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+  .btn.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .btn.primary:hover { background: var(--brand-dark); }
+  .btn[aria-pressed="true"] { background: var(--brand-soft); border-color: var(--brand); color: var(--brand); }
+  .why { background: var(--brand-soft); border-radius: 14px; padding: 14px 16px; font-size: 14.5px; line-height: 1.5; margin: 0 0 28px; }
+  .why b { color: var(--brand); }
+  .card { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 28px; align-items: start; }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px 20px 16px; }
+  .ing-panel { position: sticky; top: 16px; }
+  h2 { font-family: var(--display); font-weight: 650; font-size: 24px; margin: 0 0 12px; }
+  h3 { font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); margin: 18px 0 8px; }
+  .ings { list-style: none; margin: 0; padding: 0; }
+  .ings li { border-bottom: 1px solid #F1EBDD; }
+  .ings li:last-child { border-bottom: none; }
+  .ings label { display: flex; gap: 12px; align-items: flex-start; padding: 10px 2px; cursor: pointer; font-size: 15.5px; line-height: 1.4; min-height: 44px; }
+  .ings input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--brand); flex: 0 0 auto; }
+  .ings input:checked + span { color: var(--ink-faint); text-decoration: line-through; }
+  .small-list { margin: 0; padding-left: 18px; color: var(--ink-soft); font-size: 14px; line-height: 1.6; }
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding: 14px 0;
+    border-bottom: 1px solid #F1EBDD; cursor: pointer; font-size: 16.5px; line-height: 1.6; }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before { content: counter(step); width: 36px; height: 36px; border-radius: 50%; background: var(--brand); color: #fff;
+    display: grid; place-items: center; font-weight: 800; font-size: 15px; margin-top: 1px; }
+  .steps li.done { color: var(--ink-faint); }
+  .steps li.done::before { content: '✓'; background: #B9C9C0; }
+  .step-hint { font-size: 12.5px; color: var(--ink-faint); margin: -6px 0 6px; }
+  .tips { margin-top: 24px; }
+  .tip { background: #FBF3D6; color: #5E4A12; border-radius: 12px; padding: 12px 14px; font-size: 14.5px; line-height: 1.5; margin-bottom: 10px; }
+  .storage { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 14.5px; line-height: 1.5; }
+  .hero { margin: -8px 0 22px; border-radius: 18px; overflow: hidden; aspect-ratio: 21 / 9; background: #E9E1CF; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .based { font-size: 14px; color: var(--ink-soft); margin: -8px 0 20px; max-width: 680px; }
+  .based a { color: var(--brand, #0F5A43); font-weight: 700; }
+  .draft { background: #FBF3D6; color: #5E4A12; border-radius: 12px; padding: 10px 14px; font-size: 14px; line-height: 1.45; margin: 0 0 16px; max-width: 680px; }
+  .missing { text-align: center; padding: 80px 20px; color: var(--ink-soft); }
+  @media (max-width: 760px) {
+    main { padding: 20px 16px 60px; }
+    h1 { font-size: 34px; }
+    .intro { font-size: 16px; }
+    .card { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+    .ing-panel { position: static; }
+    .chip { min-width: 0; flex: 1 1 calc(50% - 10px); }
+    .hero { aspect-ratio: 16 / 10; margin-top: -4px; }
+    .steps li { font-size: 16px; grid-template-columns: 40px 1fr; }
+  }
+  @media print {
+    .bar, .actions, .step-hint, .why { display: none !important; }
+    body { background: #fff; } .panel, .chip, .storage { border-color: #ccc; } .ing-panel { position: static; }
+    .card { grid-template-columns: 1fr 1.6fr; }
+  }
+</style>
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="back" href="home.html" id="back">← Back</a>
+  <a class="logo" href="home.html">grocery<span>scorer</span></a>
+</div></div>
+<main id="main"><div class="missing">Loading…</div></main>
+<script>
+const esc = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// "Steps based on the recipe from Serious Eats": the steps are rewritten in our own words
+// from real, well-tested recipes; this credits them and links the original.
+function based(b) {
+  const list = (Array.isArray(b) ? b : b ? [b] : []).filter(x => x && x.name && /^https:\/\//.test(x.url || ''));
+  if (!list.length) return '';
+  const links = list.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)}</a>`);
+  const joined = links.length > 1 ? links.slice(0, -1).join(', ') + ' and ' + links[links.length - 1] : links[0];
+  return `<p class="based">Steps based on ${list.length > 1 ? 'recipes from' : 'the recipe from'} ${joined}. Tap to see the original${list.length > 1 ? 's' : ''}.</p>`;
+}
+const mins = m => !m ? '—' : m < 60 ? `${m} min` : `${Math.floor(m / 60)} hr${m % 60 ? ' ' + (m % 60) + ' min' : ''}`;
+const frac = t => String(t).replace(/(\d+) 1\/2/g, '$1½').replace(/\b1\/2\b/g, '½').replace(/\b1\/3\b/g, '⅓').replace(/\b2\/3\b/g, '⅔')
+  .replace(/\b1\/4\b/g, '¼').replace(/\b3\/4\b/g, '¾');
+
+// Came here from the app? Then Back is a real back (keeps your place); otherwise go home.
+document.getElementById('back').addEventListener('click', e => {
+  if (document.referrer && new URL(document.referrer).origin === location.origin) { e.preventDefault(); history.back(); }
+});
+
+(async function () {
+  const qs = new URLSearchParams(location.search);
+  const id = qs.get('id') || '', mealId = qs.get('meal') || '';
+  let item = null;
+  try {
+    if (mealId) {
+      // A meal (data/meals.json + data/meal_recipes.json): shaped like a make-it item so the
+      // same page renders both. Ingredients are the meal's rough buy-for-two amounts.
+      const [meals, recs] = await Promise.all([
+        fetch('data/meals.json', { cache: 'no-store' }).then(r => r.json()),
+        fetch('data/meal_recipes.json', { cache: 'no-store' }).then(r => r.json())]);
+      const m = (meals.meals || []).find(x => x.id === mealId), rec = (recs.recipes || {})[mealId];
+      if (m && rec) item = { id: m.id, kind: 'meal', title: m.title, image: m.image, why: '', recipe: rec,
+        ingredients: m.items.map((q, i) => ({ q, text: ((m.amounts || [])[i] ? m.amounts[i] + ' ' : '') + q })) };
+    } else {
+      item = ((await (await fetch('data/makeable.json', { cache: 'no-store' })).json()).items || []).find(i => i.id === id);
+    }
+  } catch (e) {}
+  const main = document.getElementById('main');
+  if (!item || !item.recipe) { main.innerHTML = '<div class="missing">That recipe wasn\'t found. <a href="home.html">Back to GroceryScorer</a></div>'; return; }
+  const r = item.recipe;
+  document.title = `${item.title} · GroceryScorer`;
+  const total = (r.prep_min || 0) + (r.cook_min || 0);
+  main.innerHTML = `
+    ${item.image ? `<div class="hero"><img src="${esc(item.image)}" alt=""></div>` : ''}
+    <div class="eyebrow">${item.kind === 'meal' ? 'Recipe · serves 2' : 'Make it yourself'}</div>
+    <h1>${esc(item.title)}</h1>
+    ${r.draft ? `<div class="draft">This is one of <b>your</b> meals${r.based_on ? ' - the steps follow a well-tested recipe' : ' - the steps are a starting point'}. If you make it differently, tell Claude and it'll be updated.</div>` : ''}
+    <p class="intro">${esc(r.intro)}</p>
+    ${based(r.based_on)}
+    <div class="meta">
+      <div class="chip"><small>Prep</small><b>${mins(r.prep_min)}</b></div>
+      <div class="chip"><small>Cook</small><b>${r.cook_min ? mins(r.cook_min) : 'None'}</b></div>
+      <div class="chip"><small>Total</small><b>${mins(total)}</b></div>
+      <div class="chip"><small>Makes</small><b>${esc(r.servings || item.yields)}</b></div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="home.html#${item.kind === 'meal' ? 'meal' : 'make'}=${encodeURIComponent(item.id)}">＋ Add ingredients to my list</a>
+      <button class="btn" id="cook" aria-pressed="false" hidden>Keep screen on</button>
+      <button class="btn" onclick="window.print()">Print</button>
+    </div>
+    ${item.why ? `<div class="why"><b>Why make it?</b> ${esc(item.why)}</div>` : ''}
+    <div class="card">
+      <section class="panel ing-panel">
+        <h2>Ingredients</h2>
+        <ul class="ings">${item.ingredients.map((x, i) => `<li><label><input type="checkbox" data-i="${i}"><span>${esc(frac(x.text || (x.amount + ' ' + x.q)))}</span></label></li>`).join('')}</ul>
+        ${(r.pantry || []).length ? `<h3>From your pantry</h3><ul class="small-list">${r.pantry.map(p => `<li>${esc(frac(p))}</li>`).join('')}</ul>` : ''}
+        ${(r.equipment || []).length ? `<h3>You'll need</h3><ul class="small-list">${r.equipment.map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
+      </section>
+      <section>
+        <section class="panel">
+          <h2>Instructions</h2>
+          <p class="step-hint">Tap a step to mark it done.</p>
+          <ol class="steps">${r.steps.map(s => `<li>${esc(frac(s))}</li>`).join('')}</ol>
+        </section>
+        ${(r.tips || []).length ? `<div class="tips"><h2>Good to know</h2>${r.tips.map(t => `<div class="tip">${esc(frac(t))}</div>`).join('')}</div>` : ''}
+        ${r.storage ? `<h2 style="margin-top:22px">Storing it</h2><div class="storage">${esc(r.storage)}</div>` : ''}
+      </section>
+    </div>`;
+
+  main.querySelector('.steps').addEventListener('click', e => { const li = e.target.closest('li'); if (li) li.classList.toggle('done'); });
+
+  // "Keep screen on" while cooking: the Screen Wake Lock API. It only exists on https or
+  // localhost, so on the home-Wi-Fi address the button simply stays hidden.
+  const cook = document.getElementById('cook');
+  if ('wakeLock' in navigator) {
+    cook.hidden = false;
+    let lock = null;
+    const set = on => { cook.setAttribute('aria-pressed', on ? 'true' : 'false'); cook.textContent = on ? 'Screen stays on ✓' : 'Keep screen on'; };
+    cook.addEventListener('click', async () => {
+      if (lock) { await lock.release(); lock = null; set(false); return; }
+      try { lock = await navigator.wakeLock.request('screen'); set(true); lock.addEventListener('release', () => { lock = null; set(false); }); } catch (e) {}
+    });
+  }
+})();
+</script>
+</body>
+</html>

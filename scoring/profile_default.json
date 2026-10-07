@@ -1,0 +1,11 @@
+{
+  "name": "default",
+  "description": "General health: ingredient simplicity and avoiding added sugar/oil matter most. Calories are not weighted. NOTE: these 5 weights are relative - compute_score() renormalizes over whichever sub-scores actually apply, so they need not sum to 1.0. The organic bonus is weighted from category_facts.json instead of here, since it's a fact about the food category, not a health-philosophy choice. external_processing was lowered 0.17 -> 0.12 on 2026-09-15: NOVA is a genuinely useful outside opinion but it is a third-party summary, and at 0.17 it was the second-heaviest sub-score in the whole profile, outweighed only by our own flagged-ingredient analysis.",
+  "weights": {
+    "ingredient_simplicity": 0.24,
+    "flagged_ingredients": 0.34,
+    "nutrition": 0.1,
+    "whole_food_processing": 0.1,
+    "external_processing": 0.12
+  }
+}

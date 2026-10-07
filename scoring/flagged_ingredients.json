@@ -1,0 +1,260 @@
+{
+  "hydrogenated_oil": {
+    "severity": 3,
+    "label": "hydrogenated oil",
+    "terms": [
+      "hydrogenated vegetable oil",
+      "hydrogenated oil",
+      "partially hydrogenated"
+    ]
+  },
+  "palm_oil": {
+    "severity": 2,
+    "label": "palm oil",
+    "terms": [
+      "palm oil",
+      "palm kernel oil"
+    ]
+  },
+  "other_added_oil": {
+    "severity": 2,
+    "label": "added oil",
+    "terms": [
+      "peanut oil",
+      "palm fruit oil"
+    ],
+    "_note": "Non-seed added fats only, since 2026-09-15. Seed oils moved to their own 'seed oil' entry so the app can name them - peanut is a legume and palm is a fruit oil (palm has its own entry too), so neither belongs under the seed-oil label."
+  },
+  "added_sugar": {
+    "severity": 2,
+    "label": "added sugar",
+    "terms": [
+      "sugar",
+      "cane sugar",
+      "corn syrup",
+      "high fructose corn syrup",
+      "dextrose",
+      "molasses",
+      "honey",
+      "fructose",
+      "maltodextrin",
+      "cassava root syrup",
+      "cassava syrup",
+      "tapioca syrup",
+      "brown rice syrup",
+      "rice syrup",
+      "agave syrup",
+      "agave nectar",
+      "maple syrup",
+      "date syrup",
+      "cane juice",
+      "invert syrup",
+      "malt syrup",
+      "barley malt syrup",
+      "glucose syrup",
+      "apple juice concentrate",
+      "grape juice concentrate",
+      "pear juice concentrate"
+    ]
+  },
+  "emulsifier": {
+    "severity": 1,
+    "label": "emulsifier",
+    "_note": "Bare 'monoglycerides'/'distilled monoglycerides' were added 2026-09-09 - they appear in ~19 breads and the old terms only matched the 'mono and diglycerides' phrasing, so they were being missed.",
+    "terms": [
+      "mono and diglycerides",
+      "mono- and diglycerides",
+      "monoglycerides",
+      "diglycerides",
+      "soy lecithin",
+      "lecithin",
+      "polysorbate"
+    ]
+  },
+  "dough_conditioner": {
+    "severity": 2,
+    "label": "dough conditioner",
+    "_note": "Industrial additives that make dough machine-processable and extend softness - a strong marker of factory bread rather than simple baked bread. DATEM alone appears in 20 of 64 breads. Also covers the two additives most associated with industrial bread: azodicarbonamide (banned in the EU/UK) and potassium bromate (banned in several countries, restricted in California) - neither appeared in this store's data, which is worth knowing.",
+    "terms": [
+      "datem",
+      "dough conditioner",
+      "azodicarbonamide",
+      "potassium bromate",
+      "sodium stearoyl lactylate",
+      "calcium stearoyl lactylate",
+      "ethoxylated mono",
+      "l-cysteine"
+    ]
+  },
+  "artificial_preservative": {
+    "severity": 2,
+    "label": "preservative",
+    "_note": "calcium propionate (mold inhibitor, in 18 breads), sorbic acid and the literal word 'preservatives' added 2026-09-09.",
+    "terms": [
+      "potassium sorbate",
+      "sodium benzoate",
+      "artificial flavor",
+      "artificial color",
+      "bht",
+      "bha",
+      "tbhq",
+      "calcium propionate",
+      "sodium propionate",
+      "propionic acid",
+      "sorbic acid",
+      "preservative"
+    ]
+  },
+  "petroleum_derived": {
+    "severity": 2,
+    "label": "mineral oil",
+    "_note": "Petroleum-derived pan-release/coating agent, found in 7 breads. Distinct from food oils, so kept separate from the added-oil category.",
+    "terms": [
+      "mineral oil",
+      "petrolatum",
+      "paraffin"
+    ]
+  },
+  "added_color": {
+    "severity": 2,
+    "label": "added color",
+    "terms": [
+      "artificial color",
+      "caramel color",
+      "annatto",
+      "titanium dioxide",
+      "yellow 5",
+      "yellow 6",
+      "red 40",
+      "blue 1"
+    ]
+  },
+  "thickener_stabilizer": {
+    "severity": 1,
+    "label": "thickener/stabilizer",
+    "_note": "Texture agents. Mild - pectin is fruit-derived and fairly benign - but their presence means the product needed help to look/feel like the real thing, which is a processing signal. Added 2026-09-09 for yogurt (pectin in Stonyfield/Silk, agar in Forager); also correctly catches starches in snack-type products.",
+    "terms": [
+      "pectin",
+      "guar gum",
+      "xanthan gum",
+      "carrageenan",
+      "locust bean gum",
+      "gellan gum",
+      "agar",
+      "gelatin",
+      "modified food starch",
+      "modified corn starch",
+      "corn starch",
+      "tapioca starch"
+    ]
+  },
+  "protein_concentrate": {
+    "severity": 2,
+    "label": "isolated protein",
+    "_note": "Protein fractions separated out industrially and added back. Notable because high protein is often read as healthy, but achieving it via concentrates is a processing marker rather than a sign of concentrated real food (Cabot's Greek yogurt vs. Chobani's, which is just cultured milk).",
+    "terms": [
+      "milk protein concentrate",
+      "whey protein concentrate",
+      "whey protein isolate",
+      "protein isolate",
+      "rice protein",
+      "pea protein",
+      "soy protein"
+    ]
+  },
+  "added_dairy_solids": {
+    "severity": 1,
+    "label": "added milk solids",
+    "_note": "Milk solids/dry milk added to boost body and protein. Mild - it is still dairy - but it means the texture was engineered rather than achieved by straining.",
+    "terms": [
+      "nonfat milk solids",
+      "non-fat milk solids",
+      "nonfat dry milk",
+      "non-fat dry milk",
+      "milk solids",
+      "dry milk"
+    ]
+  },
+  "added_flavoring": {
+    "severity": 1,
+    "label": "added flavoring",
+    "_note": "\"Natural flavor\" is an industrially-produced flavor compound despite the name - a processing marker in an otherwise-simple ingredient list.",
+    "terms": [
+      "natural flavor",
+      "natural flavour",
+      "flavoring",
+      "flavouring"
+    ]
+  },
+  "mechanically_separated_meat": {
+    "severity": 3,
+    "label": "mechanically separated meat",
+    "_note": "Added 2026-09-12 after researching how other food-scoring platforms (Yuka, NOVA) work and checking our own coverage against NOVA's published ultra-processing markers - this one had zero coverage despite being a well-documented, specific signal (associated with hot dogs, nuggets, low-grade deli meat). Verified against real data before adding: 77 products in the catalog contain the literal phrase 'mechanically separated <meat>', confirming it's a real, unambiguous marker, not a false-positive risk.",
+    "terms": [
+      "mechanically separated turkey",
+      "mechanically separated chicken",
+      "mechanically separated beef",
+      "mechanically separated pork",
+      "mechanically separated meat"
+    ]
+  },
+  "hydrolyzed_protein": {
+    "severity": 2,
+    "label": "hydrolyzed protein",
+    "_note": "Added 2026-09-12, same research pass as mechanically_separated_meat. Hydrolyzed protein (soy/corn/beef/wheat) is a flavor-enhancer-adjacent processing marker distinct from protein_concentrate (which is about protein fortification, not flavor) and added_flavoring (which is about 'natural flavor' broadly). 106 real matches found in the catalog before adding, mostly in seasoning packets and processed meat products.",
+    "terms": [
+      "hydrolyzed soy protein",
+      "hydrolyzed corn protein",
+      "hydrolyzed beef protein",
+      "hydrolyzed wheat protein",
+      "hydrolyzed vegetable protein",
+      "hydrolyzed protein",
+      "hydrolysed protein"
+    ]
+  },
+  "seed_oil": {
+    "severity": 2,
+    "label": "seed oil",
+    "terms": [
+      "canola oil",
+      "rapeseed oil",
+      "soybean oil",
+      "soya oil",
+      "corn oil",
+      "cottonseed oil",
+      "sunflower oil",
+      "safflower oil",
+      "grapeseed oil",
+      "grape seed oil",
+      "rice bran oil",
+      "vegetable oil",
+      "sesame oil",
+      "sesame seed oil",
+      "sunflower seed oil",
+      "canola seed oil",
+      "soy oil"
+    ],
+    "_note": "Split out of 'added oil' 2026-09-15 at the user's direction so seed oils can be named and banner-flagged rather than lumped in with all added fat. Severity stays 2, NOT 3: 4,998 products contain a seed oil somewhere, and severity 3 triggers SEVERE_INGREDIENT_CAP, which would pin all 4,998 at 50 - far broader than intended. The 'tank it' case is the 219 products whose FIRST ingredient is a seed oil (a bottle of sunflower oil IS the seed oil); those are handled by SEED_OIL_PRIMARY_CAP in scorer.py instead. Olive, avocado and coconut are deliberately absent - they are fruit/nut oils, not seed oils, and score 80-100 correctly. Sesame IS botanically a seed oil and is included; remove it here if you consider traditionally-pressed sesame a different case."
+  },
+  "artificial_sweetener": {
+    "label": "artificial sweetener",
+    "severity": 2,
+    "terms": [
+      "aspartame",
+      "sucralose",
+      "acesulfame",
+      "saccharin",
+      "neotame",
+      "advantame"
+    ],
+    "_why": "Audit 2026-10-02: 1,031 products used these and none were flagged, so swapping sugar for sucralose RAISED a score (sucralose packets 83.8, Sprite Zero 59.4). Severity 2 like added sugar."
+  },
+  "phosphoric_acid": {
+    "label": "phosphoric acid",
+    "severity": 1,
+    "terms": [
+      "phosphoric acid"
+    ],
+    "_why": "Variant C 2026-10-02: colas (not other sodas) linked to 3.7-5.4% lower hip bone density in older women, phosphoric acid suspected (Framingham, Tucker et al., AJCN 2006). Severity 1: association, not proof."
+  }
+}

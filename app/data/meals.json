@@ -1,0 +1,2401 @@
+{
+  "_note": "Meal cards. Each is just a TITLE plus a list of search terms - the shopping list already turns a name into the best-scoring product that passes your filters and diet profile, so a meal needs no scoring logic of its own. Every term below was checked against the real catalog before being added; loose words resolve badly and the failures are not obvious. Three that were caught and fixed: 'butter' matched butter LETTUCE, 'yukon potatoes' matched instant mashed potato mix, and 'tortilla' matched tortilla CHIPS. Re-check with scripts/check_meals.py after any catalog change. `image` is a photo under the Unsplash License (see assets/meals/LICENSE.txt) - free for commercial use, no attribution required. Every candidate was VIEWED before being kept: one that looked plausible from its URL was a stack of books, another was pancakes rather than oats. To swap one, replace assets/meals/<id>.jpg. `spice` (mild / kick / hot) drives the dinner picker's spice question; set by hand 2026-10-03 from each recipe (hot sauce, chili, curry, sriracha = hot).",
+  "meals": [
+    {
+      "id": "crispytacos",
+      "title": "Crispy chicken tacos",
+      "subtitle": "Crisped in the cast iron. Hot sauce on top, not on the list",
+      "accent": "#B4462E",
+      "course": "dinner",
+      "protein": "poultry",
+      "time": "quick",
+      "mood": "hearty",
+      "source": "yours",
+      "tags": [
+        "tacos",
+        "chicken tacos",
+        "crispy tacos",
+        "taco night",
+        "chicken",
+        "mexican",
+        "cast iron"
+      ],
+      "items": [
+        "chicken thighs",
+        "corn tortillas",
+        "shredded cheddar",
+        "avocado",
+        "lime"
+      ],
+      "image": "assets/meals/crispytacos.jpg",
+      "amounts": [
+        "1 lb",
+        "1 pack",
+        "1 cup",
+        "2",
+        "2"
+      ],
+      "spice": "hot"
+    },
+    {
+      "id": "shrimpricebowl",
+      "title": "Shrimp, rice and cucumber bowls",
+      "subtitle": "Avocado, lemon and sriracha do the talking",
+      "accent": "#3F7A6B",
+      "course": "dinner",
+      "also": [
+        "lunch"
+      ],
+      "protein": "fish",
+      "time": "quick",
+      "mood": "light",
+      "source": "yours",
+      "tags": [
+        "bowl",
+        "rice bowl",
+        "shrimp",
+        "seafood",
+        "cucumber",
+        "asian",
+        "sriracha"
+      ],
+      "items": [
+        "shrimp",
+        "white rice",
+        "cucumber",
+        "avocado",
+        "lemon",
+        "sriracha"
+      ],
+      "image": "assets/meals/shrimpricebowl.jpg",
+      "amounts": [
+        "1 lb",
+        "1 cup dry",
+        "1",
+        "1",
+        "1",
+        "1 bottle"
+      ],
+      "spice": "hot"
+    },
+    {
+      "id": "chickenalfredo",
+      "title": "Chicken alfredo",
+      "subtitle": "The jar version, with real chicken and a proper pasta",
+      "accent": "#C58B2B",
+      "course": "dinner",
+      "protein": "poultry",
+      "time": "quick",
+      "mood": "cozy",
+      "source": "yours",
+      "tags": [
+        "alfredo",
+        "chicken alfredo",
+        "pasta",
+        "fettuccine",
+        "chicken",
+        "italian",
+        "creamy"
+      ],
+      "items": [
+        "chicken breast",
+        "fettuccine",
+        "alfredo sauce",
+        "parmesan cheese"
+      ],
+      "image": "assets/meals/chickenalfredo.jpg",
+      "amounts": [
+        "1 lb",
+        "1 box",
+        "1 jar",
+        "1/2 cup"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "meatballpasta",
+      "title": "Meatball, spinach and red lentil pasta",
+      "subtitle": "Protein-packed pasta that still feels like pasta night",
+      "accent": "#8C3B49",
+      "course": "dinner",
+      "also": [
+        "lunch"
+      ],
+      "protein": "poultry",
+      "time": "quick",
+      "mood": "hearty",
+      "source": "yours",
+      "tags": [
+        "pasta",
+        "meatballs",
+        "lentil pasta",
+        "red lentil",
+        "spinach",
+        "italian",
+        "high protein"
+      ],
+      "items": [
+        "turkey meatballs",
+        "baby spinach",
+        "red lentil pasta",
+        "pasta sauce"
+      ],
+      "image": "assets/meals/meatballpasta.jpg",
+      "amounts": [
+        "1 bag",
+        "1 bag (5 oz)",
+        "1 box",
+        "1 jar"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "sliders",
+      "title": "Sliders",
+      "subtitle": "Small, fast, and everyone eats three",
+      "accent": "#8B3A2B",
+      "course": "dinner",
+      "protein": "beef",
+      "time": "quick",
+      "mood": "hearty",
+      "source": "yours",
+      "tags": [
+        "sliders",
+        "burgers",
+        "sandwich",
+        "beef",
+        "party food"
+      ],
+      "items": [
+        "ground beef",
+        "slider buns",
+        "sliced cheddar",
+        "dill pickle chips"
+      ],
+      "image": "assets/meals/sliders.jpg",
+      "amounts": [
+        "1 lb",
+        "1 pack (12)",
+        "6 slices",
+        "1 jar"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "chickenricveg",
+      "title": "Chicken, rice and veg",
+      "subtitle": "The weeknight default, which is the point",
+      "accent": "#6F8B3D",
+      "course": "dinner",
+      "also": [
+        "lunch"
+      ],
+      "protein": "poultry",
+      "time": "medium",
+      "mood": "light",
+      "source": "yours",
+      "tags": [
+        "chicken and rice",
+        "chicken rice",
+        "meal prep",
+        "bowl",
+        "rice bowl",
+        "chicken",
+        "vegetables",
+        "make ahead"
+      ],
+      "items": [
+        "chicken breast",
+        "brown rice",
+        "broccoli crowns",
+        "carrots"
+      ],
+      "image": "assets/meals/chickenricveg.jpg",
+      "amounts": [
+        "1 lb",
+        "1 cup dry",
+        "2 crowns",
+        "3"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "chili",
+      "title": "Slow-cooker chili",
+      "subtitle": "Six things, one pot, feeds you all week",
+      "accent": "#B4462E",
+      "items": [
+        "ground beef",
+        "kidney beans",
+        "black beans",
+        "diced tomatoes",
+        "yellow onion",
+        "chili powder"
+      ],
+      "image": "assets/meals/chili.jpg",
+      "course": "dinner",
+      "featured": true,
+      "protein": "beef",
+      "time": "long",
+      "mood": "cozy",
+      "tags": [
+        "chili",
+        "beans",
+        "slow cooker",
+        "soup",
+        "one pot"
+      ],
+      "amounts": [
+        "1 lb",
+        "1 can",
+        "1 can",
+        "1 can (28 oz)",
+        "1 large",
+        "2 tbsp"
+      ],
+      "spice": "hot"
+    },
+    {
+      "id": "sheetpan",
+      "title": "Sheet-pan chicken",
+      "subtitle": "Chicken, potatoes, broccoli, one tray",
+      "accent": "#7A6A2F",
+      "items": [
+        "chicken thighs",
+        "russet potatoes",
+        "broccoli crowns",
+        "fresh garlic",
+        "olive oil"
+      ],
+      "image": "assets/meals/sheetpan.jpg",
+      "course": "dinner",
+      "featured": true,
+      "protein": "poultry",
+      "time": "medium",
+      "mood": "hearty",
+      "tags": [
+        "sheet pan",
+        "chicken",
+        "roasted",
+        "potatoes"
+      ],
+      "amounts": [
+        "1.5 lb",
+        "1.5 lb",
+        "2 crowns",
+        "4 cloves",
+        "3 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "oats",
+      "title": "Overnight oats",
+      "subtitle": "Assembled at night, breakfast for four days",
+      "accent": "#4E6B8A",
+      "items": [
+        "rolled oats",
+        "plain greek yogurt",
+        "whole milk",
+        "blueberries"
+      ],
+      "image": "assets/meals/oats.jpg",
+      "course": "breakfast",
+      "featured": true,
+      "tags": [
+        "overnight oats",
+        "oats",
+        "oatmeal",
+        "make ahead"
+      ],
+      "amounts": [
+        "1 cup",
+        "1/2 cup",
+        "1 cup",
+        "1/2 cup"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "tacos",
+      "title": "Taco night",
+      "subtitle": "The version where the toppings do the work",
+      "accent": "#A8522B",
+      "items": [
+        "ground turkey",
+        "corn tortillas",
+        "shredded cheddar",
+        "chunky salsa",
+        "romaine lettuce",
+        "avocado"
+      ],
+      "image": "assets/meals/tacos.jpg",
+      "course": "dinner",
+      "featured": true,
+      "protein": "poultry",
+      "time": "quick",
+      "mood": "hearty",
+      "tags": [
+        "tacos",
+        "taco night",
+        "turkey",
+        "mexican"
+      ],
+      "amounts": [
+        "1 lb",
+        "1 pack",
+        "1 cup",
+        "1 jar",
+        "1 head",
+        "2"
+      ],
+      "spice": "kick"
+    },
+    {
+      "id": "salmon",
+      "title": "Salmon rice bowl",
+      "subtitle": "Twenty minutes, mostly waiting for rice",
+      "accent": "#3F7A6B",
+      "items": [
+        "salmon fillet",
+        "brown rice",
+        "baby spinach",
+        "lemon",
+        "olive oil"
+      ],
+      "image": "assets/meals/salmon.jpg",
+      "course": "dinner",
+      "featured": true,
+      "protein": "fish",
+      "time": "quick",
+      "mood": "light",
+      "tags": [
+        "salmon",
+        "rice bowl",
+        "bowl",
+        "fish"
+      ],
+      "also": [
+        "lunch"
+      ],
+      "amounts": [
+        "1 lb",
+        "1 cup dry",
+        "2 handfuls",
+        "1",
+        "2 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "pasta",
+      "title": "Weeknight pasta",
+      "subtitle": "Where the jar you pick decides everything",
+      "accent": "#8C3B49",
+      "items": [
+        "whole wheat pasta",
+        "pasta sauce",
+        "parmesan cheese",
+        "fresh garlic",
+        "olive oil"
+      ],
+      "image": "assets/meals/pasta.jpg",
+      "course": "dinner",
+      "featured": true,
+      "protein": "veg",
+      "time": "quick",
+      "mood": "hearty",
+      "tags": [
+        "pasta",
+        "spaghetti",
+        "tomato sauce",
+        "italian"
+      ],
+      "also": [
+        "lunch"
+      ],
+      "amounts": [
+        "8 oz",
+        "1 jar",
+        "1/2 cup",
+        "3 cloves",
+        "2 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "scramble",
+      "title": "Breakfast scramble",
+      "subtitle": "Eggs, greens, and good bread",
+      "accent": "#9A7430",
+      "items": [
+        "eggs",
+        "baby spinach",
+        "shredded cheddar",
+        "unsalted butter",
+        "whole wheat bread"
+      ],
+      "image": "assets/meals/scramble.jpg",
+      "course": "breakfast",
+      "featured": true,
+      "tags": [
+        "eggs",
+        "scramble",
+        "scrambled eggs"
+      ],
+      "amounts": [
+        "6",
+        "2 handfuls",
+        "1/2 cup",
+        "1 tbsp",
+        "4 slices"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "stirfry",
+      "title": "Chicken stir-fry",
+      "subtitle": "Hot pan, fast, and the sauce is the only real decision",
+      "accent": "#B5651D",
+      "items": [
+        "chicken breast",
+        "broccoli crowns",
+        "bell peppers",
+        "soy sauce",
+        "brown rice",
+        "fresh garlic"
+      ],
+      "course": "dinner",
+      "protein": "poultry",
+      "time": "quick",
+      "mood": "light",
+      "image": "assets/meals/stirfry.jpg",
+      "tags": [
+        "stir fry",
+        "chicken",
+        "asian",
+        "rice"
+      ],
+      "amounts": [
+        "1 lb",
+        "2 crowns",
+        "2",
+        "3 tbsp",
+        "1 cup dry",
+        "3 cloves"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "burgers",
+      "title": "Smash burgers",
+      "subtitle": "Two thin patties beat one thick one",
+      "accent": "#8B3A2B",
+      "items": [
+        "ground beef",
+        "hamburger buns",
+        "sliced cheddar",
+        "romaine lettuce",
+        "tomatoes"
+      ],
+      "course": "dinner",
+      "protein": "beef",
+      "time": "quick",
+      "mood": "hearty",
+      "image": "assets/meals/burgers.jpg",
+      "tags": [
+        "burgers",
+        "burger",
+        "beef",
+        "sandwich"
+      ],
+      "amounts": [
+        "1 lb",
+        "4",
+        "4 slices",
+        "4 leaves",
+        "1"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "fajitas",
+      "title": "Chicken fajitas",
+      "subtitle": "One pan, everyone builds their own",
+      "accent": "#B4462E",
+      "items": [
+        "chicken breast",
+        "bell peppers",
+        "yellow onion",
+        "flour tortillas",
+        "sour cream"
+      ],
+      "course": "dinner",
+      "protein": "poultry",
+      "time": "quick",
+      "mood": "hearty",
+      "image": "assets/meals/fajitas.jpg",
+      "tags": [
+        "fajitas",
+        "chicken",
+        "mexican",
+        "wraps"
+      ],
+      "amounts": [
+        "1 lb",
+        "3",
+        "1",
+        "1 pack (8)",
+        "1 tub"
+      ],
+      "spice": "kick"
+    },
+    {
+      "id": "bakedsalmon",
+      "title": "Baked salmon and asparagus",
+      "subtitle": "Fifteen minutes in the oven, nothing to babysit",
+      "accent": "#3F7A6B",
+      "items": [
+        "salmon fillet",
+        "asparagus",
+        "lemon",
+        "olive oil",
+        "petite potatoes"
+      ],
+      "course": "dinner",
+      "protein": "fish",
+      "time": "quick",
+      "mood": "light",
+      "image": "assets/meals/bakedsalmon.jpg",
+      "tags": [
+        "salmon",
+        "baked",
+        "asparagus",
+        "fish"
+      ],
+      "amounts": [
+        "1 lb",
+        "1 bunch",
+        "1",
+        "2 tbsp",
+        "1 lb"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "scampi",
+      "title": "Shrimp scampi",
+      "subtitle": "Feels like a restaurant, takes one pot of water",
+      "accent": "#C58B2B",
+      "items": [
+        "shrimp",
+        "linguine",
+        "fresh garlic",
+        "lemon",
+        "unsalted butter"
+      ],
+      "course": "dinner",
+      "protein": "fish",
+      "time": "quick",
+      "mood": "light",
+      "image": "assets/meals/scampi.jpg",
+      "tags": [
+        "shrimp",
+        "scampi",
+        "pasta",
+        "seafood"
+      ],
+      "amounts": [
+        "1 lb",
+        "8 oz",
+        "4 cloves",
+        "1",
+        "3 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "chickensoup",
+      "title": "Chicken noodle soup",
+      "subtitle": "The one you make when somebody is under the weather",
+      "accent": "#A8793A",
+      "items": [
+        "chicken breast",
+        "egg noodles",
+        "carrots",
+        "celery",
+        "chicken broth"
+      ],
+      "course": "dinner",
+      "protein": "poultry",
+      "time": "medium",
+      "mood": "cozy",
+      "image": "assets/meals/chickensoup.jpg",
+      "tags": [
+        "chicken soup",
+        "soup",
+        "noodles",
+        "chicken noodle"
+      ],
+      "also": [
+        "lunch"
+      ],
+      "amounts": [
+        "1 lb",
+        "8 oz",
+        "3",
+        "3 stalks",
+        "6 cups"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "beefstew",
+      "title": "Beef stew",
+      "subtitle": "Long and slow, and the house smells incredible",
+      "accent": "#6E3B24",
+      "items": [
+        "chuck roast",
+        "russet potatoes",
+        "carrots",
+        "yellow onion",
+        "beef broth"
+      ],
+      "course": "dinner",
+      "protein": "beef",
+      "time": "long",
+      "mood": "cozy",
+      "image": "assets/meals/beefstew.jpg",
+      "tags": [
+        "beef stew",
+        "stew",
+        "beef",
+        "slow"
+      ],
+      "amounts": [
+        "2 lb",
+        "1.5 lb",
+        "4",
+        "1",
+        "4 cups"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "meatballs",
+      "title": "Spaghetti and meatballs",
+      "subtitle": "Comfort food that reheats better than it starts",
+      "accent": "#8C3B49",
+      "items": [
+        "ground beef",
+        "spaghetti",
+        "pasta sauce",
+        "parmesan cheese",
+        "bread crumbs"
+      ],
+      "course": "dinner",
+      "protein": "beef",
+      "time": "medium",
+      "mood": "hearty",
+      "image": "assets/meals/meatballs.jpg",
+      "tags": [
+        "meatballs",
+        "spaghetti",
+        "pasta",
+        "beef",
+        "italian"
+      ],
+      "amounts": [
+        "1 lb",
+        "8 oz",
+        "1 jar",
+        "1/2 cup",
+        "1/2 cup"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "tofu",
+      "title": "Tofu veggie stir-fry",
+      "subtitle": "Press the tofu and it is genuinely good",
+      "accent": "#6F8B3D",
+      "items": [
+        "extra firm tofu",
+        "broccoli crowns",
+        "carrots",
+        "soy sauce",
+        "brown rice"
+      ],
+      "course": "dinner",
+      "protein": "veg",
+      "time": "quick",
+      "mood": "light",
+      "image": "assets/meals/tofu.jpg",
+      "tags": [
+        "tofu",
+        "stir fry",
+        "vegetarian",
+        "asian",
+        "rice"
+      ],
+      "amounts": [
+        "1 block",
+        "2 crowns",
+        "2",
+        "3 tbsp",
+        "1 cup dry"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "quesadillas",
+      "title": "Black bean quesadillas",
+      "subtitle": "Crispy, cheesy, and on the table in fifteen minutes",
+      "accent": "#A8522B",
+      "items": [
+        "black beans",
+        "flour tortillas",
+        "shredded cheddar",
+        "chunky salsa",
+        "avocado"
+      ],
+      "course": "dinner",
+      "protein": "veg",
+      "time": "quick",
+      "mood": "hearty",
+      "image": "assets/meals/quesadillas.jpg",
+      "tags": [
+        "quesadillas",
+        "quesadilla",
+        "beans",
+        "mexican",
+        "cheese"
+      ],
+      "also": [
+        "lunch"
+      ],
+      "amounts": [
+        "1 can",
+        "1 pack (8)",
+        "1.5 cups",
+        "1 jar",
+        "1"
+      ],
+      "spice": "kick"
+    },
+    {
+      "id": "caesar",
+      "title": "Chicken Caesar salad",
+      "subtitle": "A salad that actually counts as dinner",
+      "accent": "#5E7F3A",
+      "items": [
+        "chicken breast",
+        "romaine lettuce",
+        "caesar dressing marinade",
+        "parmesan cheese",
+        "seasoned croutons"
+      ],
+      "course": "dinner",
+      "protein": "poultry",
+      "time": "quick",
+      "mood": "light",
+      "image": "assets/meals/caesar.jpg",
+      "tags": [
+        "caesar",
+        "salad",
+        "chicken",
+        "chicken salad"
+      ],
+      "also": [
+        "lunch"
+      ],
+      "amounts": [
+        "1 lb",
+        "2 hearts",
+        "1 bottle",
+        "1/2 cup",
+        "1 bag"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "porkchops",
+      "title": "Pork chops and green beans",
+      "subtitle": "Sear, finish in the oven, done",
+      "accent": "#7A6A2F",
+      "items": [
+        "pork chops",
+        "green beans",
+        "petite potatoes",
+        "olive oil",
+        "fresh garlic"
+      ],
+      "course": "dinner",
+      "protein": "pork",
+      "time": "medium",
+      "mood": "hearty",
+      "image": "assets/meals/porkchops.jpg",
+      "tags": [
+        "pork chops",
+        "pork",
+        "green beans"
+      ],
+      "amounts": [
+        "4 chops",
+        "1 lb",
+        "1 lb",
+        "2 tbsp",
+        "3 cloves"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "sausage",
+      "title": "Sausage and peppers",
+      "subtitle": "Sweet, a little smoky, and hard to get wrong",
+      "accent": "#9A4B2B",
+      "items": [
+        "italian sausage",
+        "bell peppers",
+        "yellow onion",
+        "hoagie rolls"
+      ],
+      "course": "dinner",
+      "protein": "pork",
+      "time": "medium",
+      "mood": "hearty",
+      "image": "assets/meals/sausage.jpg",
+      "tags": [
+        "sausage",
+        "peppers",
+        "sandwich",
+        "italian"
+      ],
+      "amounts": [
+        "1 lb",
+        "3",
+        "1",
+        "4 rolls"
+      ],
+      "spice": "kick"
+    },
+    {
+      "id": "lentil",
+      "title": "Lentil soup",
+      "subtitle": "Cheap, filling, and better the next day",
+      "accent": "#8A6B2F",
+      "items": [
+        "lentils",
+        "carrots",
+        "celery",
+        "diced tomatoes",
+        "vegetable broth"
+      ],
+      "course": "dinner",
+      "protein": "veg",
+      "time": "medium",
+      "mood": "cozy",
+      "image": "assets/meals/lentil.jpg",
+      "tags": [
+        "lentil soup",
+        "lentils",
+        "soup",
+        "vegetarian"
+      ],
+      "also": [
+        "lunch"
+      ],
+      "amounts": [
+        "1 bag (1 lb)",
+        "3",
+        "3 stalks",
+        "1 can",
+        "6 cups"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "greekbowl",
+      "title": "Greek chicken bowls",
+      "subtitle": "Cool, crunchy, and tangy on warm rice",
+      "accent": "#4E6B8A",
+      "items": [
+        "chicken breast",
+        "cucumber",
+        "cherry tomatoes",
+        "feta cheese",
+        "hummus",
+        "brown rice"
+      ],
+      "course": "dinner",
+      "protein": "poultry",
+      "time": "medium",
+      "mood": "light",
+      "image": "assets/meals/greekbowl.jpg",
+      "tags": [
+        "greek",
+        "chicken",
+        "bowl",
+        "rice bowl",
+        "hummus"
+      ],
+      "also": [
+        "lunch"
+      ],
+      "amounts": [
+        "1 lb",
+        "1",
+        "1 pint",
+        "4 oz",
+        "1 tub",
+        "1 cup dry"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "macbroc",
+      "title": "Mac and cheese with broccoli",
+      "subtitle": "The comfort version with one vegetable sneaked in",
+      "accent": "#C58B2B",
+      "items": [
+        "elbow macaroni",
+        "sharp cheddar cheese",
+        "whole milk",
+        "broccoli crowns"
+      ],
+      "course": "dinner",
+      "protein": "veg",
+      "time": "medium",
+      "mood": "cozy",
+      "image": "assets/meals/macbroc.jpg",
+      "tags": [
+        "mac and cheese",
+        "macaroni",
+        "pasta",
+        "cheese",
+        "vegetarian"
+      ],
+      "also": [
+        "lunch"
+      ],
+      "amounts": [
+        "8 oz",
+        "2 cups",
+        "1.5 cups",
+        "2 crowns"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "fishtacos",
+      "title": "Fish tacos",
+      "subtitle": "Crisp cabbage, lime, and a pan-seared white fish",
+      "accent": "#3F7A6B",
+      "items": [
+        "cod fillet",
+        "corn tortillas",
+        "cabbage",
+        "lime",
+        "chunky salsa"
+      ],
+      "course": "dinner",
+      "protein": "fish",
+      "time": "quick",
+      "mood": "light",
+      "image": "assets/meals/fishtacos.jpg",
+      "tags": [
+        "fish tacos",
+        "tacos",
+        "fish",
+        "mexican"
+      ],
+      "amounts": [
+        "1 lb",
+        "1 pack (8)",
+        "1/4 head",
+        "2",
+        "1 jar"
+      ],
+      "spice": "kick"
+    },
+    {
+      "id": "chickenparm",
+      "title": "Chicken parmesan",
+      "subtitle": "Crispy, saucy, cheesy, and worth the extra step",
+      "accent": "#8C3B49",
+      "items": [
+        "chicken breast",
+        "pasta sauce",
+        "mozzarella cheese",
+        "bread crumbs",
+        "spaghetti"
+      ],
+      "course": "dinner",
+      "protein": "poultry",
+      "time": "medium",
+      "mood": "hearty",
+      "image": "assets/meals/chickenparm.jpg",
+      "tags": [
+        "chicken parmesan",
+        "chicken parm",
+        "pasta",
+        "italian"
+      ],
+      "amounts": [
+        "1 lb",
+        "1 jar",
+        "1 cup",
+        "1 cup",
+        "8 oz"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "bfastdinner",
+      "title": "Breakfast for dinner",
+      "subtitle": "The night nobody can decide, this always wins",
+      "accent": "#9A7430",
+      "items": [
+        "eggs",
+        "sliced bacon",
+        "whole wheat bread",
+        "unsalted butter"
+      ],
+      "course": "dinner",
+      "protein": "pork",
+      "time": "quick",
+      "mood": "cozy",
+      "image": "assets/meals/bfastdinner.jpg",
+      "tags": [
+        "breakfast for dinner",
+        "eggs",
+        "bacon",
+        "breakfast"
+      ],
+      "amounts": [
+        "6",
+        "6 slices",
+        "4 slices",
+        "2 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "pulledpork",
+      "title": "Slow-cooker pulled pork",
+      "subtitle": "Five minutes of work, eight hours of waiting",
+      "accent": "#7A3B24",
+      "items": [
+        "pork shoulder",
+        "original barbecue sauce",
+        "hamburger buns",
+        "coleslaw"
+      ],
+      "course": "dinner",
+      "protein": "pork",
+      "time": "long",
+      "mood": "hearty",
+      "image": "assets/meals/pulledpork.jpg",
+      "tags": [
+        "pulled pork",
+        "pork",
+        "sandwich",
+        "slow cooker",
+        "barbecue"
+      ],
+      "amounts": [
+        "3 lb",
+        "1 bottle",
+        "8",
+        "1 bag"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "frenchtoast",
+      "title": "French toast",
+      "subtitle": "Day-old bread is the whole trick",
+      "accent": "#B5651D",
+      "items": [
+        "eggs",
+        "whole wheat bread",
+        "whole milk",
+        "cinnamon",
+        "maple syrup",
+        "unsalted butter"
+      ],
+      "course": "breakfast",
+      "tags": [
+        "french toast",
+        "eggs",
+        "sweet",
+        "bread"
+      ],
+      "time": "quick",
+      "mood": "cozy",
+      "image": "assets/meals/frenchtoast.jpg",
+      "amounts": [
+        "4",
+        "6 slices",
+        "1/2 cup",
+        "1 tsp",
+        "1/4 cup",
+        "1 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "pancakes",
+      "title": "Blueberry pancakes",
+      "subtitle": "Weekend energy, weekday speed",
+      "accent": "#9A7430",
+      "items": [
+        "pancake mix",
+        "eggs",
+        "whole milk",
+        "blueberries",
+        "maple syrup"
+      ],
+      "course": "breakfast",
+      "tags": [
+        "pancakes",
+        "blueberries",
+        "sweet"
+      ],
+      "time": "quick",
+      "mood": "cozy",
+      "image": "assets/meals/pancakes.jpg",
+      "amounts": [
+        "1 box",
+        "2",
+        "1 cup",
+        "1 cup",
+        "1 bottle"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "parfait",
+      "title": "Yogurt parfait",
+      "subtitle": "Breakfast that is mostly assembly",
+      "accent": "#8C3B49",
+      "items": [
+        "plain greek yogurt",
+        "granola",
+        "strawberries",
+        "raw honey"
+      ],
+      "course": "breakfast",
+      "tags": [
+        "yogurt",
+        "parfait",
+        "granola",
+        "fruit",
+        "greek yogurt"
+      ],
+      "time": "quick",
+      "mood": "light",
+      "image": "assets/meals/parfait.jpg",
+      "amounts": [
+        "2 cups",
+        "1/2 cup",
+        "1 pint",
+        "2 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "avotoast",
+      "title": "Avocado toast with egg",
+      "subtitle": "Better than it has any right to be",
+      "accent": "#5E7F3A",
+      "items": [
+        "whole wheat bread",
+        "avocado",
+        "eggs",
+        "lemon",
+        "cherry tomatoes"
+      ],
+      "course": "breakfast",
+      "tags": [
+        "avocado toast",
+        "avocado",
+        "toast",
+        "eggs"
+      ],
+      "time": "quick",
+      "mood": "light",
+      "image": "assets/meals/avotoast.jpg",
+      "amounts": [
+        "4 slices",
+        "2",
+        "4",
+        "1",
+        "1 handful"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "bfastsandwich",
+      "title": "Breakfast sandwich",
+      "subtitle": "The drive-through one, made properly",
+      "accent": "#A8522B",
+      "items": [
+        "english muffins",
+        "eggs",
+        "sliced cheddar",
+        "sliced bacon"
+      ],
+      "course": "breakfast",
+      "tags": [
+        "breakfast sandwich",
+        "sandwich",
+        "eggs",
+        "english muffin"
+      ],
+      "time": "quick",
+      "mood": "hearty",
+      "image": "assets/meals/bfastsandwich.jpg",
+      "amounts": [
+        "1 pack (6)",
+        "4",
+        "4 slices",
+        "4 slices"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "bfastburrito",
+      "title": "Breakfast burritos",
+      "subtitle": "Make six, freeze five",
+      "accent": "#B4462E",
+      "items": [
+        "flour tortillas",
+        "eggs",
+        "black beans",
+        "shredded cheddar",
+        "chunky salsa"
+      ],
+      "course": "breakfast",
+      "tags": [
+        "burritos",
+        "breakfast burrito",
+        "eggs",
+        "mexican",
+        "make ahead"
+      ],
+      "time": "quick",
+      "mood": "hearty",
+      "image": "assets/meals/bfastburrito.jpg",
+      "amounts": [
+        "1 pack (8)",
+        "6",
+        "1 can",
+        "1 cup",
+        "1 jar"
+      ],
+      "spice": "kick"
+    },
+    {
+      "id": "greensmoothie",
+      "title": "Green smoothie",
+      "subtitle": "Tastes like fruit, looks like a lawn",
+      "accent": "#6F8B3D",
+      "items": [
+        "fresh banana",
+        "strawberries",
+        "plain greek yogurt",
+        "baby spinach",
+        "unsweetened almondmilk"
+      ],
+      "course": "breakfast",
+      "tags": [
+        "smoothie",
+        "green smoothie",
+        "fruit",
+        "spinach"
+      ],
+      "time": "quick",
+      "mood": "light",
+      "image": "assets/meals/greensmoothie.jpg",
+      "amounts": [
+        "2",
+        "1 cup",
+        "1 cup",
+        "2 handfuls",
+        "2 cups"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "hotoats",
+      "title": "Cinnamon banana oatmeal",
+      "subtitle": "The five-minute bowl that keeps you full",
+      "accent": "#4E6B8A",
+      "items": [
+        "rolled oats",
+        "whole milk",
+        "fresh banana",
+        "cinnamon",
+        "walnuts"
+      ],
+      "course": "breakfast",
+      "tags": [
+        "oatmeal",
+        "oats",
+        "hot oats",
+        "porridge",
+        "banana"
+      ],
+      "time": "quick",
+      "mood": "cozy",
+      "image": "assets/meals/hotoats.jpg",
+      "amounts": [
+        "1 cup",
+        "2 cups",
+        "1",
+        "1 tsp",
+        "1/4 cup"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "chia",
+      "title": "Chia pudding",
+      "subtitle": "Stir it tonight, eat it tomorrow",
+      "accent": "#4E6B8A",
+      "items": [
+        "chia seeds",
+        "unsweetened almondmilk",
+        "raw honey",
+        "blueberries"
+      ],
+      "course": "breakfast",
+      "tags": [
+        "chia pudding",
+        "chia",
+        "make ahead",
+        "pudding"
+      ],
+      "time": "quick",
+      "mood": "light",
+      "image": "assets/meals/chia.jpg",
+      "amounts": [
+        "1/2 cup",
+        "2 cups",
+        "2 tbsp",
+        "1 cup"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "omelet",
+      "title": "Spinach and feta omelet",
+      "subtitle": "Ten minutes, one pan, protein sorted",
+      "accent": "#9A7430",
+      "items": [
+        "eggs",
+        "baby spinach",
+        "feta cheese",
+        "mushrooms",
+        "olive oil"
+      ],
+      "course": "breakfast",
+      "tags": [
+        "omelet",
+        "omelette",
+        "eggs",
+        "spinach",
+        "feta"
+      ],
+      "time": "quick",
+      "mood": "light",
+      "image": "assets/meals/omelet.jpg",
+      "amounts": [
+        "4",
+        "2 handfuls",
+        "1/4 cup",
+        "4 oz",
+        "1 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "pbbanana",
+      "title": "Peanut butter banana toast",
+      "subtitle": "Breakfast for people who hate breakfast",
+      "accent": "#8B6B2F",
+      "items": [
+        "whole wheat bread",
+        "peanut butter",
+        "fresh banana",
+        "raw honey"
+      ],
+      "course": "breakfast",
+      "tags": [
+        "peanut butter",
+        "banana",
+        "toast"
+      ],
+      "time": "quick",
+      "mood": "hearty",
+      "image": "assets/meals/pbbanana.jpg",
+      "amounts": [
+        "4 slices",
+        "4 tbsp",
+        "2",
+        "2 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "sphash",
+      "title": "Sweet potato hash",
+      "subtitle": "Crispy edges, runny egg on top",
+      "accent": "#B5651D",
+      "items": [
+        "fresh sweet potato",
+        "eggs",
+        "yellow onion",
+        "bell peppers",
+        "olive oil"
+      ],
+      "course": "breakfast",
+      "tags": [
+        "hash",
+        "sweet potato",
+        "eggs",
+        "skillet"
+      ],
+      "time": "medium",
+      "mood": "hearty",
+      "image": "assets/meals/sphash.jpg",
+      "amounts": [
+        "2",
+        "4",
+        "1",
+        "1",
+        "2 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "turkeysand",
+      "title": "Turkey and swiss sandwich",
+      "subtitle": "The lunch that never lets you down",
+      "accent": "#7A6A2F",
+      "items": [
+        "whole wheat bread",
+        "deli turkey",
+        "swiss cheese",
+        "romaine lettuce",
+        "tomatoes"
+      ],
+      "course": "lunch",
+      "tags": [
+        "sandwich",
+        "sandwiches",
+        "turkey sandwich",
+        "deli"
+      ],
+      "time": "quick",
+      "protein": "poultry",
+      "mood": "hearty",
+      "image": "assets/meals/turkeysand.jpg",
+      "amounts": [
+        "4 slices",
+        "1/2 lb",
+        "4 slices",
+        "4 leaves",
+        "1"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "chickensalsand",
+      "title": "Chicken salad sandwich",
+      "subtitle": "Cook the chicken once, eat it three days",
+      "accent": "#A8793A",
+      "items": [
+        "premium chunk chicken",
+        "mayonnaise",
+        "celery",
+        "whole wheat bread"
+      ],
+      "course": "lunch",
+      "tags": [
+        "sandwich",
+        "sandwiches",
+        "chicken salad",
+        "make ahead"
+      ],
+      "time": "quick",
+      "protein": "poultry",
+      "mood": "hearty",
+      "image": "assets/meals/chickensalsand.jpg",
+      "amounts": [
+        "1 can",
+        "1/4 cup",
+        "2 stalks",
+        "4 slices"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "tunasand",
+      "title": "Tuna salad sandwich",
+      "subtitle": "Pantry staples and five minutes",
+      "accent": "#3F7A6B",
+      "items": [
+        "chunk light tuna",
+        "mayonnaise",
+        "celery",
+        "whole wheat bread",
+        "lemon"
+      ],
+      "course": "lunch",
+      "tags": [
+        "sandwich",
+        "sandwiches",
+        "tuna",
+        "tuna salad",
+        "pantry"
+      ],
+      "time": "quick",
+      "protein": "fish",
+      "mood": "hearty",
+      "image": "assets/meals/tunasand.jpg",
+      "amounts": [
+        "2 cans",
+        "1/4 cup",
+        "2 stalks",
+        "4 slices",
+        "1/2"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "grilledcheese",
+      "title": "Grilled cheese and tomato soup",
+      "subtitle": "Nothing to improve on",
+      "accent": "#C58B2B",
+      "items": [
+        "whole wheat bread",
+        "sharp cheddar cheese",
+        "unsalted butter",
+        "tomato soup"
+      ],
+      "course": "lunch",
+      "tags": [
+        "sandwich",
+        "sandwiches",
+        "grilled cheese",
+        "soup",
+        "tomato soup",
+        "cheese"
+      ],
+      "time": "quick",
+      "protein": "veg",
+      "mood": "cozy",
+      "image": "assets/meals/grilledcheese.jpg",
+      "amounts": [
+        "4 slices",
+        "4 slices",
+        "2 tbsp",
+        "1 can"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "blt",
+      "title": "BLT",
+      "subtitle": "Good tomatoes are the only thing that matters",
+      "accent": "#8B3A2B",
+      "items": [
+        "sliced bacon",
+        "romaine lettuce",
+        "tomatoes",
+        "whole wheat bread",
+        "mayonnaise"
+      ],
+      "course": "lunch",
+      "tags": [
+        "sandwich",
+        "sandwiches",
+        "blt",
+        "bacon"
+      ],
+      "time": "quick",
+      "protein": "pork",
+      "mood": "hearty",
+      "image": "assets/meals/blt.jpg",
+      "amounts": [
+        "8 slices",
+        "4 leaves",
+        "1",
+        "4 slices",
+        "2 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "hummuswrap",
+      "title": "Hummus veggie wrap",
+      "subtitle": "Crunchy, cold, and no cooking at all",
+      "accent": "#6F8B3D",
+      "items": [
+        "flour tortillas",
+        "hummus",
+        "cucumber",
+        "baby spinach",
+        "feta cheese"
+      ],
+      "course": "lunch",
+      "tags": [
+        "wrap",
+        "wraps",
+        "hummus",
+        "vegetarian",
+        "sandwich"
+      ],
+      "time": "quick",
+      "protein": "veg",
+      "mood": "light",
+      "image": "assets/meals/hummuswrap.jpg",
+      "amounts": [
+        "2",
+        "1/2 cup",
+        "1/2",
+        "1 handful",
+        "1/4 cup"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "pbj",
+      "title": "Peanut butter and jelly",
+      "subtitle": "Still undefeated",
+      "accent": "#8C3B49",
+      "items": [
+        "whole wheat bread",
+        "peanut butter",
+        "strawberry jam"
+      ],
+      "course": "lunch",
+      "tags": [
+        "sandwich",
+        "sandwiches",
+        "pb&j",
+        "pbj",
+        "peanut butter"
+      ],
+      "time": "quick",
+      "protein": "veg",
+      "mood": "hearty",
+      "image": "assets/meals/pbj.jpg",
+      "amounts": [
+        "4 slices",
+        "4 tbsp",
+        "2 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "eggsalad",
+      "title": "Egg salad sandwich",
+      "subtitle": "Boil a dozen on Sunday",
+      "accent": "#C58B2B",
+      "items": [
+        "eggs",
+        "mayonnaise",
+        "dijon mustard",
+        "whole wheat bread"
+      ],
+      "course": "lunch",
+      "tags": [
+        "sandwich",
+        "sandwiches",
+        "egg salad",
+        "eggs",
+        "make ahead"
+      ],
+      "time": "quick",
+      "protein": "veg",
+      "mood": "hearty",
+      "image": "assets/meals/eggsalad.jpg",
+      "amounts": [
+        "6",
+        "1/4 cup",
+        "1 tbsp",
+        "4 slices"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "chickenwrap",
+      "title": "Chicken Caesar wrap",
+      "subtitle": "A salad you can eat one-handed",
+      "accent": "#5E7F3A",
+      "items": [
+        "chicken breast",
+        "flour tortillas",
+        "romaine lettuce",
+        "parmesan cheese",
+        "caesar dressing marinade"
+      ],
+      "course": "lunch",
+      "tags": [
+        "wrap",
+        "wraps",
+        "chicken",
+        "caesar",
+        "sandwich"
+      ],
+      "time": "quick",
+      "protein": "poultry",
+      "mood": "light",
+      "image": "assets/meals/chickenwrap.jpg",
+      "amounts": [
+        "1/2 lb",
+        "2",
+        "4 leaves",
+        "1/4 cup",
+        "2 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "pestopasta",
+      "title": "Pesto pasta",
+      "subtitle": "Jar of pesto, box of pasta, done",
+      "accent": "#5E7F3A",
+      "items": [
+        "whole wheat pasta",
+        "pesto",
+        "cherry tomatoes",
+        "parmesan cheese"
+      ],
+      "course": "lunch",
+      "tags": [
+        "pasta",
+        "pesto",
+        "vegetarian",
+        "italian"
+      ],
+      "time": "quick",
+      "protein": "veg",
+      "mood": "hearty",
+      "image": "assets/meals/pestopasta.jpg",
+      "also": [
+        "dinner"
+      ],
+      "amounts": [
+        "8 oz",
+        "1 jar",
+        "1 pint",
+        "1/4 cup"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "pastasalad",
+      "title": "Italian pasta salad",
+      "subtitle": "Better cold, so make it the night before",
+      "accent": "#8C3B49",
+      "items": [
+        "rotini",
+        "cherry tomatoes",
+        "cucumber",
+        "italian dressing",
+        "mozzarella cheese"
+      ],
+      "course": "lunch",
+      "tags": [
+        "pasta",
+        "pasta salad",
+        "cold",
+        "make ahead"
+      ],
+      "time": "quick",
+      "protein": "veg",
+      "mood": "light",
+      "image": "assets/meals/pastasalad.jpg",
+      "amounts": [
+        "8 oz",
+        "1 pint",
+        "1",
+        "1/4 cup",
+        "1 cup"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "greeksalad",
+      "title": "Greek salad",
+      "subtitle": "Salty, sharp, and very little work",
+      "accent": "#4E6B8A",
+      "items": [
+        "cucumber",
+        "cherry tomatoes",
+        "feta cheese",
+        "kalamata olives",
+        "red onion",
+        "olive oil"
+      ],
+      "course": "lunch",
+      "tags": [
+        "salad",
+        "greek",
+        "greek salad",
+        "vegetarian"
+      ],
+      "time": "quick",
+      "protein": "veg",
+      "mood": "light",
+      "image": "assets/meals/greeksalad.jpg",
+      "amounts": [
+        "2",
+        "1 pint",
+        "4 oz",
+        "1/2 cup",
+        "1/2",
+        "2 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "chickpeasalad",
+      "title": "Chickpea salad",
+      "subtitle": "Protein from a can, dinner from a bowl",
+      "accent": "#9A7430",
+      "items": [
+        "chickpeas",
+        "cucumber",
+        "cherry tomatoes",
+        "feta cheese",
+        "lemon",
+        "olive oil"
+      ],
+      "course": "lunch",
+      "tags": [
+        "salad",
+        "chickpeas",
+        "vegetarian",
+        "make ahead"
+      ],
+      "time": "quick",
+      "protein": "veg",
+      "mood": "light",
+      "image": "assets/meals/chickpeasalad.jpg",
+      "amounts": [
+        "1 can",
+        "1",
+        "1 pint",
+        "4 oz",
+        "1",
+        "2 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "burritobowl",
+      "title": "Burrito bowl",
+      "subtitle": "Everything you like in a burrito, none of the folding",
+      "accent": "#A8522B",
+      "items": [
+        "brown rice",
+        "black beans",
+        "sweet corn",
+        "chunky salsa",
+        "avocado",
+        "shredded cheddar"
+      ],
+      "course": "lunch",
+      "tags": [
+        "burrito bowl",
+        "bowl",
+        "rice bowl",
+        "beans",
+        "mexican"
+      ],
+      "time": "quick",
+      "protein": "veg",
+      "mood": "hearty",
+      "image": "assets/meals/burritobowl.jpg",
+      "also": [
+        "dinner"
+      ],
+      "amounts": [
+        "1 cup dry",
+        "1 can",
+        "1 cup",
+        "1 jar",
+        "1",
+        "1/2 cup"
+      ],
+      "spice": "kick"
+    },
+    {
+      "id": "minestrone",
+      "title": "Minestrone",
+      "subtitle": "Whatever is in the fridge, plus beans",
+      "accent": "#B4462E",
+      "items": [
+        "diced tomatoes",
+        "cannellini beans",
+        "carrots",
+        "celery",
+        "vegetable broth",
+        "whole wheat pasta"
+      ],
+      "course": "lunch",
+      "tags": [
+        "soup",
+        "minestrone",
+        "vegetarian",
+        "beans",
+        "italian"
+      ],
+      "time": "medium",
+      "protein": "veg",
+      "mood": "cozy",
+      "image": "assets/meals/minestrone.jpg",
+      "also": [
+        "dinner"
+      ],
+      "amounts": [
+        "1 can",
+        "1 can",
+        "2",
+        "2 stalks",
+        "4 cups",
+        "1 cup"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "teriyaki",
+      "title": "Teriyaki chicken and broccoli",
+      "subtitle": "Sticky, salty, and sorted in 25 minutes",
+      "accent": "#8B3A2B",
+      "items": [
+        "chicken thighs",
+        "teriyaki sauce",
+        "broccoli crowns",
+        "brown rice"
+      ],
+      "course": "dinner",
+      "tags": [
+        "teriyaki",
+        "chicken",
+        "asian",
+        "rice"
+      ],
+      "time": "quick",
+      "protein": "poultry",
+      "mood": "hearty",
+      "image": "assets/meals/teriyaki.jpg",
+      "amounts": [
+        "1.5 lb",
+        "1 bottle",
+        "2 crowns",
+        "1 cup dry"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "friedrice",
+      "title": "Shrimp fried rice",
+      "subtitle": "Day-old rice is the secret",
+      "accent": "#C58B2B",
+      "items": [
+        "shrimp",
+        "brown rice",
+        "eggs",
+        "sweet peas",
+        "soy sauce",
+        "carrots"
+      ],
+      "course": "dinner",
+      "tags": [
+        "fried rice",
+        "shrimp",
+        "rice",
+        "asian"
+      ],
+      "time": "quick",
+      "protein": "fish",
+      "mood": "hearty",
+      "image": "assets/meals/friedrice.jpg",
+      "amounts": [
+        "1 lb",
+        "1.5 cups dry",
+        "3",
+        "1 cup",
+        "3 tbsp",
+        "2"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "stuffedpeppers",
+      "title": "Stuffed peppers",
+      "subtitle": "Looks impressive, mostly just waiting",
+      "accent": "#B4462E",
+      "items": [
+        "bell peppers",
+        "ground turkey",
+        "brown rice",
+        "diced tomatoes",
+        "shredded cheddar"
+      ],
+      "course": "dinner",
+      "tags": [
+        "stuffed peppers",
+        "peppers",
+        "turkey",
+        "rice"
+      ],
+      "time": "medium",
+      "protein": "poultry",
+      "mood": "hearty",
+      "image": "assets/meals/stuffedpeppers.jpg",
+      "amounts": [
+        "4",
+        "1 lb",
+        "1 cup dry",
+        "1 can",
+        "1 cup"
+      ],
+      "spice": "kick"
+    },
+    {
+      "id": "steak",
+      "title": "Steak and potatoes",
+      "subtitle": "Dry the steak and the pan does the rest",
+      "accent": "#6E3B24",
+      "items": [
+        "sirloin steak",
+        "petite potatoes",
+        "asparagus",
+        "unsalted butter"
+      ],
+      "course": "dinner",
+      "tags": [
+        "steak",
+        "beef",
+        "potatoes",
+        "asparagus"
+      ],
+      "time": "medium",
+      "protein": "beef",
+      "mood": "hearty",
+      "image": "assets/meals/steak.jpg",
+      "amounts": [
+        "1.5 lb",
+        "1 lb",
+        "1 bunch",
+        "2 tbsp"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "bakedziti",
+      "title": "Baked ziti",
+      "subtitle": "Feeds a crowd and reheats perfectly",
+      "accent": "#8C3B49",
+      "items": [
+        "ziti",
+        "pasta sauce",
+        "ricotta cheese",
+        "mozzarella cheese"
+      ],
+      "course": "dinner",
+      "tags": [
+        "baked ziti",
+        "ziti",
+        "pasta",
+        "cheese",
+        "italian",
+        "baked pasta"
+      ],
+      "time": "medium",
+      "protein": "veg",
+      "mood": "cozy",
+      "image": "assets/meals/bakedziti.jpg",
+      "amounts": [
+        "1 lb",
+        "1 jar",
+        "1 tub",
+        "2 cups"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "curry",
+      "title": "Chicken curry",
+      "subtitle": "One pot, a little heat, rice underneath",
+      "accent": "#B5651D",
+      "items": [
+        "chicken thighs",
+        "coconut milk",
+        "curry powder",
+        "diced tomatoes",
+        "brown rice"
+      ],
+      "course": "dinner",
+      "tags": [
+        "curry",
+        "chicken",
+        "indian",
+        "rice",
+        "coconut"
+      ],
+      "time": "medium",
+      "protein": "poultry",
+      "mood": "cozy",
+      "image": "assets/meals/curry.jpg",
+      "amounts": [
+        "1.5 lb",
+        "1 can",
+        "2 tbsp",
+        "1 can",
+        "1 cup dry"
+      ],
+      "spice": "hot"
+    },
+    {
+      "id": "beanchili",
+      "title": "Three-bean chili",
+      "subtitle": "The meat-free one nobody misses meat in",
+      "accent": "#B4462E",
+      "items": [
+        "kidney beans",
+        "black beans",
+        "pinto beans",
+        "diced tomatoes",
+        "yellow onion",
+        "chili powder"
+      ],
+      "course": "dinner",
+      "tags": [
+        "chili",
+        "beans",
+        "vegetarian",
+        "soup",
+        "one pot"
+      ],
+      "time": "long",
+      "protein": "veg",
+      "mood": "cozy",
+      "image": "assets/meals/beanchili.jpg",
+      "amounts": [
+        "1 can",
+        "1 can",
+        "1 can",
+        "1 can (28 oz)",
+        "1",
+        "2 tbsp"
+      ],
+      "spice": "hot"
+    },
+    {
+      "id": "bakedpotato",
+      "title": "Loaded baked potatoes",
+      "subtitle": "Dinner you can build at the table",
+      "accent": "#A8793A",
+      "items": [
+        "russet potatoes",
+        "broccoli crowns",
+        "shredded cheddar",
+        "sour cream"
+      ],
+      "course": "dinner",
+      "tags": [
+        "baked potato",
+        "potatoes",
+        "broccoli",
+        "cheese",
+        "vegetarian"
+      ],
+      "time": "long",
+      "protein": "veg",
+      "mood": "cozy",
+      "image": "assets/meals/bakedpotato.jpg",
+      "amounts": [
+        "4",
+        "2 crowns",
+        "1 cup",
+        "1 tub"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "turkeyburgers",
+      "title": "Turkey burgers",
+      "subtitle": "Lean, and they stay juicy if you add an egg",
+      "accent": "#7A6A2F",
+      "items": [
+        "ground turkey",
+        "hamburger buns",
+        "romaine lettuce",
+        "tomatoes",
+        "avocado"
+      ],
+      "course": "dinner",
+      "tags": [
+        "burgers",
+        "burger",
+        "turkey",
+        "sandwich"
+      ],
+      "time": "quick",
+      "protein": "poultry",
+      "mood": "hearty",
+      "image": "assets/meals/turkeyburgers.jpg",
+      "amounts": [
+        "1 lb",
+        "4",
+        "4 leaves",
+        "1",
+        "1"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "lemonchicken",
+      "title": "Lemon chicken and rice",
+      "subtitle": "One pan, bright, and hard to get wrong",
+      "accent": "#C58B2B",
+      "items": [
+        "chicken breast",
+        "brown rice",
+        "lemon",
+        "fresh garlic",
+        "chicken broth"
+      ],
+      "course": "dinner",
+      "tags": [
+        "lemon chicken",
+        "chicken",
+        "rice",
+        "one pan"
+      ],
+      "time": "medium",
+      "protein": "poultry",
+      "mood": "light",
+      "image": "assets/meals/lemonchicken.jpg",
+      "amounts": [
+        "1 lb",
+        "1 cup dry",
+        "2",
+        "3 cloves",
+        "2 cups"
+      ],
+      "spice": "mild"
+    },
+    {
+      "id": "peanutnoodles",
+      "title": "Peanut noodles with chicken",
+      "subtitle": "Pantry sauce, cold or warm, ready in 20 minutes",
+      "accent": "#B5651D",
+      "items": [
+        "spaghetti",
+        "chicken breast",
+        "peanut butter",
+        "soy sauce",
+        "cucumber",
+        "carrots"
+      ],
+      "course": "dinner",
+      "tags": [
+        "peanut noodles",
+        "noodles",
+        "pasta",
+        "chicken",
+        "asian",
+        "peanut butter"
+      ],
+      "time": "medium",
+      "protein": "poultry",
+      "mood": "hearty",
+      "image": "assets/meals/peanutnoodles.jpg",
+      "amounts": [
+        "8 oz",
+        "1 lb",
+        "1/4 cup",
+        "2 tbsp",
+        "1",
+        "2"
+      ],
+      "spice": "kick"
+    },
+    {
+      "id": "shakshuka",
+      "title": "Shakshuka",
+      "subtitle": "Eggs poached in spiced tomato, with bread for the sauce",
+      "accent": "#B4462E",
+      "items": [
+        "eggs",
+        "diced tomatoes",
+        "yellow onion",
+        "bell peppers",
+        "feta cheese"
+      ],
+      "course": "dinner",
+      "tags": [
+        "shakshuka",
+        "eggs",
+        "tomato",
+        "vegetarian",
+        "one pan"
+      ],
+      "time": "quick",
+      "protein": "veg",
+      "mood": "cozy",
+      "image": "assets/meals/shakshuka.jpg",
+      "amounts": [
+        "6",
+        "1 can (28 oz)",
+        "1",
+        "1",
+        "4 oz"
+      ],
+      "spice": "kick"
+    },
+    {
+      "id": "potroast",
+      "title": "Pot roast",
+      "subtitle": "Sunday dinner, and Monday lunch",
+      "accent": "#6E3B24",
+      "items": [
+        "chuck roast",
+        "carrots",
+        "russet potatoes",
+        "yellow onion",
+        "beef broth"
+      ],
+      "course": "dinner",
+      "tags": [
+        "pot roast",
+        "roast",
+        "beef",
+        "slow",
+        "stew"
+      ],
+      "time": "long",
+      "protein": "beef",
+      "mood": "cozy",
+      "image": "assets/meals/potroast.jpg",
+      "amounts": [
+        "3 lb",
+        "4",
+        "1.5 lb",
+        "1",
+        "2 cups"
+      ],
+      "spice": "mild"
+    }
+  ],
+  "_tags": "course: breakfast|lunch|dinner (the dinner flowchart uses only course=dinner). also: other courses a meal works for. protein: poultry|beef|pork|fish|veg. time: quick (<=30 min)|medium (30-60)|long (an hour or more). mood: cozy|light|hearty. tags: lowercase words a typed request should match ('tacos', 'sandwiches', 'soup'). featured: shown on the Shop tab shelf. A meal without an `image` renders an accent-coloured card; a photo at assets/meals/<id>.jpg fixes that. source: 'yours' marks meals the user actually cooks. amounts: parallel to items - a ROUGH buy-for-two amount (scripts/add_meal_amounts.py), shown as an estimate."
+}

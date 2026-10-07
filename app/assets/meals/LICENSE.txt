@@ -1,0 +1,85 @@
+Meal photography: Unsplash (https://unsplash.com)
+
+Used under the Unsplash License, which permits free commercial and
+non-commercial use with no permission or attribution required:
+https://unsplash.com/license
+
+Photo IDs, so any image can be traced or replaced:
+  chili.jpg    photo-1666819632298-fe15dc7d4c34
+  sheetpan.jpg photo-1700956015209-4735e8bd9163
+  oats.jpg     photo-1517673400267-0251440c45dc
+  tacos.jpg    photo-1565299585323-38d6b0865b47
+  salmon.jpg   photo-1467003909585-2f8a72700288
+  pasta.jpg    photo-1622973536968-3ead9e780960
+  scramble.jpg photo-1673925962465-7bfd6339ab2e
+  stirfry.jpg     photo-1601226809816-b8c32440158a
+  burgers.jpg     photo-1678110707289-ab14382a1625
+  chickenparm.jpg photo-1632778149955-e80f8ceca2e8
+  bfastdinner.jpg photo-1608475861994-cf7af0f0c1be
+  meatballs.jpg   photo-1635264685671-739e75e73e0f
+  beefstew.jpg    photo-1664741662725-bd131742b7b7
+  porkchops.jpg   photo-1432139555190-58524dae6a55
+  chickensoup.jpg photo-1470324161839-ce2bb6fa6bc3
+  fishtacos.jpg   photo-1660180750968-4fbc84789a96
+  quesadillas.jpg photo-1618040996337-56904b7850b9
+  macbroc.jpg     photo-1667499989723-c4ab9549d63c
+  caesar.jpg      photo-1605291535065-e1d52d2b264a
+  fajitas.jpg     photo-1689773976415-293dd893f77e
+  pulledpork.jpg  photo-1680404971036-33eaa1d2d840
+  scampi.jpg      photo-1677681483419-e18aa1376db7
+  tofu.jpg        photo-1644527199848-94b0b067a689
+  lentil.jpg      photo-1642497394078-4794e837019c
+  bakedsalmon.jpg photo-1570645314284-8b28f8fac62e
+  sausage.jpg     photo-1592259695987-4aa79c3c34a6
+  greekbowl.jpg   photo-1788619996569-ecdac125ee35
+  frenchtoast.jpg photo-1595044643502-616eeebbdff3
+  greeksalad.jpg  photo-1573409157844-6a56035363fc
+  chickenalfredo.jpg  photo-1645112411341-6c4fd023714a
+  crispytacos.jpg photo-1627564803215-ad55bad5c5ea
+  chia.jpg        photo-1552528352-59648b345866
+  shakshuka.jpg   photo-1582492710145-d723e0a219f8
+  tunasand.jpg    photo-1558985250-27a406d64cb3
+  sliders.jpg     photo-1620041630998-e147e143468c
+  blt.jpg         photo-1722041220514-f6a26e286f2e
+  pastasalad.jpg  photo-1630492782892-74f99406dc59
+  parfait.jpg     photo-1550594645-25c5bd703258
+  bfastburrito.jpg  photo-1711488735428-27c6757beb5c
+  lemonchicken.jpg  photo-1579619002916-88cd4c81a70c
+  greensmoothie.jpg  photo-1610970881699-44a5587cabec
+  pestopasta.jpg  photo-1707448460889-e268eb742820
+  curry.jpg       photo-1565557623262-b51c2513a641
+  meatballpasta.jpg  photo-1632808664408-f8ab196b0523
+  burritobowl.jpg photo-1668665771757-4d42737d295a
+  pancakes.jpg    photo-1650134973809-d8c3a2da59ba
+  turkeysand.jpg  photo-1553909489-cd47e0907980
+  chickenricveg.jpg  photo-1606250593181-5a81736038ed
+  hummuswrap.jpg  photo-1563282397-db1ac3a6bf86
+  friedrice.jpg   photo-1551326844-4df70f78d0e9
+  chickensalsand.jpg  photo-1666819604716-7b60a604bb76
+  pbj.jpg         photo-1660002676868-8b620a2e8084
+  bakedpotato.jpg photo-1642522685167-cf414ea225be
+  peanutnoodles.jpg  photo-1582519744097-6d0e59fef473
+  minestrone.jpg  photo-1603105037880-880cd4edfb0d
+  pbbanana.jpg    photo-1676976197406-15da02148ff1
+  chickpeasalad.jpg  photo-1688807462845-a06bc0abcadb
+  steak.jpg       photo-1594041680534-e8c8cdebd659
+  chickenwrap.jpg photo-1626700051175-6818013e1d4f
+  beanchili.jpg   photo-1658308766948-01c85ade2737
+  sphash.jpg      photo-1596723419840-c7767821fc11
+  potroast.jpg    photo-1622003074877-15f50ba7b6f8
+  eggsalad.jpg    photo-1733105658196-44b3c597bb41
+  grilledcheese.jpg  photo-1581347877417-af9b670aa28a
+  turkeyburgers.jpg  photo-1521305916504-4a1121188589
+  teriyaki.jpg    photo-1636401870585-a8852371e84a
+  bfastsandwich.jpg  photo-1569159316006-900e88b5dbc2
+  shrimpricebowl.jpg  photo-1685458695838-ac47c5233947
+  stuffedpeppers.jpg  photo-1673646960062-9aeb2188335f
+  avotoast.jpg    photo-1687276287139-88f7333c8ca4
+  omelet.jpg      photo-1494597706938-de2cd7341979
+  hotoats.jpg     photo-1598259298632-e785684cfa90
+  bakedziti.jpg   photo-1602541770236-d2b65f51202c
+
+To swap one: drop a replacement at assets/meals/<meal id>.jpg. The id is the
+`id` field in data/meals.json. Every candidate was viewed before being kept -
+one that looked plausible from its URL turned out to be a stack of BOOKS, and
+another was pancakes rather than oats.

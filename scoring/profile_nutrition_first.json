@@ -1,0 +1,19 @@
+{
+  "label": "Nutrition first",
+  "blurb": "The Yuka/EWG ordering - the nutrition panel leads and ingredients support it.",
+  "coverage_note": "Closest to how mainstream food scores work; included so you can compare.",
+  "weights": {
+    "ingredient_simplicity": 0.15,
+    "flagged_ingredients": 0.22,
+    "nutrition": 0.4,
+    "whole_food_processing": 0.1,
+    "external_processing": 0.1
+  },
+  "nutrition_emphasis": {
+    "sodium": 1,
+    "added_sugar": 1,
+    "saturated_fat": 1
+  },
+  "name": "nutrition_first",
+  "_note": "Diet profile. Only the WEIGHTING changes - every sub-score is a fact about the product and is computed once, then re-combined per profile in the browser (proto_shared.js applyProfile). Score caps (processed meat 50, seed-oil bottles 25, pure sweeteners 40, severity-3 ingredients 50) still apply under every profile: no diet preference can lift bacon above its ceiling. DELIBERATELY ABSENT: keto / low-carb and high-protein. Total carbohydrate is on only 36% of products and protein 41%, so those profiles would rank mostly on missing data - the exact mistake this project has spent its whole life fixing. Add them if coverage improves."
+}

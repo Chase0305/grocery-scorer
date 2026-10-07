@@ -1,0 +1,83 @@
+{
+  "_note": "Ingredients and product classes with a REAL carcinogenicity classification from a named authority, so the app can show a warning that cites its source instead of an unexplained symbol. Three levels, deliberately kept distinct: collapsing IARC Group 1 (known) into Group 2B (possible) would badly mislead - processed meat and a possible-carcinogen sweetener are not the same claim. Nothing goes in this file without a specific citable classification. Deliberately EXCLUDED after checking: BHT (IARC Group 3, 'not classifiable' - no basis to warn); food-grade carrageenan (only DEGRADED carrageenan/poligeenan is Group 2B, the food additive is not); Red 40 / Yellow 5 / Yellow 6 (real concerns exist about hyperactivity and benzidine traces, but these are not classified carcinogens and calling them that would be false).",
+  "levels": {
+    "known": {"rank": 1, "label": "Known carcinogen", "blurb": "Classified as carcinogenic to humans"},
+    "probable": {"rank": 2, "label": "Probable carcinogen", "blurb": "Classified as probably carcinogenic to humans"},
+    "possible": {"rank": 3, "label": "Possible carcinogen", "blurb": "Classified as possibly carcinogenic to humans, or restricted by a food-safety regulator"}
+  },
+  "product_classes": [
+    {
+      "id": "processed_meat",
+      "level": "known",
+      "label": "Processed meat",
+      "classification": "IARC Group 1",
+      "source": "IARC Monographs Vol. 114 (2015)",
+      "note": "Meat preserved by smoking, curing, salting or with added chemical preservatives."
+    }
+  ],
+  "ingredients": [
+    {
+      "id": "nitrite_nitrate",
+      "level": "probable",
+      "label": "Nitrites / nitrates",
+      "classification": "IARC Group 2A",
+      "source": "IARC Monographs Vol. 94",
+      "note": "Ingested nitrite or nitrate under conditions that result in endogenous nitrosation.",
+      "terms": ["sodium nitrite", "sodium nitrate", "potassium nitrite", "potassium nitrate"]
+    },
+    {
+      "id": "potassium_bromate",
+      "level": "possible",
+      "label": "Potassium bromate",
+      "classification": "IARC Group 2B",
+      "source": "IARC; banned as a food additive in the EU, UK, Canada and Brazil",
+      "note": "A flour improver still permitted in the United States.",
+      "terms": ["potassium bromate", "bromated flour"]
+    },
+    {
+      "id": "bha",
+      "level": "possible",
+      "label": "BHA",
+      "classification": "IARC Group 2B",
+      "source": "IARC; US National Toxicology Program, 'reasonably anticipated to be a human carcinogen'",
+      "note": "Butylated hydroxyanisole, a preservative.",
+      "terms": ["butylated hydroxyanisole", "bha"]
+    },
+    {
+      "id": "titanium_dioxide",
+      "level": "possible",
+      "label": "Titanium dioxide",
+      "classification": "IARC Group 2B",
+      "source": "IARC; banned as a food additive in the EU since 2022 after EFSA could not rule out genotoxicity",
+      "note": "A whitening agent.",
+      "terms": ["titanium dioxide"]
+    },
+    {
+      "id": "red_3",
+      "level": "possible",
+      "label": "Red Dye No. 3",
+      "classification": "FDA authorization revoked",
+      "source": "US FDA, January 2025, under the Delaney Clause",
+      "note": "Erythrosine; causes thyroid tumours in male rats.",
+      "terms": ["red 3", "red no. 3", "red #3", "fd&c red no. 3", "erythrosine"]
+    },
+    {
+      "id": "aspartame",
+      "level": "possible",
+      "label": "Aspartame",
+      "classification": "IARC Group 2B",
+      "source": "IARC / WHO, July 2023",
+      "note": "An artificial sweetener. WHO left the acceptable daily intake unchanged.",
+      "terms": ["aspartame"]
+    },
+    {
+      "id": "smoke_flavoring",
+      "level": "possible",
+      "label": "Smoke flavouring",
+      "classification": "Genotoxicity concern",
+      "source": "EFSA re-evaluation, 2023",
+      "note": "Carries polycyclic aromatic hydrocarbons; EFSA could not rule out genotoxicity for the primary smoke flavourings it reviewed.",
+      "terms": ["smoke flavor", "smoke flavour", "smoke flavoring", "smoke flavouring", "liquid smoke"]
+    }
+  ]
+}

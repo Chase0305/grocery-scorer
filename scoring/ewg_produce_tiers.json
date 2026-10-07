@@ -1,0 +1,51 @@
+{
+  "_purpose": "EWG's Shopper's Guide to Pesticides in Produce - annual, based on real USDA residue testing (not the reasoning-from-first-principles approach used for peanut_butter in category_facts.json). Use this for any FRESH PRODUCE category going forward: look up the item here first before hand-deriving organic reasoning. Only covers fruits/vegetables - does not include nuts, grains, legumes, dairy, meat, or packaged/processed goods.",
+  "source": "EWG 2026 Shopper's Guide to Pesticides in Produce",
+  "source_note": "EWG's own site (ewg.org) blocks automated fetches (403) - this was compiled from a secondary source mirroring their published 2026 data on 2026-09-09. Re-verify against ewg.org directly if precision matters, and re-fetch next year - this list updates annually.",
+  "suggested_weights": {
+    "dirty_dozen": 0.12,
+    "also_flagged": 0.07,
+    "clean_fifteen": 0.0,
+    "not_listed": null
+  },
+  "weight_reasoning": "Dirty Dozen items have real measured high pesticide residue (96% of samples test positive) - a stronger evidence grade than the peanut_butter exposure-pathway argument, so a higher weight than peanut_butter's is defensible if this framework is used. Clean Fifteen gets 0 (badge-only, same treatment as peanut_butter) since ~60% of samples show no detectable residue at all - buying organic doesn't meaningfully change exposure. 'not_listed' is null on purpose: an item EWG hasn't tested isn't evidence either way - don't default it to any weight, research it specifically like peanut_butter was, or leave at badge-only until you do.",
+
+  "dirty_dozen_ranked_worst_to_least": [
+    "Spinach",
+    "Kale, collard, and mustard greens",
+    "Strawberries",
+    "Grapes",
+    "Nectarines",
+    "Peaches",
+    "Cherries",
+    "Apples",
+    "Blackberries",
+    "Pears",
+    "Potatoes",
+    "Blueberries"
+  ],
+
+  "also_flagged_for_high_toxicity_not_in_ranked_12": [
+    "Bell peppers",
+    "Hot peppers",
+    "Green beans"
+  ],
+
+  "clean_fifteen_ranked_safest_first": [
+    "Pineapple",
+    "Sweet corn (fresh and frozen)",
+    "Avocados",
+    "Papaya",
+    "Onions",
+    "Sweet peas (frozen)",
+    "Asparagus",
+    "Cabbage",
+    "Cauliflower",
+    "Watermelon",
+    "Mangoes",
+    "Bananas",
+    "Carrots",
+    "Mushrooms",
+    "Kiwi"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "label": "Low sugar",
+  "blurb": "Added sugar counts for much more, and flagged sweeteners still bite.",
+  "coverage_note": "Added sugar is on 65% of products; absent values are never read as zero.",
+  "weights": {
+    "ingredient_simplicity": 0.2,
+    "flagged_ingredients": 0.28,
+    "nutrition": 0.28,
+    "whole_food_processing": 0.1,
+    "external_processing": 0.12
+  },
+  "nutrition_emphasis": {
+    "sodium": 1,
+    "added_sugar": 4,
+    "saturated_fat": 1
+  },
+  "name": "low_sugar",
+  "_note": "Diet profile. Only the WEIGHTING changes - every sub-score is a fact about the product and is computed once, then re-combined per profile in the browser (proto_shared.js applyProfile). Score caps (processed meat 50, seed-oil bottles 25, pure sweeteners 40, severity-3 ingredients 50) still apply under every profile: no diet preference can lift bacon above its ceiling. DELIBERATELY ABSENT: keto / low-carb and high-protein. Total carbohydrate is on only 36% of products and protein 41%, so those profiles would rank mostly on missing data - the exact mistake this project has spent its whole life fixing. Add them if coverage improves."
+}

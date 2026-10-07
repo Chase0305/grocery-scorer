@@ -1,0 +1,19 @@
+{
+  "label": "Heart",
+  "blurb": "Saturated fat and sodium together, the way heart-health guidance frames it.",
+  "coverage_note": "Saturated fat is on 63% and sodium on 79% of products.",
+  "weights": {
+    "ingredient_simplicity": 0.2,
+    "flagged_ingredients": 0.26,
+    "nutrition": 0.3,
+    "whole_food_processing": 0.1,
+    "external_processing": 0.12
+  },
+  "nutrition_emphasis": {
+    "sodium": 2.5,
+    "added_sugar": 1,
+    "saturated_fat": 3
+  },
+  "name": "heart",
+  "_note": "Diet profile. Only the WEIGHTING changes - every sub-score is a fact about the product and is computed once, then re-combined per profile in the browser (proto_shared.js applyProfile). Score caps (processed meat 50, seed-oil bottles 25, pure sweeteners 40, severity-3 ingredients 50) still apply under every profile: no diet preference can lift bacon above its ceiling. DELIBERATELY ABSENT: keto / low-carb and high-protein. Total carbohydrate is on only 36% of products and protein 41%, so those profiles would rank mostly on missing data - the exact mistake this project has spent its whole life fixing. Add them if coverage improves."
+}

@@ -1,0 +1,175 @@
+<title>How GroceryScorer Was Built</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+  /* Layout: a dated timeline down the page; each stop shows what the app looked like then. */
+  :root {
+    --bg: #FAF7F0; --surface: #FFFFFF; --fg: #1F2B25; --soft: #56625C; --line: #E3DCCD;
+    --brand: #0F5A43; --tint: #E5F0EA; --bar: #9CC7B4;
+    --display: 'Fraunces', Georgia, serif; --body: 'DM Sans', system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #121A16; --surface: #1A241F; --fg: #E8EEE9; --soft: #A3B1A9; --line: #2C3A33;
+    --brand: #6FC4A0; --tint: #1E3329; --bar: #3E7A62; color-scheme: dark } }
+  :root[data-theme="dark"] {
+    --bg: #121A16; --surface: #1A241F; --fg: #E8EEE9; --soft: #A3B1A9; --line: #2C3A33;
+    --brand: #6FC4A0; --tint: #1E3329; --bar: #3E7A62; color-scheme: dark }
+  body { background: var(--bg); color: var(--fg); font: 15.5px/1.6 var(--body); }
+  .wrap { max-width: 940px; margin: 0 auto; padding-inline: 18px; padding-block: 30px 60px; }
+  .eyebrow { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); }
+  h1 { font: 700 36px/1.1 var(--display); margin: 6px 0 10px; text-wrap: balance; }
+  .lede { color: var(--soft); font-size: 17px; max-width: 64ch; margin: 0 0 22px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 26px; padding: 0; list-style: none; }
+  .stats li { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; min-width: 120px; }
+  .stats b { display: block; font: 700 24px/1.1 var(--display); font-variant-numeric: tabular-nums; }
+  .stats span { font-size: 13px; color: var(--soft); }
+  h2 { font: 600 20px/1.3 var(--display); margin: 0 0 10px; }
+  .chart { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin: 0 0 36px; }
+  .bars { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px; align-items: end; height: 150px; }
+  .bars div { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; min-width: 0; }
+  .bars i { display: block; width: 70%; background: var(--bar); border-radius: 6px 6px 0 0; }
+  .bars em { font-style: normal; font-size: 12px; font-weight: 700; margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+  .bars small { font-size: 11.5px; color: var(--soft); margin-top: 6px; white-space: nowrap; }
+  .tl { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--line); margin-left: 8px; }
+  .stop { position: relative; padding: 0 0 38px 26px; }
+  .stop::before { content: ""; position: absolute; left: -9px; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: var(--brand); border: 3px solid var(--bg); }
+  .date { font-size: 13px; font-weight: 700; color: var(--brand); letter-spacing: .04em; }
+  .stop h3 { font: 700 23px/1.2 var(--display); margin: 2px 0 6px; text-wrap: balance; }
+  .stop p { margin: 0 0 10px; max-width: 68ch; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
+  .chips span { font-size: 12.5px; background: var(--tint); color: var(--fg); border-radius: 999px; padding: 3px 10px; }
+  .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .shots.phone { grid-template-columns: 2fr 1fr; }
+  figure { margin: 0; min-width: 0; }
+  figure button { display: block; width: 100%; padding: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); cursor: zoom-in; }
+  figure button:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+  figure img { display: block; width: 100%; height: auto; }
+  figcaption { font-size: 12.5px; color: var(--soft); margin-top: 4px; }
+  dialog { border: none; padding: 0; background: transparent; max-width: 96vw; max-height: 94vh; }
+  dialog::backdrop { background: rgba(0,0,0,.8); }
+  dialog img { display: block; max-width: 96vw; max-height: 88vh; border-radius: 8px; }
+  dialog p { color: #fff; text-align: center; margin: 8px 0 0; font-size: 14px; }
+  footer { margin-top: 10px; font-size: 13px; color: var(--soft); }
+  @media (max-width: 560px) { h1 { font-size: 28px; } .shots.phone { grid-template-columns: 1fr 1fr; } .bars small { font-size: 10px; } }
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Project history · Sep 9 - Oct 3, 2026</p>
+  <h1>How GroceryScorer Was Built</h1>
+  <p class="lede">From five jars of peanut butter to a store-wide health scorer with meals, recipes and agents. Every screenshot below is the real app, loaded from the saved version of that day.</p>
+
+  <ul class="stats">
+    <li><b>25</b><span>days</span></li>
+    <li><b>111</b><span>saved versions</span></li>
+    <li><b>18,744</b><span>products</span></li>
+    <li><b>16,742</b><span>scored</span></li>
+    <li><b>73</b><span>meals + 9 make-it recipes</span></li>
+  </ul>
+
+  <section class="chart" aria-label="Saved versions per day">
+    <h2>Saved versions per day</h2>
+    <div class="bars">
+      <div><em>10</em><i style="height:24%"></i><small>Sep 9</small></div>
+      <div><em>1</em><i style="height:3%"></i><small>Sep 14</small></div>
+      <div><em>4</em><i style="height:10%"></i><small>Sep 18</small></div>
+      <div><em>1</em><i style="height:3%"></i><small>Sep 25</small></div>
+      <div><em>7</em><i style="height:17%"></i><small>Sep 29</small></div>
+      <div><em>17</em><i style="height:41%"></i><small>Sep 30</small></div>
+      <div><em>30</em><i style="height:73%"></i><small>Oct 2</small></div>
+      <div><em>41</em><i style="height:100%"></i><small>Oct 3</small></div>
+    </div>
+  </section>
+
+  <ol class="tl">
+    <li class="stop">
+      <div class="date">SEP 9 · MORNING</div>
+      <h3>Five peanut butters</h3>
+      <p>It started with one aisle: collect every peanut butter ShopRite sells, rank them by hand, then build a scoring engine and see if it agreed. A progress screen watched the collector work; the first results page ranked 45 jars.</p>
+      <div class="chips"><span>45 products</span><span>first scoring engine</span><span>Open Food Facts link-up</span></div>
+      <div class="shots">
+        <figure><button data-full="img/01_dashboard.jpg"><img src="img/01_dashboard.jpg" alt="Dark progress screen: peanut butter collection complete" loading="lazy"></button><figcaption>The collector's progress screen</figcaption></figure>
+        <figure><button data-full="img/01_results.jpg"><img src="img/01_results.jpg" alt="First ranked list of peanut butters with scores" loading="lazy"></button><figcaption>The first scored list</figcaption></figure>
+      </div>
+    </li>
+    <li class="stop">
+      <div class="date">SEP 9 · AFTERNOON</div>
+      <h3>Four categories and a blind review</h3>
+      <p>Yogurt, bread and ground beef joined. A review page listed products alphabetically, with no scores, so your own ranking stayed unbiased, and the engine was tuned until it matched.</p>
+      <div class="chips"><span>yogurt additives</span><span>whole-grain scoring</span><span>missing data no longer counts as perfect</span></div>
+      <div class="shots"><figure><button data-full="img/02_review.jpg"><img src="img/02_review.jpg" alt="Review page listing peanut butters alphabetically without scores" loading="lazy"></button><figcaption>The blind review page</figcaption></figure></div>
+    </li>
+    <li class="stop">
+      <div class="date">SEP 14</div>
+      <h3>The whole store, and three designs</h3>
+      <p>The crawler went store-wide (17,787 products), meat got sourcing and carcinogen warnings, and three looks were mocked up: a dark console, a friendly market and a newspaper-style ledger. The market won and became the app.</p>
+      <div class="chips"><span>17,787 products</span><span>meat sourcing</span><span>carcinogen citations</span></div>
+      <div class="shots">
+        <figure><button data-full="img/03_proto_a.jpg"><img src="img/03_proto_a.jpg" alt="Prototype A: dark console design" loading="lazy"></button><figcaption>A · Console</figcaption></figure>
+        <figure><button data-full="img/03_proto_b.jpg"><img src="img/03_proto_b.jpg" alt="Prototype B: light market design with search" loading="lazy"></button><figcaption>B · Market (chosen)</figcaption></figure>
+        <figure><button data-full="img/03_proto_c.jpg"><img src="img/03_proto_c.jpg" alt="Prototype C: newspaper-style ledger design" loading="lazy"></button><figcaption>C · Ledger</figcaption></figure>
+        <figure><button data-full="img/04_home_0914_search.jpg"><img src="img/04_home_0914_search.jpg" alt="The market design searching peanut butter" loading="lazy"></button><figcaption>The app, Sep 14</figcaption></figure>
+      </div>
+    </li>
+    <li class="stop">
+      <div class="date">SEP 18</div>
+      <h3>Every product scored, and it works on a phone</h3>
+      <p>Scores went from about 1,700 products to over 15,000: filters, warning banners, a price signal, sweetener caps and a phone layout.</p>
+      <div class="chips"><span>15,764 scored</span><span>filters</span><span>phone layout</span></div>
+      <div class="shots phone">
+        <figure><button data-full="img/05_home_0918_search.jpg"><img src="img/05_home_0918_search.jpg" alt="Search results with filters, Sep 18" loading="lazy"></button><figcaption>Laptop</figcaption></figure>
+        <figure><button data-full="img/05_home_0918_phone_search.jpg"><img src="img/05_home_0918_phone_search.jpg" alt="The same search on a phone" loading="lazy"></button><figcaption>Phone</figcaption></figure>
+      </div>
+    </li>
+    <li class="stop">
+      <div class="date">SEP 29</div>
+      <h3>From scores to shopping</h3>
+      <p>A shopping list grouped by aisle, diet profiles, editable ingredient severities, and the big idea: start from a meal and get every ingredient's healthiest pick. "Buy it or make it" compared store versions with homemade.</p>
+      <div class="chips"><span>shopping list</span><span>diet profiles</span><span>meal cards with photos</span><span>buy or make</span></div>
+      <div class="shots"><figure><button data-full="img/06_home_0929.jpg"><img src="img/06_home_0929.jpg" alt="Home screen with photo meal cards" loading="lazy"></button><figcaption>Photo meal cards arrive</figcaption></figure></div>
+    </li>
+    <li class="stop">
+      <div class="date">SEP 30</div>
+      <h3>Dinner picker, 73 meals, recipe import</h3>
+      <p>The busiest build day yet: a "What's for dinner?" flowchart, 73 meals with photos, a 2-3x faster load, a weekly planner, recipe import from links or pasted text, and cheaper mode.</p>
+      <div class="chips"><span>73 meals</span><span>97% less data to load</span><span>week planner</span><span>recipe import</span></div>
+      <div class="shots">
+        <figure><button data-full="img/07_home_0930_dinner.jpg"><img src="img/07_home_0930_dinner.jpg" alt="First dinner flowchart with text buttons" loading="lazy"></button><figcaption>The first dinner flowchart</figcaption></figure>
+        <figure><button data-full="img/08_home_0930pm_list.jpg"><img src="img/08_home_0930pm_list.jpg" alt="Shopping list sheet grouped by aisle" loading="lazy"></button><figcaption>The shopping list</figcaption></figure>
+      </div>
+    </li>
+    <li class="stop">
+      <div class="date">OCT 2</div>
+      <h3>New look, sharper scores, helpers that work overnight</h3>
+      <p>A redesign inspired by Trader Joe's, Whole Foods and EWG; a scoring deep dive that put Coke at 15 and Poppi well above it; a label scanner; recipes for every meal; and the first agents: a night fetcher and a daily researcher.</p>
+      <div class="chips"><span>design v2</span><span>scoring fixes A+B+C</span><span>label scanner</span><span>night fetch agent</span><span>research agent</span></div>
+      <div class="shots">
+        <figure><button data-full="img/09_design_v2.jpg"><img src="img/09_design_v2.jpg" alt="Redesigned home with green header and photo hero" loading="lazy"></button><figcaption>Design v2</figcaption></figure>
+        <figure><button data-full="img/09_design_v2_search.jpg"><img src="img/09_design_v2_search.jpg" alt="Redesigned search results" loading="lazy"></button><figcaption>Search in the new look</figcaption></figure>
+        <figure><button data-full="img/10_recipe_page.jpg"><img src="img/10_recipe_page.jpg" alt="First recipe page; the chili photo was actually a Thai curry" loading="lazy"></button><figcaption>First recipe pages (that "chili" was a curry - fixed Oct 3)</figcaption></figure>
+      </div>
+    </li>
+    <li class="stop">
+      <div class="date">OCT 3 · TODAY</div>
+      <h3>Polish, real recipes, agents in the cloud</h3>
+      <p>Research moved to the cloud on Opus and a weekly fishy-scores check was added. A processing-rating fix moved 2,154 scores. Twelve wrong meal photos were replaced, all 82 recipes now follow tested sources, the dinner picker asks about cravings and spice, and hosting is ready to switch on.</p>
+      <div class="chips"><span>cloud agents</span><span>NOVA fix</span><span>82 sourced recipes</span><span>new dinner questions</span><span>hosting ready</span></div>
+      <div class="shots">
+        <figure><button data-full="img/11_now.jpg"><img src="img/11_now.jpg" alt="Current home screen" loading="lazy"></button><figcaption>Home today</figcaption></figure>
+        <figure><button data-full="img/11_now_dinner.jpg"><img src="img/11_now_dinner.jpg" alt="Current dinner picker with photo tiles" loading="lazy"></button><figcaption>The new dinner picker</figcaption></figure>
+        <figure><button data-full="img/11_now_recipe.jpg"><img src="img/11_now_recipe.jpg" alt="Current recipe page crediting its sources" loading="lazy"></button><figcaption>Recipes with credited sources</figcaption></figure>
+        <figure><button data-full="img/11_now_phone.jpg"><img src="img/11_now_phone.jpg" alt="The app today on a phone" loading="lazy"></button><figcaption>On a phone</figcaption></figure>
+      </div>
+    </li>
+  </ol>
+  <footer>Every version is saved in the private GitHub repo; any of them can be opened again.</footer>
+</div>
+
+<dialog id="zoom"><img alt=""><p></p></dialog>
+<script>
+  const dlg = document.getElementById('zoom');
+  document.addEventListener('click', e => {
+    const b = e.target.closest('button[data-full]');
+    if (b) { const img = b.querySelector('img'); dlg.querySelector('img').src = b.dataset.full; dlg.querySelector('img').alt = img.alt;
+      dlg.querySelector('p').textContent = b.parentElement.querySelector('figcaption').textContent; dlg.showModal(); return; }
+    if (e.target === dlg || e.target.closest('dialog')) dlg.close();
+  });
+</script>

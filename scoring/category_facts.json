@@ -1,0 +1,1014 @@
+{
+  "peanut_butter": {
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "moderate, but not EWG-backed",
+    "organic_ingredient_keywords": [
+      "peanut"
+    ],
+    "whole_food_fat_density_baseline": 0.45,
+    "whole_food_fat_density_reasoning": "Natural peanut butter is ~45-50% fat by weight. A product with far less than that has had oil mechanically pressed out (e.g. PB2 powdered peanut butter, ~12%), taking most of the monounsaturated fat and vitamin E with it, even though the ingredient list still reads clean. Only set this for categories where a *known natural fat density* exists and losing that fat is meaningful - it is NOT a generic 'less fat is worse' rule. Deliberately unset for yogurt: nonfat vs. whole yogurt is a normal product choice, not evidence of stripping a whole food, and treating it like PB2 would be wrong.",
+    "reasoning": "Peanut shells are soft/porous (unlike thick-skinned produce e.g. avocados) and peanuts grow underground with high fat content, so they absorb rather than block pesticides - a real exposure-pathway argument, researched 2026-09-08. BUT peanuts (nuts/legumes) are not tracked by EWG's Dirty Dozen/Clean Fifteen at all - that framework only covers fresh produce, and it's the strongest evidence source we have access to (real USDA residue testing, not reasoning-from-first-principles). Without that grade of backing, decided 2026-09-08 to show organic as an informational badge only (still detected and displayed) rather than let it move the numeric score - ingredient-list quality is the more solidly-evidenced factor. See ewg_produce_tiers.json for the produce framework to use once Phase 5 adds fruit/vegetable categories, where organic_weight SHOULD be set from real tier data, not zeroed like this."
+  },
+  "plain_yogurt": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_evidence_strength": "moderate-good: measured compositional difference, not just an inferred exposure pathway",
+    "organic_ingredient_keywords": [
+      "milk"
+    ],
+    "reasoning": "Researched 2026-09-09. Organic dairy has a STRONGER evidence base than organic peanuts, which is why this gets a small nonzero weight (0.05) where peanut_butter gets 0.0. Peanuts rested on an inferred exposure-pathway argument (porous shell, underground growth). Dairy has actual measured compositional differences: a Newcastle University peer-reviewed study found ~62% more omega-3 in organic milk, attributed to more pasture/grass in the cows' diet. Plus two structural (not just statistical) differences: organic has a zero-tolerance antibiotic policy - a treated cow leaves the organic supply permanently - and organic is always rBST-free. CAVEAT worth remembering: the most prominent write-ups of this are from the Organic Trade Association, an industry body with an obvious interest, though the underlying Newcastle study is independent and peer-reviewed. The health-outcome magnitude is still unproven, so this stays a small tiebreaker weight, not a major factor - deliberately well below the ingredient-quality signals.",
+    "live_cultures_note": "Deliberately NOT scored, despite being the obvious 'yogurt quality' idea. Checked all 18 collected products: every single one has live cultures (either explicit strain lists or the word 'Cultured' leading the ingredients). A sub-score with zero variance across the category is pure noise - it would shift nothing and just dilute the signals that do differentiate. Revisit ONLY if heat-treated-after-culturing products (dead cultures, no probiotic benefit) actually show up in the data; those would say 'heat treated' on the label.",
+    "protein_note": "Raw protein density is deliberately NOT scored either, even though it ranges widely here (3.5-10.6 g/100g). It's ambiguous as a quality signal: Chobani reaches ~9-10 g/100g by straining real milk, but Cabot reaches 8.2 g/100g partly by ADDING milk protein concentrate and whey protein concentrate. Rewarding protein directly would credit the more-processed product. Instead the isolated-protein additives are penalized via flagged_ingredients, which captures the actual distinction."
+  },
+  "bread": {
+    "organic_matters": true,
+    "organic_weight": 0.03,
+    "organic_evidence_strength": "weak-moderate: glyphosate residue is a real documented issue in wheat, but health-impact magnitude is contested",
+    "organic_ingredient_keywords": [
+      "wheat",
+      "flour",
+      "grain",
+      "oat"
+    ],
+    "reasoning": "Set 2026-09-09, deliberately the SMALLEST organic weight of the three categories so far (peanut butter 0.0, yogurt 0.05, bread 0.03). Wheat is not on EWG's lists (they only cover fresh produce), so there's no residue-testing tier to lean on. The real documented concern is glyphosate, sometimes used as a pre-harvest desiccant on conventional wheat, and residues do show up in finished wheat products - but whether those levels matter for health is genuinely contested, not settled. So: small nonzero weight to reflect that it's a real and specific concern (unlike peanuts' purely inferred pathway), but kept below dairy's because dairy had actual measured compositional benefits (omega-3), whereas here the claim is only 'less of something possibly bad'. Revisit if a residue-testing body ever covers grains the way EWG covers produce.",
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.22,
+    "whole_grain_reasoning": "This is THE dominant quality signal for bread and is weighted accordingly - higher than any other category-specific factor so far. Unlike the organic question, refined-vs-whole-grain is not a close call: refining strips the bran and germ, removing most of the fiber, and the fact that refined flour has to be legally 'enriched' (niacin, riboflavin, folic acid, reduced iron added back synthetically) is itself the admission that nutrients were removed. Detection uses the FIRST grain in the ingredient list, since that's the dominant one by weight. Important US labeling gotcha encoded in the scorer: unqualified 'wheat flour' and 'enriched wheat flour' both mean REFINED white flour - only 'whole wheat'/'whole grain'/'sprouted' means the bran and germ are intact.",
+    "notable_absences": "Neither potassium bromate nor azodicarbonamide - the two additives most associated with industrial bread, both banned or restricted in various countries - appeared in ANY of the 64 breads collected at this store. They're still in flagged_ingredients as a tripwire in case they show up elsewhere. What IS pervasive here: DATEM (20/64), calcium propionate (18/64), monoglycerides (19/64), and mineral oil (7/64)."
+  },
+  "spinach": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.12,
+    "organic_evidence_strength": "Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "organic_ingredient_keywords": [
+      "spinach"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Spinach' as Dirty Dozen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread)."
+  },
+  "kale": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.12,
+    "organic_evidence_strength": "Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "organic_ingredient_keywords": [
+      "kale"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Kale, collard, and mustard greens' as Dirty Dozen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "pre_cut_keywords": [
+      "chopped",
+      "salad kit"
+    ]
+  },
+  "strawberries": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.12,
+    "organic_evidence_strength": "Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "organic_ingredient_keywords": [
+      "strawberr"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Strawberries' as Dirty Dozen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "pre_cut_keywords": [
+      "sliced",
+      "trimmed"
+    ]
+  },
+  "grapes": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.12,
+    "organic_evidence_strength": "Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "organic_ingredient_keywords": [
+      "grape"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Grapes' as Dirty Dozen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread)."
+  },
+  "nectarines": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.12,
+    "organic_evidence_strength": "Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "organic_ingredient_keywords": [
+      "nectarine"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Nectarines' as Dirty Dozen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread)."
+  },
+  "peaches": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.12,
+    "organic_evidence_strength": "Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "organic_ingredient_keywords": [
+      "peach"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Peaches' as Dirty Dozen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "pre_cut_keywords": [
+      "sliced",
+      "diced"
+    ]
+  },
+  "cherries": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.12,
+    "organic_evidence_strength": "Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "organic_ingredient_keywords": [
+      "cherr"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Cherries' as Dirty Dozen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread)."
+  },
+  "apples": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.12,
+    "organic_evidence_strength": "Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "organic_ingredient_keywords": [
+      "apple"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Apples' as Dirty Dozen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "pre_cut_keywords": [
+      "sliced",
+      "wedges"
+    ]
+  },
+  "blackberries": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.12,
+    "organic_evidence_strength": "Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "organic_ingredient_keywords": [
+      "blackberr"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Blackberries' as Dirty Dozen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread)."
+  },
+  "pears": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.12,
+    "organic_evidence_strength": "Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "organic_ingredient_keywords": [
+      "pear"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Pears' as Dirty Dozen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread)."
+  },
+  "potatoes": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.12,
+    "organic_evidence_strength": "Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "organic_ingredient_keywords": [
+      "potato"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Potatoes' as Dirty Dozen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "pre_cut_keywords": [
+      "diced",
+      "shredded",
+      "hash brown",
+      "wedges",
+      "fries"
+    ]
+  },
+  "blueberries": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.12,
+    "organic_evidence_strength": "Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread).",
+    "organic_ingredient_keywords": [
+      "blueberr"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Blueberries' as Dirty Dozen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Dirty Dozen items test positive for pesticide residue in 96% of USDA samples - real measured evidence, weighted higher than any inferred-pathway category (peanut butter, bread)."
+  },
+  "bell_peppers": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.07,
+    "organic_evidence_strength": "Flagged by EWG for high toxicity findings but not in the main ranked 12, so weighted somewhat below the Dirty Dozen proper.",
+    "organic_ingredient_keywords": [
+      "pepper"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Bell peppers' as also flagged for high toxicity (not in the ranked 12) (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Flagged by EWG for high toxicity findings but not in the main ranked 12, so weighted somewhat below the Dirty Dozen proper.",
+    "pre_cut_keywords": [
+      "sliced",
+      "diced",
+      "strips"
+    ]
+  },
+  "hot_peppers": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.07,
+    "organic_evidence_strength": "Flagged by EWG for high toxicity findings but not in the main ranked 12, so weighted somewhat below the Dirty Dozen proper.",
+    "organic_ingredient_keywords": [
+      "pepper"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Hot peppers' as also flagged for high toxicity (not in the ranked 12) (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Flagged by EWG for high toxicity findings but not in the main ranked 12, so weighted somewhat below the Dirty Dozen proper."
+  },
+  "green_beans": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.07,
+    "organic_evidence_strength": "Flagged by EWG for high toxicity findings but not in the main ranked 12, so weighted somewhat below the Dirty Dozen proper.",
+    "organic_ingredient_keywords": [
+      "bean"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Green beans' as also flagged for high toxicity (not in the ranked 12) (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Flagged by EWG for high toxicity findings but not in the main ranked 12, so weighted somewhat below the Dirty Dozen proper."
+  },
+  "pineapple": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "pineapple"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Pineapple' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "pre_cut_keywords": [
+      "chunks",
+      "cored",
+      "spears",
+      "sliced",
+      "tidbits"
+    ]
+  },
+  "sweet_corn": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "corn"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Sweet corn (fresh and frozen)' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here."
+  },
+  "avocados": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "avocado"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Avocados' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "pre_cut_keywords": [
+      "diced",
+      "halved",
+      "pulp"
+    ]
+  },
+  "papaya": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "papaya"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Papaya' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "pre_cut_keywords": [
+      "chunks",
+      "diced"
+    ]
+  },
+  "onions": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "onion"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Onions' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "pre_cut_keywords": [
+      "diced",
+      "chopped",
+      "minced",
+      "sliced"
+    ]
+  },
+  "frozen_peas": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "pea"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Sweet peas (frozen)' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here."
+  },
+  "asparagus": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "asparagus"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Asparagus' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "pre_cut_keywords": [
+      "tips"
+    ]
+  },
+  "cabbage": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "cabbage"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Cabbage' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "pre_cut_keywords": [
+      "shredded",
+      "coleslaw",
+      "slaw",
+      "chopped"
+    ]
+  },
+  "cauliflower": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "cauliflower"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Cauliflower' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "pre_cut_keywords": [
+      "florets",
+      "pre-cut",
+      "riced"
+    ]
+  },
+  "watermelon": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "watermelon"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Watermelon' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "pre_cut_keywords": [
+      "chunks",
+      "cubed",
+      "cubes"
+    ]
+  },
+  "mangoes": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "mango"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Mangoes' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "pre_cut_keywords": [
+      "chunks",
+      "diced",
+      "sliced",
+      "spears"
+    ]
+  },
+  "bananas": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "banana"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Bananas' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here."
+  },
+  "carrots": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "carrot"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Carrots' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "pre_cut_keywords": [
+      "shredded",
+      "baby",
+      "petite",
+      "pre-cut",
+      "matchstick",
+      "crinkle cut"
+    ]
+  },
+  "mushrooms": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "mushroom"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Mushrooms' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "pre_cut_keywords": [
+      "sliced"
+    ]
+  },
+  "kiwi": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "organic_ingredient_keywords": [
+      "kiwi"
+    ],
+    "reasoning": "EWG 2026 Shopper's Guide to Pesticides in Produce classifies 'Kiwi' as Clean Fifteen (see scripts/ewg_produce_tiers.json for the full ranked lists and source notes). Weight follows the tier-wide suggested_weights in that file, not a per-category guess: Clean Fifteen items show no detectable pesticide residue in ~60% of samples - organic status shown as an informational badge only (weight 0), same treatment as peanut butter's badge-only precedent, since buying organic doesn't meaningfully change exposure here.",
+    "pre_cut_keywords": [
+      "sliced",
+      "trimmed"
+    ]
+  },
+  "rice": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.22,
+    "whole_grain_markers": [
+      "brown",
+      "wild",
+      "red rice",
+      "black rice"
+    ],
+    "whole_grain_noun": "grain",
+    "whole_grain_reasoning": "Added 2026-09-10 after an audit found white and brown rice scoring IDENTICALLY (94.0) - instant white rice was tied for #1 in the category, which contradicts the same refined-vs-whole reasoning already used for bread at this exact weight (0.22). Brown rice keeps the bran and germ; white rice has them milled off, which is why white rice is so often 'enriched' with iron/niacin/thiamin/folic acid added back - the enrichment is the admission that nutrients were stripped. RICE-SPECIFIC LABELING RULE encoded via whole_grain_markers: 'brown' alone means whole grain here (real examples in this store's data: 'Long Grain Brown Rice', 'Brown Basmati Rice' - neither says the word 'whole' anywhere, so the generic markers would have misread both as refined). That marker is deliberately NOT global: on bread 'brown' is a known trap, since brown bread is often white flour colored with caramel or molasses. Unqualified white/jasmine/basmati rice is refined.",
+    "organic_matters": false
+  },
+  "pasta": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.22,
+    "whole_grain_noun": "flour",
+    "whole_grain_reasoning": "Added 2026-09-10 (pre-emptively, while pasta was still being collected) for the same refined-vs-whole reason as bread and rice, at the same weight. Pasta needs NO custom markers: the existing generic refined markers already include 'semolina' and 'durum', which is exactly how refined pasta labels itself, and whole wheat pasta says 'whole' explicitly. Verify against real collected pasta data once that category finishes - this entry was written before the data existed, which is the opposite of how the other categories were designed.",
+    "organic_matters": false
+  },
+  "eggs": {
+    "egg_husbandry_matters": true,
+    "egg_husbandry_weight": 0.3,
+    "egg_husbandry_reasoning": "Added 2026-09-10. Weighted unusually high (0.30) for a deliberate structural reason, not because husbandry is believed to matter more than ingredient quality does elsewhere: eggs have NO ingredient list at all, so ingredient_simplicity and flagged_ingredients are both dropped, and over half the products are missing nutrition panels too. Before this sub-score existed every egg in the category scored an identical 70.0 - conventional caged and certified pasture-raised organic were indistinguishable - and the only eggs that could rank higher were PRE-COOKED PEELED ones, purely because being a processed product gave them an ingredient list to score. Husbandry is the real quality axis here. Evidence is measured, not inferred: Penn State found ~2.5x omega-3 in pastured vs caged eggs; an NIH-published study found ~4x vitamin D3 with outdoor access. CAVEAT the user should weigh: the Egg Nutrition Center holds that overall nutritional differences are small, and the vitamin D gap needs 5+ eggs/day to be clinically meaningful. There is also an animal-welfare dimension that this project does NOT score - the tiers are justified on composition evidence alone. If the user disagrees with 0.30, this is the one number to change.",
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "egg"
+    ],
+    "organic_evidence_strength": "moderate - USDA Organic requires organic feed, no antibiotics, AND mandated outdoor access",
+    "reasoning": "Organic enabled for eggs 2026-09-10 at the same 0.05 as dairy. USDA Organic certification for eggs requires organic feed, prohibits antibiotics, and mandates outdoor access - so it overlaps with the husbandry tiers by design. KNOWN DOUBLE-COUNT, flagged rather than silently tuned away (same handling as the pectin/NOVA double-count in yogurt): an 'Organic Free Range' egg earns credit from both signals. Judged acceptable because the two certify genuinely different things (feed and medication vs. space and outdoor time), but it is a real overlap, and it is why organic is kept small here rather than matched to the husbandry weight.",
+    "processed_form_keywords": [
+      "hard cooked",
+      "hard-cooked",
+      "peeled",
+      "liquid egg",
+      "folded",
+      "scrambled",
+      "omelet",
+      "patty"
+    ],
+    "produce_freshness_weight": 0.2,
+    "processed_form_reasoning": "Pre-cooked/peeled/liquid egg products are convenience foods, not whole eggs. Needed because they were ranking ABOVE fresh organic free-range eggs purely for having an ingredient list to score, which fresh eggs lack entirely."
+  },
+  "cereal": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.22,
+    "refined_grain_markers": [
+      "degerminated",
+      "milled corn",
+      "corn meal",
+      "cornmeal",
+      "rice flour",
+      "white rice"
+    ],
+    "whole_grain_noun": "grain",
+    "organic_matters": false,
+    "whole_grain_reasoning": "Same refined-vs-whole science as bread and rice, weight 0.22. Configured 2026-09-10 BEFORE this category was collected, so the markers are a reasoned first pass, not designed against real data - which is the opposite of how peanut butter/yogurt/bread were built, and this project has been burned by assumption-first design before. VERIFY against the real ingredient lists once collected: check that the top-scored products are genuinely whole-grain and that nothing is mislabeled 'refined'. Reason for configuring it early anyway: without whole_grain_matters set, a sugary refined cereal ties with a whole-grain one, which is the exact bug that had instant white rice tied for #1 in the rice category."
+  },
+  "granola": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.18,
+    "refined_grain_markers": [
+      "degerminated",
+      "milled corn",
+      "corn meal",
+      "cornmeal",
+      "rice flour",
+      "white rice"
+    ],
+    "whole_grain_noun": "grain",
+    "organic_matters": false,
+    "whole_grain_reasoning": "Same refined-vs-whole science as bread and rice, weight 0.18. Configured 2026-09-10 BEFORE this category was collected, so the markers are a reasoned first pass, not designed against real data - which is the opposite of how peanut butter/yogurt/bread were built, and this project has been burned by assumption-first design before. VERIFY against the real ingredient lists once collected: check that the top-scored products are genuinely whole-grain and that nothing is mislabeled 'refined'. Reason for configuring it early anyway: without whole_grain_matters set, a sugary refined cereal ties with a whole-grain one, which is the exact bug that had instant white rice tied for #1 in the rice category."
+  },
+  "granola_bars": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.18,
+    "refined_grain_markers": [
+      "degerminated",
+      "milled corn",
+      "corn meal",
+      "cornmeal",
+      "rice flour",
+      "white rice"
+    ],
+    "whole_grain_noun": "grain",
+    "organic_matters": false,
+    "whole_grain_reasoning": "Same refined-vs-whole science as bread and rice, weight 0.18. Configured 2026-09-10 BEFORE this category was collected, so the markers are a reasoned first pass, not designed against real data - which is the opposite of how peanut butter/yogurt/bread were built, and this project has been burned by assumption-first design before. VERIFY against the real ingredient lists once collected: check that the top-scored products are genuinely whole-grain and that nothing is mislabeled 'refined'. Reason for configuring it early anyway: without whole_grain_matters set, a sugary refined cereal ties with a whole-grain one, which is the exact bug that had instant white rice tied for #1 in the rice category."
+  },
+  "oatmeal": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.22,
+    "refined_grain_markers": [
+      "degerminated",
+      "milled corn",
+      "corn meal",
+      "cornmeal",
+      "rice flour",
+      "white rice"
+    ],
+    "whole_grain_noun": "grain",
+    "organic_matters": false,
+    "whole_grain_reasoning": "Same refined-vs-whole science as bread and rice, weight 0.22. Configured 2026-09-10 BEFORE this category was collected, so the markers are a reasoned first pass, not designed against real data - which is the opposite of how peanut butter/yogurt/bread were built, and this project has been burned by assumption-first design before. VERIFY against the real ingredient lists once collected: check that the top-scored products are genuinely whole-grain and that nothing is mislabeled 'refined'. Reason for configuring it early anyway: without whole_grain_matters set, a sugary refined cereal ties with a whole-grain one, which is the exact bug that had instant white rice tied for #1 in the rice category. OAT-SPECIFIC: rolled/steel-cut oats retain the bran and germ and are whole grain by definition, but plain labels often just say 'Rolled Oats' without the word 'whole' - same shape of problem as 'Long Grain Brown Rice'. Instant flavored oatmeal is the thing to watch: it's still oats but comes loaded with added sugar, which flagged_ingredients and nutrition should catch independently.",
+    "whole_grain_markers": [
+      "rolled oat",
+      "steel cut",
+      "steel-cut",
+      "oat groat",
+      "old fashioned oat"
+    ]
+  },
+  "crackers": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.22,
+    "refined_grain_markers": [
+      "degerminated",
+      "milled corn",
+      "corn meal",
+      "cornmeal",
+      "rice flour",
+      "white rice"
+    ],
+    "whole_grain_noun": "grain",
+    "organic_matters": false,
+    "whole_grain_reasoning": "Same refined-vs-whole science as bread and rice, weight 0.22. Configured 2026-09-10 BEFORE this category was collected, so the markers are a reasoned first pass, not designed against real data - which is the opposite of how peanut butter/yogurt/bread were built, and this project has been burned by assumption-first design before. VERIFY against the real ingredient lists once collected: check that the top-scored products are genuinely whole-grain and that nothing is mislabeled 'refined'. Reason for configuring it early anyway: without whole_grain_matters set, a sugary refined cereal ties with a whole-grain one, which is the exact bug that had instant white rice tied for #1 in the rice category."
+  },
+  "broccoli": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_ingredient_keywords": [
+      "broccoli"
+    ],
+    "organic_evidence_strength": "unknown - not covered by EWG's 2026 lists",
+    "reasoning": "Added 2026-09-10. Checked against scripts/ewg_produce_tiers.json and this item appears on NEITHER the Dirty Dozen nor the Clean Fifteen, so there is no residue-testing tier to lean on. That file's own guidance is explicit that 'not listed' is not evidence either way and must not be defaulted to a weight - so organic is detected and shown as a BADGE ONLY (weight 0.0), the same conservative treatment peanut butter got. Do NOT quietly give this a nonzero weight without real evidence; either research the specific item or leave it badge-only. NOTE: EWG revises these lists annually and the recorded 2026 list is from a secondary source, so some of these (tomatoes, celery, lettuce especially) have appeared on the Dirty Dozen in other years - worth re-verifying against ewg.org directly before trusting the zero.",
+    "pre_cut_keywords": [
+      "florets",
+      "pre-cut",
+      "chopped",
+      "riced",
+      "slaw"
+    ]
+  },
+  "lettuce": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_ingredient_keywords": [
+      "lettuce"
+    ],
+    "organic_evidence_strength": "unknown - not covered by EWG's 2026 lists",
+    "reasoning": "Added 2026-09-10. Checked against scripts/ewg_produce_tiers.json and this item appears on NEITHER the Dirty Dozen nor the Clean Fifteen, so there is no residue-testing tier to lean on. That file's own guidance is explicit that 'not listed' is not evidence either way and must not be defaulted to a weight - so organic is detected and shown as a BADGE ONLY (weight 0.0), the same conservative treatment peanut butter got. Do NOT quietly give this a nonzero weight without real evidence; either research the specific item or leave it badge-only. NOTE: EWG revises these lists annually and the recorded 2026 list is from a secondary source, so some of these (tomatoes, celery, lettuce especially) have appeared on the Dirty Dozen in other years - worth re-verifying against ewg.org directly before trusting the zero.",
+    "pre_cut_keywords": [
+      "chopped",
+      "shredded",
+      "salad kit",
+      "salad blend",
+      "torn"
+    ]
+  },
+  "tomatoes": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_ingredient_keywords": [
+      "tomato"
+    ],
+    "organic_evidence_strength": "unknown - not covered by EWG's 2026 lists",
+    "reasoning": "Added 2026-09-10. Checked against scripts/ewg_produce_tiers.json and this item appears on NEITHER the Dirty Dozen nor the Clean Fifteen, so there is no residue-testing tier to lean on. That file's own guidance is explicit that 'not listed' is not evidence either way and must not be defaulted to a weight - so organic is detected and shown as a BADGE ONLY (weight 0.0), the same conservative treatment peanut butter got. Do NOT quietly give this a nonzero weight without real evidence; either research the specific item or leave it badge-only. NOTE: EWG revises these lists annually and the recorded 2026 list is from a secondary source, so some of these (tomatoes, celery, lettuce especially) have appeared on the Dirty Dozen in other years - worth re-verifying against ewg.org directly before trusting the zero.",
+    "pre_cut_keywords": [
+      "diced",
+      "chopped"
+    ]
+  },
+  "cucumbers": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_ingredient_keywords": [
+      "cucumber"
+    ],
+    "organic_evidence_strength": "unknown - not covered by EWG's 2026 lists",
+    "reasoning": "Added 2026-09-10. Checked against scripts/ewg_produce_tiers.json and this item appears on NEITHER the Dirty Dozen nor the Clean Fifteen, so there is no residue-testing tier to lean on. That file's own guidance is explicit that 'not listed' is not evidence either way and must not be defaulted to a weight - so organic is detected and shown as a BADGE ONLY (weight 0.0), the same conservative treatment peanut butter got. Do NOT quietly give this a nonzero weight without real evidence; either research the specific item or leave it badge-only. NOTE: EWG revises these lists annually and the recorded 2026 list is from a secondary source, so some of these (tomatoes, celery, lettuce especially) have appeared on the Dirty Dozen in other years - worth re-verifying against ewg.org directly before trusting the zero.",
+    "pre_cut_keywords": [
+      "sliced",
+      "spears"
+    ]
+  },
+  "celery": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_ingredient_keywords": [
+      "celery"
+    ],
+    "organic_evidence_strength": "unknown - not covered by EWG's 2026 lists",
+    "reasoning": "Added 2026-09-10. Checked against scripts/ewg_produce_tiers.json and this item appears on NEITHER the Dirty Dozen nor the Clean Fifteen, so there is no residue-testing tier to lean on. That file's own guidance is explicit that 'not listed' is not evidence either way and must not be defaulted to a weight - so organic is detected and shown as a BADGE ONLY (weight 0.0), the same conservative treatment peanut butter got. Do NOT quietly give this a nonzero weight without real evidence; either research the specific item or leave it badge-only. NOTE: EWG revises these lists annually and the recorded 2026 list is from a secondary source, so some of these (tomatoes, celery, lettuce especially) have appeared on the Dirty Dozen in other years - worth re-verifying against ewg.org directly before trusting the zero.",
+    "pre_cut_keywords": [
+      "sticks",
+      "chopped",
+      "diced"
+    ]
+  },
+  "lemons": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_ingredient_keywords": [
+      "lemon"
+    ],
+    "organic_evidence_strength": "unknown - not covered by EWG's 2026 lists",
+    "reasoning": "Added 2026-09-10. Checked against scripts/ewg_produce_tiers.json and this item appears on NEITHER the Dirty Dozen nor the Clean Fifteen, so there is no residue-testing tier to lean on. That file's own guidance is explicit that 'not listed' is not evidence either way and must not be defaulted to a weight - so organic is detected and shown as a BADGE ONLY (weight 0.0), the same conservative treatment peanut butter got. Do NOT quietly give this a nonzero weight without real evidence; either research the specific item or leave it badge-only. NOTE: EWG revises these lists annually and the recorded 2026 list is from a secondary source, so some of these (tomatoes, celery, lettuce especially) have appeared on the Dirty Dozen in other years - worth re-verifying against ewg.org directly before trusting the zero."
+  },
+  "sweet_potatoes": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_ingredient_keywords": [
+      "sweet potato"
+    ],
+    "organic_evidence_strength": "unknown - not covered by EWG's 2026 lists",
+    "reasoning": "Added 2026-09-10. Checked against scripts/ewg_produce_tiers.json and this item appears on NEITHER the Dirty Dozen nor the Clean Fifteen, so there is no residue-testing tier to lean on. That file's own guidance is explicit that 'not listed' is not evidence either way and must not be defaulted to a weight - so organic is detected and shown as a BADGE ONLY (weight 0.0), the same conservative treatment peanut butter got. Do NOT quietly give this a nonzero weight without real evidence; either research the specific item or leave it badge-only. NOTE: EWG revises these lists annually and the recorded 2026 list is from a secondary source, so some of these (tomatoes, celery, lettuce especially) have appeared on the Dirty Dozen in other years - worth re-verifying against ewg.org directly before trusting the zero.",
+    "pre_cut_keywords": [
+      "diced",
+      "cubed",
+      "fries",
+      "spiralized"
+    ]
+  },
+  "raspberries": {
+    "is_produce": true,
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_ingredient_keywords": [
+      "raspberr"
+    ],
+    "organic_evidence_strength": "unknown - not covered by EWG's 2026 lists",
+    "reasoning": "Added 2026-09-10. Checked against scripts/ewg_produce_tiers.json and this item appears on NEITHER the Dirty Dozen nor the Clean Fifteen, so there is no residue-testing tier to lean on. That file's own guidance is explicit that 'not listed' is not evidence either way and must not be defaulted to a weight - so organic is detected and shown as a BADGE ONLY (weight 0.0), the same conservative treatment peanut butter got. Do NOT quietly give this a nonzero weight without real evidence; either research the specific item or leave it badge-only. NOTE: EWG revises these lists annually and the recorded 2026 list is from a secondary source, so some of these (tomatoes, celery, lettuce especially) have appeared on the Dirty Dozen in other years - worth re-verifying against ewg.org directly before trusting the zero."
+  },
+  "tortillas": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.22,
+    "whole_grain_noun": "flour",
+    "organic_matters": false,
+    "whole_grain_reasoning": "Same refined-vs-whole science as bread, same weight. Corn tortillas are a wrinkle worth checking against real data: masa/nixtamalized corn is traditionally whole-grain-ish, but 'corn flour' on a label may be degerminated. Configured before collection - verify the top-scored tortillas really are whole grain once the data lands. CORRECTED before first run 2026-09-10 after inspecting real tortilla-CHIP ingredient data: 'corn masa flour' and 'nixtamalized corn' are WHOLE grain (nixtamalization is a lime treatment of the whole kernel, not a refining step that strips bran/germ), but they contain the word 'flour' and no 'whole' marker, so the default rule would have mislabeled them 'refined flour'. Added masa/nixtamal/whole ground/processed-with-lime as whole-grain markers. Note bare 'corn' as a first ingredient remains genuinely ambiguous - it falls through to the refined default, which may be too harsh for corn tortillas; check this once real tortilla data lands.",
+    "refined_grain_markers": [
+      "degerminated",
+      "corn meal",
+      "cornmeal"
+    ],
+    "whole_grain_markers": [
+      "masa",
+      "nixtamal",
+      "whole ground",
+      "processed with lime"
+    ]
+  },
+  "flour_meal": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.22,
+    "whole_grain_noun": "flour",
+    "whole_grain_reasoning": "Added 2026-09-12 extending scoring to the full-catalog taxonomy. Same refined-vs-whole science and same 0.22 weight as bread/rice/cereal. VALIDATED AGAINST REAL DATA BEFORE ENABLING (unlike the 2026-09-10 pre-emptive entries): 73 real products checked. Refined/bleached/enriched flours (King Arthur Unbleached All-Purpose, Gold Medal All Purpose, Swans Down Enriched Bleached Cake Flour) correctly drop to 20; whole grain sorghum and stone-ground cornmeal correctly hit 100; almond flour, coconut flour, flaxseed meal and arrowroot starch correctly return applicable:False via the existing _NON_GRAIN_FLOURS filter, since refined-vs-whole is a grain concept that does not apply to them. This was the clearest gap found in the whole audit: before this, Swans Down ENRICHED BLEACHED cake flour scored 95.5 and King Arthur refined all-purpose 96.6, essentially tied with One Degree sprouted spelt at 100 - flour is the one category where refined-vs-whole IS the entire quality question, and it was the one category not asking it."
+  },
+  "granola_cereal_bars": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.08,
+    "whole_grain_noun": "grain",
+    "whole_grain_markers": [
+      "rolled oat",
+      "steel cut",
+      "steel-cut",
+      "oat groat",
+      "old fashioned oat",
+      "whole grain oat"
+    ],
+    "whole_grain_reasoning": "Added 2026-09-12 extending scoring to the full-catalog taxonomy. Same refined-vs-whole science and same 0.22 weight as bread/rice/cereal. VALIDATED AGAINST REAL DATA BEFORE ENABLING (unlike the 2026-09-10 pre-emptive entries): 169 real products checked, splitting 76 whole / 77 refined / 16 not-applicable - genuine discrimination, not a one-sided signal. Nature Valley bars leading with 'whole grain oats' score whole; Fiber One soft-baked bars leading with 'wheat flour bleached' score refined. Oat markers copied from the curated oatmeal entry for the same reason they exist there: rolled oats keep bran and germ and ARE whole grain, but labels often just say 'Rolled Oats' without the word 'whole'.",
+    "whole_grain_weight_reasoning": "Weight deliberately 0.08 here, NOT the 0.22 used for bread/flour/rice/pasta - set after watching what 0.22 actually did. The bread entry justifies 0.22 on the grounds that refined-vs-whole is THE dominant quality signal FOR BREAD. In a sweetened snack bar the grain is one component among thirty-odd, so the same weight produces whole-grain washing: at 0.22, General Mills 'Lucky Charms Treats Marshmallow Bars' jumped 3.4 -> 25.3 and Cinnamon Toast Crunch Treats 3.4 -> 28.1, because their ingredient lists lead with 'cereal (whole grain oats...)' and so earned a PERFECT 100 whole-grain sub-score while simultaneously scoring 0 on ingredient_simplicity (17-35 ingredients) and 0 on flagged_ingredients (palm oil, added colour, preservatives, added sugar). That is precisely the industry tactic of fronting a whole grain in an otherwise ultra-processed product, and a 22% weight rewarded it. At 0.08 those bars land at 12.7 and 15.9 - whole grain still counts for something real, but cannot rescue a product the other sub-scores have already condemned. Checked that this does NOT cost genuinely good products anything: Nature Valley Protein Peanut Butter (88.7) and Oats 'n Honey Crunchy (86.1) score identically at 0.22 and 0.08, because they earn their scores on the ingredient-quality signals rather than leaning on the grain claim."
+  },
+  "pretzels": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.22,
+    "whole_grain_noun": "flour",
+    "whole_grain_reasoning": "Added 2026-09-12 extending scoring to the full-catalog taxonomy. Same refined-vs-whole science and same 0.22 weight as bread/rice/cereal. VALIDATED AGAINST REAL DATA BEFORE ENABLING (unlike the 2026-09-10 pre-emptive entries): 109 real products checked: 104 refined, 1 whole (Quinn whole-grain sorghum), 4 not-applicable. Deliberately enabled even though the result is 99% one-sided, which is the opposite of the call made on yogurt's live cultures - the difference is that live cultures had ZERO variance (every product identical, so the sub-score could only add noise), whereas here the signal is real, correct, and does separate the one genuinely whole-grain pretzel from the rest. Pretzels being overwhelmingly refined white flour is a true fact about the category, and treating it the same way bread is treated is the consistent choice."
+  },
+  "macaroni_cheese": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.22,
+    "whole_grain_noun": "flour",
+    "whole_grain_reasoning": "Added 2026-09-12 extending scoring to the full-catalog taxonomy. Same refined-vs-whole science and same 0.22 weight as bread/rice/cereal. VALIDATED AGAINST REAL DATA BEFORE ENABLING (unlike the 2026-09-10 pre-emptive entries): 91 real products checked: 68 refined, 12 whole, 11 not-applicable. Needs no custom markers for the same reason the curated pasta entry does not - 'semolina'/'durum'/'enriched macaroni' are already in the generic refined markers and are exactly how refined pasta labels itself. Worth noting the not-applicable bucket is doing real work here: Banza chickpea-pasta mac and cheese correctly opts out via _NON_GRAIN_FLOURS, since a chickpea is not a refined grain - the same distinction that was fixed by hand for Barilla legume pastas on 2026-09-10."
+  },
+  "rice_side_dishes": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.22,
+    "whole_grain_noun": "grain",
+    "whole_grain_markers": [
+      "brown",
+      "wild"
+    ],
+    "whole_grain_reasoning": "Added 2026-09-12 extending scoring to the full-catalog taxonomy. Same refined-vs-whole science and same 0.22 weight as bread/rice/cereal. VALIDATED AGAINST REAL DATA BEFORE ENABLING (unlike the 2026-09-10 pre-emptive entries): 67 real products checked: 58 refined, 8 whole, 1 not-applicable. Uses the rice-specific 'brown'/'wild' markers from the curated rice entry, for the same documented reason: 'Whole Grain Brown Rice' and 'brown & red rice' blends never say the word 'whole' in a way the generic markers catch, and 'brown' is safe HERE because it is a real varietal fact for rice, unlike brown BREAD which is often just caramel-coloured white flour. Knorr Rice Sides ('enriched parboiled long grain rice') and Old El Paso ('cooked white rice') correctly score refined."
+  },
+  "greek_yogurt": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_evidence_strength": "moderate-good: measured compositional difference, not just an inferred exposure pathway",
+    "organic_ingredient_keywords": [
+      "milk"
+    ],
+    "reasoning": "Added 2026-09-12. This is the SAME FOOD as the curated plain_yogurt category under a different name in ShopRite's own taxonomy, so it inherits that entry's already-researched evidence rather than a fresh judgment call: organic dairy has measured compositional differences (Newcastle peer-reviewed study, ~62% more omega-3, attributed to more pasture in the cows' diet) plus structural zero-tolerance antibiotic and rBST rules. Same small 0.05 tiebreaker weight and the same recorded caveat - the loudest promoters of this evidence are the industry-funded Organic Trade Association, though the underlying Newcastle study is independent, and the health-outcome magnitude remains unproven, so it stays well below the ingredient-quality signals. Note this is inheritance of evidence for an identical food, NOT the broader open question of whether near-match ShopRite categories should inherit curated logic in general - that one is still the user's call."
+  },
+  "traditional_yogurt": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_evidence_strength": "moderate-good: measured compositional difference, not just an inferred exposure pathway",
+    "organic_ingredient_keywords": [
+      "milk"
+    ],
+    "reasoning": "Added 2026-09-12. This is the SAME FOOD as the curated plain_yogurt category under a different name in ShopRite's own taxonomy, so it inherits that entry's already-researched evidence rather than a fresh judgment call: organic dairy has measured compositional differences (Newcastle peer-reviewed study, ~62% more omega-3, attributed to more pasture in the cows' diet) plus structural zero-tolerance antibiotic and rBST rules. Same small 0.05 tiebreaker weight and the same recorded caveat - the loudest promoters of this evidence are the industry-funded Organic Trade Association, though the underlying Newcastle study is independent, and the health-outcome magnitude remains unproven, so it stays well below the ingredient-quality signals. Note this is inheritance of evidence for an identical food, NOT the broader open question of whether near-match ShopRite categories should inherit curated logic in general - that one is still the user's call."
+  },
+  "nut_butters_spreads": {
+    "organic_matters": true,
+    "organic_weight": 0.0,
+    "organic_evidence_strength": "moderate, but not EWG-backed - badge only, deliberately does not move the score",
+    "organic_ingredient_keywords": [
+      "peanut",
+      "almond",
+      "cashew",
+      "sunflower",
+      "nut"
+    ],
+    "whole_food_fat_density_baseline": 0.45,
+    "reasoning": "Added 2026-09-12. ShopRite's own category covering what the curated peanut_butter category covers plus almond/cashew/sunflower butters and sugar-based spreads. Organic weight held at 0.0 (badge only) for exactly the reason recorded on peanut_butter: nuts and legumes are not tracked by EWG's Dirty Dozen/Clean Fifteen, which is the strongest evidence source available, and without that grade of backing the organic claim is shown but not allowed to move the number. The 0.45 fat-density baseline is set because powdered/de-fatted nut butter is real here (Crazy Richard's 100% Pure Peanut Powder was scoring 96.0, near the top of the category and above actual peanut butter - the exact bug the baseline was built to catch, which the curated peanut_butter category already handles correctly by dropping PB2 to ~76). IMPORTANT: this lever is currently INERT for Open Food Facts-sourced products, because total fat was not being carried through the OFF pipeline at all (found and fixed in merge_off_into_catalog.py and bulk_import_off.py on 2026-09-12, but the fix only takes effect for products re-imported after it). It scores applicable:False rather than wrongly when fat data is missing, so setting it now is safe and it activates as fat data lands."
+  },
+  "_aliases_note": "Maps ShopRite's REAL leaf categories onto the curated configs above. The catalog has 581 distinct leaf categories against 58 curated ones, so a curated config almost never matches by name - 'rice' and 'pasta' were fully configured for whole-grain scoring while the actual products sat in 'white_rice', 'penne_pasta', 'jasmine_rice' and so on, where the sub-score never fired. Aliases are expanded into real entries at load time in scorer.py, so every existing CATEGORY_FACTS.get(category) call works unchanged. This is the cheap, general fix for the Phase 7 taxonomy gap: add a line here rather than duplicating a config.",
+  "_aliases": {
+    "white_rice": "rice",
+    "brown_rice": "rice",
+    "jasmine_rice": "rice",
+    "basmati_rice": "rice",
+    "wild_rice": "rice",
+    "yellow_rice": "rice",
+    "spanish_rice": "rice",
+    "mexican_rice": "rice",
+    "rice_pilaf": "rice",
+    "more_rice_grains": "rice",
+    "spaghetti_angel_hair": "pasta",
+    "penne_pasta": "pasta",
+    "elbow_macaroni_ditalini": "pasta",
+    "linguine_fettuccine_pasta": "pasta",
+    "pasta_shells_orecchiette": "pasta",
+    "rigatoni_pasta": "pasta",
+    "bow_tie_pasta": "pasta",
+    "cavatelli_pasta": "pasta",
+    "tortellini_pasta": "pasta",
+    "fresh_pasta": "pasta",
+    "gluten_free_pasta": "pasta",
+    "protein_pasta": "pasta",
+    "egg_noodles": "pasta",
+    "pasta_salad": "pasta",
+    "couscous": "pasta",
+    "asian_noodles": "pasta"
+  },
+  "rice_cakes": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.08,
+    "whole_grain_markers": [
+      "brown",
+      "wild",
+      "red rice",
+      "black rice"
+    ],
+    "whole_grain_noun": "grain",
+    "whole_grain_reasoning": "Own entry, not an alias of `rice`, added 2026-09-18. Aliasing rice cakes to rice at weight 0.22 let Quaker Caramel Rice Crisps rise 7.0 -> 27.1 on a perfect whole-grain score - the same whole-grain-washing failure already fixed for candy-coated cereal bars. For a bag of rice, brown-vs-white is most of the story; for a caramel-coated puffed snack it is a footnote, so the weight is 0.08 like granola_cereal_bars. Plain brown rice cakes still get their credit.",
+    "organic_matters": false
+  },
+  "shredded_cheese": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "cheddar": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "sliced_cheese": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "cheese_sticks": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "cheese_spreads": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "cream_cheese": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "cottage_cheese": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "butter": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "sour_cream": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "ricotta_cheese": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "whole_milk": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "milk": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "half_and_half": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "heavy_cream": {
+    "organic_matters": true,
+    "organic_weight": 0.05,
+    "organic_ingredient_keywords": [
+      "milk",
+      "cream",
+      "cheese"
+    ],
+    "organic_evidence_strength": "moderate: organic dairy standards prohibit routine antibiotics and added hormones and require pasture access. Same 0.05 weight the curated yogurt categories already use, so dairy is treated consistently rather than yogurt being special.",
+    "_note": "Added 2026-09-18 (Phase 7). Dairy categories had no curated config at all, so organic dairy earned nothing."
+  },
+  "canned_tuna": {
+    "organic_matters": false,
+    "processed_form_keywords": [],
+    "_note": "Added 2026-09-18 (Phase 7). These sit under Pantry, not the Seafood department, so score_meat_sourcing() never fires on them and wild-vs-farmed went unscored entirely. The sourcing claim is read from the NAME by score_meat_sourcing once the breadcrumb gate is widened - see _SEAFOOD_PANTRY_CATEGORIES in scorer.py."
+  },
+  "more_canned_seafood": {
+    "organic_matters": false,
+    "processed_form_keywords": [],
+    "_note": "Added 2026-09-18 (Phase 7). These sit under Pantry, not the Seafood department, so score_meat_sourcing() never fires on them and wild-vs-farmed went unscored entirely. The sourcing claim is read from the NAME by score_meat_sourcing once the breadcrumb gate is widened - see _SEAFOOD_PANTRY_CATEGORIES in scorer.py."
+  },
+  "sardines": {
+    "organic_matters": false,
+    "processed_form_keywords": [],
+    "_note": "Added 2026-09-18 (Phase 7). These sit under Pantry, not the Seafood department, so score_meat_sourcing() never fires on them and wild-vs-farmed went unscored entirely. The sourcing claim is read from the NAME by score_meat_sourcing once the breadcrumb gate is widened - see _SEAFOOD_PANTRY_CATEGORIES in scorer.py."
+  },
+  "canned_salmon": {
+    "organic_matters": false,
+    "processed_form_keywords": [],
+    "_note": "Added 2026-09-18 (Phase 7). These sit under Pantry, not the Seafood department, so score_meat_sourcing() never fires on them and wild-vs-farmed went unscored entirely. The sourcing claim is read from the NAME by score_meat_sourcing once the breadcrumb gate is widened - see _SEAFOOD_PANTRY_CATEGORIES in scorer.py."
+  },
+  "tortilla_chips": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.08,
+    "whole_grain_noun": "grain",
+    "whole_grain_reasoning": "Added 2026-09-18 (Phase 7) at the LOW weight, deliberately. Whole corn or whole grain genuinely is better than refined here, but a chip is still a chip: at bread's 0.22 a caramel-coated whole-grain snack would launder one good attribute into a respectable score, which is the failure already fixed for cereal bars and rice cakes. 0.08 gives real credit without that."
+  },
+  "corn_chips": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.08,
+    "whole_grain_noun": "grain",
+    "whole_grain_reasoning": "Added 2026-09-18 (Phase 7) at the LOW weight, deliberately. Whole corn or whole grain genuinely is better than refined here, but a chip is still a chip: at bread's 0.22 a caramel-coated whole-grain snack would launder one good attribute into a respectable score, which is the failure already fixed for cereal bars and rice cakes. 0.08 gives real credit without that."
+  },
+  "popcorn": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.08,
+    "whole_grain_noun": "grain",
+    "whole_grain_reasoning": "Added 2026-09-18 (Phase 7) at the LOW weight, deliberately. Whole corn or whole grain genuinely is better than refined here, but a chip is still a chip: at bread's 0.22 a caramel-coated whole-grain snack would launder one good attribute into a respectable score, which is the failure already fixed for cereal bars and rice cakes. 0.08 gives real credit without that."
+  },
+  "pita_chips": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.08,
+    "whole_grain_noun": "grain",
+    "whole_grain_reasoning": "Added 2026-09-18 (Phase 7) at the LOW weight, deliberately. Whole corn or whole grain genuinely is better than refined here, but a chip is still a chip: at bread's 0.22 a caramel-coated whole-grain snack would launder one good attribute into a respectable score, which is the failure already fixed for cereal bars and rice cakes. 0.08 gives real credit without that."
+  },
+  "vegetable_grain_chips": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.08,
+    "whole_grain_noun": "grain",
+    "whole_grain_reasoning": "Added 2026-09-18 (Phase 7) at the LOW weight, deliberately. Whole corn or whole grain genuinely is better than refined here, but a chip is still a chip: at bread's 0.22 a caramel-coated whole-grain snack would launder one good attribute into a respectable score, which is the failure already fixed for cereal bars and rice cakes. 0.08 gives real credit without that."
+  },
+  "puffed_snacks": {
+    "whole_grain_matters": true,
+    "whole_grain_weight": 0.08,
+    "whole_grain_noun": "grain",
+    "whole_grain_reasoning": "Added 2026-09-18 (Phase 7) at the LOW weight, deliberately. Whole corn or whole grain genuinely is better than refined here, but a chip is still a chip: at bread's 0.22 a caramel-coated whole-grain snack would launder one good attribute into a respectable score, which is the failure already fixed for cereal bars and rice cakes. 0.08 gives real credit without that."
+  }
+}

@@ -1,0 +1,8 @@
+Cover photos for the Shop tab hero. Unsplash License (free for commercial use, no attribution
+required; credited here anyway).
+
+produce-marble.jpg  NordWood Themes  https://unsplash.com/photos/wtevVfGYwnM
+                    (cropped to the lower part of the frame, resized to 1600 px wide)
+
+The other three hero photos are meal photos in assets/meals/ (see assets/meals/LICENSE.txt):
+greekbowl.jpg, parfait.jpg, oats.jpg

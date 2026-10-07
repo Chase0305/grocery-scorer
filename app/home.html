@@ -1,0 +1,3162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- The data fetches already pass {cache:'no-store'}, but the DOCUMENT itself
+     was still served from cache, so a rescored catalog looked unchanged because
+     the page was running the OLD build of this file. Cost real debugging time. -->
+<meta http-equiv="Cache-Control" content="no-store">
+<title>GroceryScorer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0F5A43">
+<link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GroceryScorer">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFF9F0; --card: #FFFFFF; --line: #F0E4D0; --ink: #2B2118; --ink-soft: #6B5E4E; --ink-faint: #A69880;
+    --coral: #FF6B4A; --green: #3FA55A; --amber: #FFB648; --display: 'Nunito', sans-serif; --sans: 'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); padding-bottom: 90px; }
+
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 24px 20px 40px; }
+  .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+  .logo { font-family: var(--display); font-weight: 900; font-size: 22px; }
+  .logo span { color: var(--coral); }
+  .count-pill { background: var(--card); border: 2px solid var(--line); border-radius: 999px; padding: 7px 14px; font-size: 12.5px; font-weight: 700; color: var(--ink-soft); }
+
+  .hero-search { text-align: center; margin: 30px 0 28px; }
+  .hero-search h1 { font-family: var(--display); font-weight: 900; font-size: 32px; margin: 0 0 18px; }
+  .search-pill {
+    max-width: 520px; margin: 0 auto; display: flex; align-items: center; gap: 10px;
+    background: var(--card); border: 2px solid var(--line); border-radius: 999px; padding: 15px 22px;
+    box-shadow: 0 8px 24px rgba(43,33,24,.06);
+  }
+  .search-pill input { flex: 1; border: none; outline: none; font-size: 16px; font-family: var(--sans); background: none; color: var(--ink); }
+  .search-pill svg { color: var(--ink-faint); flex: 0 0 auto; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; margin-top: 24px; }
+  .show-more {
+    grid-column: 1/-1; padding: 13px; border: 2px dashed var(--line); border-radius: 16px;
+    background: none; color: var(--ink-soft); font-family: var(--sans); font-size: .85rem; font-weight: 700;
+    cursor: pointer; margin-top: 4px;
+  }
+  .show-more:hover { border-color: var(--coral); color: var(--coral); }
+  .results-end { grid-column: 1/-1; text-align: center; font-size: .8rem; color: var(--ink-faint); padding: 10px 0; }
+  .card {
+    background: var(--card); border: 2px solid var(--line); border-radius: 20px; padding: 14px;
+    display: flex; flex-direction: column; position: relative; transition: transform .12s, box-shadow .12s;
+    cursor: pointer;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(43,33,24,.10); }
+  .list-thumb-wrap { cursor: pointer; }
+  .card-img { width: 100%; height: 110px; border-radius: 14px; background: #FBF5E8; display: grid; place-items: center; margin-bottom: 10px; overflow: hidden; }
+  .card-img img { max-width: 88%; max-height: 88%; object-fit: contain; }
+  .card-brand { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); }
+  .card-name { font-size: 13px; font-weight: 600; line-height: 1.3; margin: 3px 0 8px; min-height: 34px; }
+  /* Score, price and any banner chips share this row, so it has to wrap -
+     adding the price pushed the chip outside the card otherwise. The add
+     button stays pinned right on the first line. */
+  .card-foot { display: flex; align-items: center; justify-content: space-between;
+    margin-top: auto; gap: 8px; }
+  .card-foot-left { flex: 1 1 auto; min-width: 0; display: flex; align-items: center;
+    flex-wrap: wrap; gap: 5px 6px; }
+  .card-foot .add-fab { flex: 0 0 auto; }
+  .grade-chip {
+    font-family: var(--display); font-weight: 800; font-size: 13px; color: #fff;
+    padding: 5px 10px; border-radius: 999px;
+  }
+  .grade-chip.none { background: #EDE2CC; color: var(--ink-faint); }
+  /* Carcinogen warning. Three distinct colours because IARC Group 1 ("known")
+     and Group 2B ("possible") are genuinely different claims - one badge for
+     both would tell the shopper less than nothing. */
+  .warn-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px 3px 6px;
+    border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .01em;
+    cursor: help; white-space: nowrap; }
+  .warn-chip svg { flex: none; }
+  .warn-known    { background: #FBE3E1; color: #A32218; }
+  .warn-probable { background: #FCEBDC; color: #A85A15; }
+  .warn-possible { background: #FBF3D6; color: #8A6A12; }
+  .card-price { font-size: 13px; font-weight: 800; color: var(--ink); white-space: nowrap; }
+  .card-unit { font-size: 11px; font-weight: 600; color: var(--ink-faint); white-space: nowrap; }
+  .detail-price { font-size: 13px; color: var(--ink-faint); margin-top: 3px; }
+  .detail-price b { color: var(--ink); font-size: 14px; }
+  .detail-warnings { display: flex; flex-direction: column; gap: 10px; margin: 4px 0 16px; }
+  .detail-warn { border-radius: 12px; padding: 11px 13px; border: 1px solid transparent; }
+  .detail-warn.warn-known    { border-color: #F0C4BF; }
+  .detail-warn.warn-probable { border-color: #F2D2B2; }
+  .detail-warn.warn-possible { border-color: #EEE0B0; }
+  .detail-warn-top { display: flex; align-items: center; gap: 7px; font-weight: 800; font-size: 13px; }
+  .detail-warn-class { font-weight: 600; font-size: 12px; opacity: .85; margin-left: auto; }
+  .detail-warn-note { font-size: 12.5px; line-height: 1.45; margin-top: 5px; color: var(--ink); }
+  .detail-warn-src { font-size: 11.5px; margin-top: 4px; opacity: .75; }
+  /* Nutrition banners are INFORMATION, not a health-agency warning - styled
+     calmer than the carcinogen chips on purpose so the two don't compete. */
+  .ing-chip { background: #FCE9DC; color: #8A4B18; }
+  .price-chip { background: #E3EEF7; color: #2F5876; }
+  .detail-priceflag { background: #E3EEF7; color: #2F5876; }
+  .detail-ingflag { background: #FCE9DC; color: #8A4B18; }
+  .nut-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px;
+    border-radius: 999px; font-size: 11px; font-weight: 700;
+    background: #EDE7F6; color: #59468C; cursor: help; white-space: nowrap; }
+  .detail-nutflags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+  .detail-nutflag { background: #EDE7F6; color: #59468C; border-radius: 12px;
+    padding: 9px 12px; font-size: 12.5px; flex: 1 1 210px; }
+  .detail-nutflag b { display: block; font-size: 13px; margin-bottom: 2px; }
+  .detail-nutflag span { opacity: .8; }
+  /* ---- filter panel ---- */
+  .filter-bar { max-width: 1000px; margin: 14px auto 0; padding: 0 20px; display: flex;
+    align-items: center; gap: 10px; flex-wrap: wrap; }
+  .filter-toggle { border: 1px solid #E2D6BC; background: #fff; border-radius: 999px;
+    padding: 7px 14px; font-size: 13px; font-weight: 700; cursor: pointer; color: var(--ink); }
+  .filter-toggle:hover { border-color: #C9B894; }
+  .filter-toggle.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .filter-clear { background: none; border: none; color: var(--ink-faint); font-size: 12.5px;
+    cursor: pointer; text-decoration: underline; }
+  .filter-panel { max-width: 1000px; margin: 10px auto 0; padding: 16px 20px; background: #fff;
+    border: 1px solid #EFE4CE; border-radius: 16px; }
+  .filter-panel[hidden] { display: none; }
+  .filter-group { margin-bottom: 14px; }
+  .filter-group:last-child { margin-bottom: 0; }
+  .filter-group h4 { margin: 0 0 3px; font-size: 13px; }
+  .filter-group p { margin: 0 0 9px; font-size: 12px; color: var(--ink-faint); line-height: 1.45; }
+  .filter-opts { display: flex; flex-wrap: wrap; gap: 7px; }
+  .filter-opt { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #E2D6BC;
+    background: #FDFBF6; border-radius: 999px; padding: 6px 12px; font-size: 12.5px; cursor: pointer; }
+  .filter-opt input { margin: 0; cursor: pointer; }
+  .filter-opt.on { background: #E8F2E2; border-color: #9CC48A; font-weight: 700; }
+  .filter-opt.on.avoid { background: #FBEAE6; border-color: #E0A99B; }
+  .filter-note { margin-top: 12px; font-size: 12px; background: #FBF3D6; color: #7A5E10;
+    border-radius: 10px; padding: 9px 12px; line-height: 1.5; }
+  .filter-summary { font-size: 12.5px; color: var(--ink-faint); }
+  .profile-pick { border: 1px solid #E2D6BC; background: #fff; border-radius: 999px; padding: 7px 13px;
+    font-size: 13px; font-weight: 700; color: var(--ink); font-family: var(--sans); cursor: pointer; }
+  .profile-pick.on { background: #EDE7F6; border-color: #C3B3E0; color: #46356F; }
+  .profile-panel { max-width: 1000px; margin: 10px auto 0; padding: 14px 20px; background: var(--card);
+    border: 1px solid #EFE4CE; border-radius: 16px; }
+  .profile-panel[hidden] { display: none; }
+  .profile-opt { display: block; width: 100%; text-align: left; border: 1px solid var(--line); background: #FDFBF6;
+    border-radius: 12px; padding: 10px 13px; margin-bottom: 7px; cursor: pointer; font-family: var(--sans); }
+  .price-row { display: flex; gap: 6px; margin: 0 0 12px; }
+  .price-opt { flex: 1; min-height: 40px; border: 1px solid var(--line); background: #FDFBF6; border-radius: 10px;
+    font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--ink); padding: 4px 6px; }
+  .price-opt.on { background: #E3F1E6; border-color: #9CCBA6; }
+  .price-head { font-size: 12px; color: var(--ink-soft); margin: 0 0 6px; line-height: 1.4; }
+  .profile-opt.on { background: #EDE7F6; border-color: #C3B3E0; }
+  .profile-opt b { display: block; font-size: 13.5px; margin-bottom: 2px; }
+  .profile-opt span { font-size: 12px; color: var(--ink-soft); line-height: 1.4; }
+  .profile-opt em { display: block; font-size: 11px; color: var(--ink-faint); font-style: normal; margin-top: 3px; }
+  .profile-note { font-size: 11.5px; color: var(--ink-faint); margin-top: 10px; line-height: 1.5; }
+  .sev-row { display: flex; align-items: center; gap: 10px; padding: 7px 2px; border-bottom: 1px solid #F6EEE0; }
+  .sev-row:last-child { border-bottom: none; }
+  .sev-name { flex: 1; min-width: 0; font-size: 13px; }
+  .sev-name small { display: block; font-size: 11px; color: var(--ink-faint); }
+  .sev-btns { flex: 0 0 auto; display: flex; gap: 4px; }
+  .sev-btn { border: 1px solid var(--line); background: #FDFBF6; border-radius: 7px; padding: 4px 9px;
+    font-size: 11px; font-weight: 700; cursor: pointer; color: var(--ink-soft); font-family: var(--sans); }
+  .sev-btn.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .sev-btn.on.off { background: #E8E0D2; color: var(--ink-faint); border-color: #DCD1BD; }
+  .add-fab {
+    width: 34px; height: 34px; border-radius: 50%; border: none; background: var(--ink); color: #fff;
+    cursor: pointer; display: grid; place-items: center; transition: .12s;
+  }
+  .add-fab:hover { background: var(--coral); transform: scale(1.08); }
+  .add-fab.added { background: var(--green); }
+  .empty-state { text-align: center; color: var(--ink-faint); padding: 50px 20px; font-size: 14px; grid-column: 1/-1; }
+
+  .list-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 3px solid var(--ink);
+    padding: 14px 20px; display: flex; align-items: center; gap: 16px; transform: translateY(100%); transition: transform .22s;
+  }
+  .list-bar.open { transform: translateY(0); }
+  .list-bar-inner { max-width: 1000px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 18px; }
+  .list-open-btn { flex: 0 0 auto; background: var(--ink); color: #fff; border: none; border-radius: 999px;
+    padding: 10px 18px; font-size: 13.5px; font-weight: 800; cursor: pointer; font-family: var(--sans); }
+  /* ---- full shopping list ---- */
+  .sheet { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 20px; }
+  .sheet[hidden] { display: none; }
+  .sheet-backdrop { position: absolute; inset: 0; background: rgba(43,33,24,.45); }
+  .sheet-panel { position: relative; background: var(--bg); border-radius: 20px; width: 100%;
+    max-width: 620px; max-height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
+  .sheet-head { padding: 18px 64px 12px 20px; border-bottom: 1px solid var(--line); background: var(--card); }
+  .sheet-head h2 { margin: 0 0 3px; font-family: var(--display); font-size: 20px; font-weight: 900; }
+  .sheet-head p { margin: 0; font-size: 12.5px; color: var(--ink-faint); }
+  .sheet-close { position: absolute; top: 14px; right: 14px; border: none; background: #F3E9D8;
+    width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 15px; line-height: 1; }
+  .sheet-body { overflow-y: auto; padding: 14px 20px 20px; }
+  .add-item { display: flex; gap: 8px; margin-bottom: 16px; }
+  .add-item input { flex: 1; min-width: 0; border: 2px solid var(--line); border-radius: 999px;
+    padding: 11px 16px; font-size: 15px; font-family: var(--sans); background: var(--card); color: var(--ink); }
+  .add-item input:focus { outline: none; border-color: #C9B894; }
+  .add-item button { flex: 0 0 auto; background: var(--coral); color: #fff; border: none;
+    border-radius: 999px; padding: 0 18px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: var(--sans); }
+  .aisle-group { margin-bottom: 18px; }
+  .aisle-head { font-size: 11px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--ink-faint); margin: 0 0 7px 2px; }
+  .li { display: flex; align-items: center; gap: 11px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 13px; padding: 10px 12px; margin-bottom: 7px; }
+  .li.done { opacity: .5; }
+  .li.done .li-name { text-decoration: line-through; }
+  .li-check { flex: 0 0 auto; width: 23px; height: 23px; border-radius: 6px; border: 2px solid #D8C9AC;
+    background: var(--card); cursor: pointer; display: grid; place-items: center; padding: 0; }
+  .li.done .li-check { background: var(--green); border-color: var(--green); color: #fff; }
+  .li-img { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 8px; background: #FBF5EA;
+    display: grid; place-items: center; overflow: hidden; }
+  .li-img img { max-width: 92%; max-height: 92%; object-fit: contain; }
+  .li-main { flex: 1; min-width: 0; }
+  .li-want { font-size: 11px; font-weight: 800; color: var(--coral); text-transform: uppercase; letter-spacing: .04em; }
+  .li-name { font-size: 13px; font-weight: 600; line-height: 1.3; }
+  .li-meta { font-size: 11.5px; color: var(--ink-faint); margin-top: 2px; }
+  .li-right { flex: 0 0 auto; display: flex; align-items: center; gap: 6px; }
+  .li-score { width: 34px; height: 25px; border-radius: 999px; color: #fff; font-size: 12px;
+    font-weight: 800; display: grid; place-items: center; }
+  .li-score.none { background: #EDE2CC; color: var(--ink-faint); }
+  .li-btn { border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 4px 8px;
+    font-size: 11px; font-weight: 700; cursor: pointer; color: var(--ink-soft); font-family: var(--sans); }
+  .li-btn:hover { border-color: #C9B894; }
+  .swap-row { padding: 2px 0 10px 46px; }
+  .swap-opt { display: flex; align-items: center; gap: 9px; padding: 7px 9px; border-radius: 9px; cursor: pointer; }
+  .swap-opt:hover { background: #F7EFE1; }
+  .swap-opt.current { background: #EDF5E9; }
+  .list-total { background: var(--card); border: 1px solid var(--line); border-radius: 13px;
+    padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .list-total b { font-family: var(--display); font-size: 19px; }
+  .list-empty { text-align: center; color: var(--ink-faint); font-size: 13.5px; padding: 26px 10px; line-height: 1.5; }
+  /* ---- meal cards ---- */
+  /* #results is itself a grid, so the meal shelf has to span every column -
+     without this the cards stack into one narrow strip. */
+  .meals { margin-top: 26px; grid-column: 1 / -1; }
+  .meals-head { font-size: 12px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--ink-faint); margin: 0 0 3px 2px; }
+  .meals-sub { font-size: 13px; color: var(--ink-soft); margin: 0 0 14px 2px; }
+  .back-btn { min-height: 40px; border: 1px solid var(--line); background: var(--card); border-radius: 999px;
+    font: inherit; font-size: 13.5px; font-weight: 700; padding: 0 14px; cursor: pointer; color: var(--ink); flex: 0 0 auto; }
+  .back-btn[hidden] { display: none; }
+  .mp-amt { font-size: 11.5px; font-weight: 600; color: var(--ink-soft); background: #F1ECDF; border-radius: 6px; padding: 1px 6px; margin-left: 4px; white-space: nowrap; }
+  .relaxed a { display: inline-block; padding: 8px 0; color: inherit; font-weight: 600; }
+  .relaxed { grid-column: 1 / -1; font-size: 12.5px; color: #7A5E10; background: #FBF3D6;
+    border-radius: 10px; padding: 9px 12px; margin-bottom: 4px; }
+  .meal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
+  /* A photo with the words layered over it, the shape a supermarket
+     homepage uses. The scrim is a two-stop gradient rather than a flat tint:
+     dark enough on the left for white type to stay legible on a bright
+     photo, clear on the right so the food is still the picture. */
+  .meal { position: relative; border-radius: 18px; overflow: hidden; border: none;
+    background: #2B2118; cursor: pointer; text-align: left; padding: 0; font-family: var(--sans);
+    display: block; aspect-ratio: 3 / 2; min-height: 200px; }
+  .meal-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .meal-scrim { position: absolute; inset: 0;
+    background: linear-gradient(100deg, rgba(20,14,9,.88) 0%, rgba(20,14,9,.72) 38%, rgba(20,14,9,.18) 72%, rgba(20,14,9,.05) 100%); }
+  .meal-body { position: absolute; inset: 0; padding: 18px 18px 16px; display: flex;
+    flex-direction: column; justify-content: flex-end; }
+  .meal-title { font-family: var(--display); font-weight: 900; font-size: 25px; line-height: 1.08;
+    color: #fff; max-width: 78%; text-shadow: 0 1px 14px rgba(0,0,0,.45); }
+  .meal-sub { font-size: 12.5px; color: rgba(255,255,255,.88); margin-top: 5px; line-height: 1.35;
+    max-width: 74%; text-shadow: 0 1px 10px rgba(0,0,0,.5); }
+  .meal-foot { margin-top: 12px; display: flex; align-items: center; gap: 9px; }
+  .meal-score { color: #fff; border-radius: 999px; font-size: 12.5px; font-weight: 800; padding: 4px 11px;
+    box-shadow: 0 1px 10px rgba(0,0,0,.35); }
+  .meal-n { font-size: 11.5px; color: rgba(255,255,255,.72); }
+  .meal-add { margin-left: auto; background: #fff; color: var(--ink); border: none; border-radius: 999px;
+    padding: 9px 16px; font-size: 12.5px; font-weight: 800; font-family: var(--sans); }
+  .meal:hover .meal-add { background: var(--coral); color: #fff; }
+  /* ---- buy or make ---- */
+  .mk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+  .mk-card { border: 1px solid var(--line); background: var(--card); border-radius: 15px; padding: 13px;
+    cursor: pointer; text-align: left; font-family: var(--sans); display: flex; flex-direction: column; gap: 8px; }
+  .mk-card:hover { border-color: #C9B894; }
+  .mk-title { font-family: var(--display); font-weight: 900; font-size: 16px; }
+  .mk-vs { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .mk-pill { border-radius: 999px; padding: 3px 9px; font-size: 12px; font-weight: 800; color: #fff; }
+  .mk-arrow { color: var(--ink-faint); font-weight: 700; }
+  .mk-note { font-size: 11.5px; color: var(--ink-faint); line-height: 1.4; }
+  .cmp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cmp-col { border: 1px solid var(--line); border-radius: 14px; padding: 13px; background: var(--card); }
+  .cmp-col.win { border-color: #9CC48A; background: #F6FBF4; }
+  .cmp-h { font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 7px; }
+  .cmp-score { display: inline-block; border-radius: 999px; color: #fff; font-weight: 800; font-size: 15px;
+    padding: 4px 12px; margin-bottom: 7px; }
+  .cmp-name { font-size: 12.5px; font-weight: 600; line-height: 1.35; }
+  .cmp-meta { font-size: 11.5px; color: var(--ink-faint); margin-top: 3px; }
+  .cmp-ings { font-size: 11.5px; color: var(--ink-soft); margin-top: 9px; line-height: 1.5;
+    max-height: 132px; overflow-y: auto; }
+  .cmp-li { display: flex; gap: 7px; align-items: baseline; padding: 3px 0; }
+  .cmp-li b { flex: 0 0 auto; font-size: 11px; border-radius: 999px; color: #fff; padding: 1px 6px; }
+  .cmp-why { font-size: 12.5px; color: var(--ink); line-height: 1.5; background: #FBF3D6;
+    border-radius: 11px; padding: 10px 12px; margin-top: 12px; }
+  .list-thumbs { display: flex; gap: -8px; flex: 1; overflow-x: auto; }
+  .list-thumb-wrap { position: relative; flex: 0 0 auto; margin-right: 8px; }
+  .list-thumb { width: 46px; height: 46px; border-radius: 12px; background: #FBF5E8; border: 2px solid var(--line); object-fit: contain; padding: 4px; }
+  .list-thumb-x {
+    position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%; background: var(--ink);
+    color: #fff; border: none; display: grid; place-items: center; cursor: pointer; font-size: 10px;
+  }
+  .list-summary { font-family: var(--display); font-weight: 800; font-size: 15px; white-space: nowrap; }
+  .list-summary span { font-weight: 500; font-size: 12px; color: var(--ink-faint); display: block; }
+
+  /* --------------------------------------------------- score breakdown */
+  .detail-overlay { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 20px; }
+  .detail-overlay[hidden] { display: none; }
+  .detail-backdrop { position: absolute; inset: 0; background: rgba(43,33,24,.42); }
+  .detail-panel {
+    position: relative; background: var(--card); border-radius: 22px; padding: 24px;
+    max-width: 420px; width: 100%; max-height: 80vh; overflow-y: auto;
+    box-shadow: 0 24px 60px rgba(43,33,24,.28);
+  }
+  .detail-close {
+    position: absolute; top: 16px; right: 16px; width: 30px; height: 30px; border-radius: 50%;
+    border: none; background: var(--bg); color: var(--ink-soft); cursor: pointer; display: grid; place-items: center;
+  }
+  .detail-close:hover { background: var(--line); }
+  .detail-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; padding-right: 30px; }
+  .detail-thumb { width: 56px; height: 56px; flex: 0 0 56px; border-radius: 12px; background: #FBF5E8; border: 2px solid var(--line); object-fit: contain; padding: 4px; }
+  .detail-meta { flex: 1; min-width: 0; }
+  .detail-brand { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); }
+  .detail-name { font-size: 14.5px; font-weight: 700; line-height: 1.3; margin: 2px 0 4px; }
+  .detail-aisle { font-size: 12px; color: var(--accent, var(--coral)); font-weight: 600; }
+  .detail-score {
+    font-family: var(--display); font-weight: 900; font-size: 18px; color: #fff;
+    width: 44px; height: 44px; flex: 0 0 44px; border-radius: 50%; display: grid; place-items: center;
+  }
+  .detail-rows { display: flex; flex-direction: column; gap: 12px; }
+  .detail-row { padding: 10px 12px; background: var(--bg); border-radius: 12px; }
+  .detail-row-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); margin-bottom: 3px; }
+  .detail-row-exp { font-size: 13.5px; color: var(--ink); line-height: 1.4; }
+  .detail-empty { font-size: 13.5px; color: var(--ink-faint); font-style: italic; text-align: center; padding: 10px 0; }
+
+  /* ---------------------------------------------------------------- mobile
+     This app's real use is one-handed, in an aisle, on a phone - and until
+     2026-09-18 the page had no media queries at all. At 375px the stats pill
+     collided with the logo, the heading ate two lines of a small screen, the
+     search placeholder was cut off mid-word and the card grid fell to a
+     single column, so you saw one product per scroll.
+
+     Everything below is layout only. No scores, data or behaviour change. */
+
+  /* ---- meal panel -------------------------------------------------------
+     Tapping a meal opens this, not the shopping list. It shows what the meal
+     WOULD put on your list, then hands it over with one button. Nothing here
+     is tickable on purpose: there is one list you shop from and this is not
+     it. */
+  .meal-hero { position: relative; border-radius: 14px; overflow: hidden; height: 148px; }
+  .meal-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .meal-hero-scrim { position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(28,24,18,.85) 0%, rgba(28,24,18,.5) 55%, rgba(28,24,18,.12) 100%); }
+  .meal-hero-txt { position: absolute; left: 16px; right: 16px; bottom: 12px; color: #fff; }
+  .meal-hero-txt b { display: block; font-family: var(--display); font-size: 22px; font-weight: 900; line-height: 1.15; }
+  .meal-hero-txt span { font-size: 12.5px; opacity: .85; }
+  .mp-head { display: flex; justify-content: space-between; align-items: baseline;
+    margin: 15px 2px 2px; font-size: 12.5px; color: var(--ink-faint); }
+  .mp-row { display: flex; align-items: center; gap: 11px; padding: 9px 2px; border-bottom: 1px solid var(--line); }
+  .mp-row:last-of-type { border-bottom: none; }
+  .mp-score { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 9px; color: #fff;
+    display: grid; place-items: center; font-family: var(--display); font-weight: 900; font-size: 14px; }
+  .mp-score.none { background: #CFC3AC; }
+  .mp-main { flex: 1; min-width: 0; }
+  .mp-want { font-size: 13.5px; font-weight: 700; }
+  .mp-pick { font-size: 12px; color: var(--ink-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mp-on { flex: 0 0 auto; font-size: 11.5px; font-weight: 700; color: var(--green); }
+  .big-btn { width: 100%; background: var(--ink); color: #fff; border: none; border-radius: 999px;
+    padding: 14px; font-size: 14.5px; font-weight: 800; font-family: var(--sans); cursor: pointer; margin-top: 15px; }
+  .big-btn[disabled] { opacity: .4; cursor: default; }
+
+  /* ---- taking the list out of this website ------------------------------
+     The phone in the store is the point. Share hands the list to whatever
+     list app they actually use; copy is the fallback everywhere else. */
+  .list-export { display: flex; gap: 8px; margin-top: 12px; }
+  .list-export button { flex: 1; background: var(--card); border: 1px solid var(--line);
+    border-radius: 999px; padding: 11px; font-size: 13px; font-weight: 700;
+    font-family: var(--sans); color: var(--ink); cursor: pointer; }
+  .list-export button:hover { background: #F7EFE1; }
+
+  /* ---- tabs + dinner flowchart -------------------------------------------
+     The flowchart is a few big buttons, not a form: each answer narrows the
+     meals and every button says how many would be left, so pressing one is
+     never a leap of faith. */
+  .tabs { display: flex; gap: 6px; margin: 0 0 18px; background: var(--card); border: 2px solid var(--line);
+    border-radius: 999px; padding: 4px; width: fit-content; }
+  .tab { border: none; background: none; font-family: var(--sans); font-weight: 800; font-size: 13.5px;
+    padding: 9px 18px; border-radius: 999px; color: var(--ink-soft); cursor: pointer; }
+  .tab.active { background: var(--ink); color: #fff; }
+  .dq { max-width: 640px; margin: 0 auto; }
+  .dq-prog { font-size: 12px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); }
+  .dq h2 { font-family: var(--display); font-weight: 900; font-size: 30px; margin: 6px 0 16px; line-height: 1.15; }
+  .dq-opts { display: grid; gap: 10px; }
+  .dq-opt { display: flex; justify-content: space-between; align-items: center; text-align: left;
+    background: var(--card); border: 2px solid var(--line); border-radius: 16px; padding: 17px 18px;
+    font-family: var(--sans); font-size: 16px; font-weight: 800; color: var(--ink); cursor: pointer; }
+  .dq-opt:hover:not([disabled]) { border-color: var(--coral); }
+  .dq-opt[disabled] { opacity: .38; cursor: default; }
+  .dq-opt small { font-size: 12.5px; font-weight: 700; color: var(--ink-faint); }
+  .dq.dq-ask { max-width: none; }
+  .dq-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+  .dq-bars { display: flex; gap: 5px; }
+  .dq-bars i { width: 34px; height: 5px; border-radius: 3px; background: var(--line); }
+  .dq-bars i.done { background: var(--brand); opacity: .45; }
+  .dq-bars i.now { background: var(--brand); }
+  .dq-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .dq-tile { position: relative; aspect-ratio: 4 / 3; border: none; border-radius: 18px; overflow: hidden; padding: 0;
+    background: var(--brand); cursor: pointer; text-align: left; font-family: var(--sans); color: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06); transition: transform .15s, box-shadow .15s; }
+  .dq-tile:hover:not([disabled]) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(15,90,67,.18); }
+  .dq-tile:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+  .dq-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .dq-tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,.72)); }
+  .dq-tile-txt { position: absolute; left: 16px; right: 16px; bottom: 14px; z-index: 1; }
+  .dq-tile-txt b { display: block; font-family: var(--display); font-size: 22px; font-weight: 650; line-height: 1.1; }
+  .dq-tile-txt small { display: block; margin-top: 3px; font-size: 13px; font-weight: 600; opacity: .88; }
+  .dq-tile[disabled] { cursor: default; filter: grayscale(1); opacity: .45; }
+  .dq-collage { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .dq-collage img { position: static; }
+  @media (max-width: 600px) {
+    .dq-tiles { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .dq-tile { border-radius: 14px; }
+    .dq-tile-txt { left: 12px; right: 10px; bottom: 10px; }
+    .dq-tile-txt b { font-size: 17px; }
+    .dq-tile-txt small { font-size: 12px; }
+  }
+  .dq-foot { display: flex; gap: 14px; margin-top: 16px; flex-wrap: wrap; }
+  .dq-link { background: none; border: none; font-family: var(--sans); font-size: 13.5px; font-weight: 700;
+    color: var(--ink-soft); text-decoration: underline; cursor: pointer; padding: 4px 0; }
+  .dq-chips { display: flex; gap: 7px; flex-wrap: wrap; margin: 0 0 14px; }
+  .dq-chip { background: var(--card); border: 2px solid var(--line); border-radius: 999px; padding: 6px 12px;
+    font-family: var(--sans); font-size: 12.5px; font-weight: 800; color: var(--ink); cursor: pointer; }
+  .dq-chip:after { content: " \00d7"; color: var(--ink-faint); }
+  .dq-results-head { display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    flex-wrap: wrap; margin: 0 0 14px; }
+  .dq-results-head h2 { margin: 0; font-size: 26px; }
+  .dq-surprise { background: var(--coral); color: #fff; border: none; border-radius: 999px; padding: 11px 20px;
+    font-family: var(--sans); font-size: 14px; font-weight: 800; cursor: pointer; }
+  .meals-more { display: block; margin: 14px auto 0; background: var(--card); border: 2px solid var(--line);
+    border-radius: 999px; padding: 10px 20px; font-family: var(--sans); font-size: 13.5px; font-weight: 800;
+    color: var(--ink); cursor: pointer; }
+
+  /* ---- weekly planner ---------------------------------------------------- */
+  .pl { max-width: 720px; margin: 0 auto; }
+  .pl-head h2 { font-family: var(--display); font-weight: 900; font-size: 30px; margin: 0 0 4px; line-height: 1.15; }
+  .pl-head p { margin: 0 0 16px; color: var(--ink-soft); font-size: 14px; line-height: 1.5; }
+  .pl-summary { position: sticky; top: 8px; z-index: 5; background: var(--card); border: 2px solid var(--line);
+    border-radius: 16px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 18px; box-shadow: 0 6px 18px rgba(43,33,24,.08); }
+  .pl-stats { flex: 1 1 200px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.4; }
+  .pl-stats b { color: var(--ink); font-family: var(--display); font-size: 17px; }
+  .pl-add { background: var(--ink); color: #fff; border: none; border-radius: 999px; padding: 12px 20px;
+    font-family: var(--sans); font-size: 14px; font-weight: 800; cursor: pointer; }
+  .pl-add[disabled] { opacity: .35; cursor: default; }
+  .pl-slot { margin: 0 0 22px; }
+  .pl-slot h3 { font-size: 12px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--ink-faint); margin: 0 0 8px 2px; display: flex; gap: 8px; align-items: baseline; }
+  .pl-row, .pl-sug { display: flex; align-items: center; gap: 11px; background: var(--card);
+    border: 2px solid var(--line); border-radius: 14px; padding: 8px 10px; margin: 0 0 7px; width: 100%;
+    text-align: left; font-family: var(--sans); color: var(--ink); }
+  .pl-sug { cursor: pointer; }
+  .pl-sug:hover { border-color: var(--coral); }
+  .pl-row img, .pl-sug img { width: 52px; height: 52px; border-radius: 10px; object-fit: cover; flex: 0 0 auto; }
+  .pl-t { flex: 1; min-width: 0; font-size: 14px; font-weight: 800; }
+  .pl-t small { display: block; font-size: 12px; font-weight: 500; color: var(--ink-faint);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pl-sc { flex: 0 0 auto; min-width: 32px; height: 32px; border-radius: 9px; color: #fff; display: grid;
+    place-items: center; font-family: var(--display); font-weight: 900; font-size: 13px; }
+  .pl-x { flex: 0 0 auto; background: none; border: none; font-size: 18px; color: var(--ink-faint);
+    cursor: pointer; width: 34px; height: 34px; border-radius: 50%; }
+  .pl-x:hover { background: #F7EFE1; color: var(--ink); }
+  .pl-row > .pl-row { min-width: 0; }   /* the tappable part of a planned meal: shrink, don't push the remove button off the card */
+  .pl-plus { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: #fff;
+    display: grid; place-items: center; font-size: 18px; font-weight: 800; }
+  .pl-input { width: 100%; border: 2px solid var(--line); border-radius: 999px; padding: 12px 16px; font-size: 15px;
+    font-family: var(--sans); background: var(--card); color: var(--ink); margin: 2px 0 8px; outline: none; }
+  .pl-input:focus { border-color: var(--coral); }
+  .pl-msg { font-size: 12.5px; color: #B4432B; min-height: 0; margin: -2px 0 6px 6px; }
+  .pl-sugg-h { font-size: 12px; color: var(--ink-faint); margin: 2px 0 6px 6px; }
+  .pl-empty { font-size: 13px; color: var(--ink-faint); margin: 0 0 8px 6px; }
+  .pl-foot { margin-top: 6px; }
+
+  /* ---- recipe import ----------------------------------------------------- */
+  .im { max-width: 720px; margin: 0 auto; }
+  .im-head h2 { font-family: var(--display); font-weight: 900; font-size: 30px; margin: 0 0 4px; line-height: 1.15; }
+  .im-head p { margin: 0 0 14px; color: var(--ink-soft); font-size: 14px; line-height: 1.5; }
+  .im-box { width: 100%; min-height: 96px; border: 2px solid var(--line); border-radius: 16px; padding: 13px 15px;
+    font-family: var(--sans); font-size: 15px; background: var(--card); color: var(--ink); resize: vertical; outline: none; }
+  .im-box:focus { border-color: var(--coral); }
+  .im-actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0 6px; }
+  .im-btn { background: var(--ink); color: #fff; border: none; border-radius: 999px; padding: 12px 20px; min-height: 44px;
+    font-family: var(--sans); font-size: 14px; font-weight: 800; cursor: pointer; }
+  .im-btn.alt { background: var(--card); color: var(--ink); border: 2px solid var(--line); }
+  .im-btn[disabled] { opacity: .4; cursor: default; }
+  .im-share { margin: 0 0 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); padding: 0 14px; }
+  .im-share summary { cursor: pointer; font-weight: 700; font-size: 14px; padding: 12px 0; min-height: 40px; box-sizing: border-box; }
+  .im-share p, .im-share li { font-size: 13.5px; line-height: 1.5; color: var(--ink-soft); }
+  .im-share ol { padding-left: 20px; margin: 6px 0 10px; }
+  .im-share h4 { margin: 14px 0 4px; font-size: 14px; }
+  .im-share .im-btn { margin: 4px 0 8px; }
+  .im-bookmarklet { display: inline-block; min-height: 40px; box-sizing: border-box; line-height: 24px; padding: 8px 12px; border-radius: 999px; background: #2B2118; color: #fff !important;
+    text-decoration: none; font-weight: 700; font-size: 13px; margin: 4px 0; }
+  .im-msg { font-size: 13.5px; color: var(--ink-soft); min-height: 20px; margin: 4px 2px 10px; line-height: 1.45; }
+  .im-msg.err { color: #B4432B; }
+  .im-ai { font-size: 12.5px; color: var(--ink-faint); margin: 0 2px 14px; }
+  .im-title { font-family: var(--display); font-weight: 900; font-size: 20px; margin: 4px 2px 2px; }
+  .im-sub { font-size: 12.5px; color: var(--ink-faint); margin: 0 2px 12px; }
+  .im-row { display: flex; gap: 6px; background: var(--card); border: 2px solid var(--line); border-radius: 14px;
+    padding: 8px 10px 10px 4px; margin: 0 0 8px; }
+  .im-row.off { opacity: .5; }
+  .im-inc { flex: 0 0 auto; width: 40px; min-height: 40px; display: grid; place-items: center; cursor: pointer; }
+  .im-inc input { width: 20px; height: 20px; accent-color: var(--ink); }
+  .im-body { flex: 1; min-width: 0; }
+  .im-term { width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 0 10px; height: 40px; font-size: 15px;
+    font-weight: 700; font-family: var(--sans); color: var(--ink); background: #FDFBF6; }
+  .im-raw { font-size: 12px; color: var(--ink-faint); margin: 4px 2px 0; line-height: 1.35; }
+  .im-amt { display: inline-block; background: #F3E9D8; border-radius: 999px; padding: 1px 8px; font-size: 11.5px;
+    font-weight: 800; color: var(--ink-soft); margin-right: 6px; }
+  .im-match { display: flex; align-items: center; gap: 9px; margin-top: 8px; }
+  .im-match img, .im-match .im-noimg { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; background: #FBF5EA; flex: 0 0 auto; }
+  .im-mname { flex: 1; min-width: 0; font-size: 13px; font-weight: 600; line-height: 1.3; }
+  .im-mname small { display: block; font-size: 11.5px; font-weight: 500; color: var(--ink-faint); }
+  .im-tag { display: inline-block; margin-top: 6px; font-size: 11.5px; font-weight: 800; border-radius: 8px; padding: 3px 8px; }
+  .im-tag.warn { background: #FFF1D6; color: #8A5A00; }
+  .im-tag.none { background: #FBE3DC; color: #9C3A22; }
+  .im-swap { flex: 0 0 auto; border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 0 11px;
+    min-height: 40px; font-family: var(--sans); font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; }
+  .im-alts { margin: 8px 0 0 0; }
+  .im-alt { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; background: #FDFBF6; border: 1px solid var(--line);
+    border-radius: 10px; padding: 6px 8px; margin: 0 0 5px; font-family: var(--sans); font-size: 12.5px; color: var(--ink); cursor: pointer; min-height: 40px; }
+  .im-alt.cur { background: #EDF5E9; }
+  .im-toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-soft); min-height: 40px; cursor: pointer; }
+  .im-toggle input { width: 18px; height: 18px; accent-color: var(--ink); }
+  .list-export .clear-btn { color: #B4432B; border-color: #F0D5CC; }
+  .list-export .clear-btn.armed { background: #B4432B; color: #fff; border-color: #B4432B; }
+  .toast { position: fixed; left: 50%; bottom: 96px; z-index: 90; background: var(--ink); color: #fff;
+    padding: 11px 18px; border-radius: 999px; font-size: 13.5px; font-weight: 700; font-family: var(--sans);
+    opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(10px);
+    transition: opacity .18s ease, transform .18s ease; max-width: 88vw; text-align: center; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 14px 12px 32px; }
+
+    /* The pill wrapped and shoved itself into the logo. Let both shrink, and
+       drop the pill's border weight so it reads as a caption, not a button. */
+    .top { margin-bottom: 14px; gap: 10px; }
+    .logo { font-size: 19px; flex: 0 0 auto; }
+    .count-pill { font-size: 11px; padding: 5px 10px; border-width: 1px;
+      text-align: right; line-height: 1.3; }
+
+    .hero-search { margin: 16px 0 16px; }
+    .hero-search h1 { font-size: 21px; margin: 0 0 12px; line-height: 1.25; }
+    .search-pill { max-width: none; padding: 11px 14px; }
+    /* Keep the input at 16px: anything smaller makes iOS Safari zoom the
+       whole page in on focus, which is worse than a cramped placeholder. */
+    .search-pill input { font-size: 16px; min-width: 0; }
+
+    /* Two columns, not one. One product per scroll is useless for comparing,
+       which is the entire point of the page. */
+    /* minmax(0, 1fr), not 1fr: a bare 1fr cannot shrink below its content, so a card
+       whose price row did not fit grew past its half of the screen and made the
+       whole page scroll sideways at 360 px (found by the exact-width audit). */
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+    .card { padding: 10px; }
+    .card-img { height: 96px; }
+    .card-name { font-size: 12.5px; line-height: 1.3; }
+    .card-brand { font-size: 9.5px; }
+    .card-price { font-size: 12px; }
+    .card-unit { font-size: 10px; }
+    .warn-chip, .nut-chip { font-size: 9.5px; padding: 2px 6px; }
+    /* 36px is the smallest comfortable thumb target; the desktop size is
+       smaller than that. */
+    .add-fab { width: 36px; height: 36px; }
+
+    .filter-bar { padding: 0 12px; gap: 8px; }
+    .filter-panel { padding: 13px 12px; border-radius: 13px; }
+    .filter-opt { font-size: 12px; padding: 7px 11px; }
+    .filter-summary { font-size: 11.5px; }
+
+    /* Full-bleed sheet rather than a floating card - a centred panel with
+       margins wastes a third of a phone screen. */
+    .detail-overlay { padding: 0; align-items: end; }
+    .detail-panel { max-width: none; width: 100%; max-height: 92vh;
+      border-radius: 18px 18px 0 0; padding-bottom: 28px; }
+    .detail-nutflag { flex: 1 1 100%; }
+
+    .list-bar-inner { gap: 10px; }
+    .sheet { padding: 0; align-items: end; }
+    .sheet-panel { max-width: none; max-height: 92vh; border-radius: 18px 18px 0 0; }
+    .sheet-body { padding: 12px 14px 20px; }
+    .swap-row { padding-left: 14px; }
+    .meal-grid { grid-template-columns: 1fr; gap: 11px; }
+    .meal { min-height: 168px; aspect-ratio: 16 / 9; }
+    .meal-title { font-size: 21px; max-width: 86%; }
+    .meal-sub { max-width: 84%; }
+    .mk-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cmp-cols { grid-template-columns: 1fr; }
+    .list-open-btn { padding: 9px 14px; font-size: 12.5px; }
+    /* ---- tap targets (phone pass, 2026-09-30) -------------------------------
+       An audit at 360/375/414 px found 40+ controls under 40 px. The ones that
+       matter most are in the in-store flow: the tick-off boxes on the shopping
+       list were 23 px, the Swap/remove buttons 23 px, the close button on every
+       sheet 30 px. Small round controls keep their look and get an invisible
+       hit area instead; text buttons just get taller. */
+    .tab, .filter-toggle, .profile-pick, .list-open-btn, .filter-opt { min-height: 40px; }
+    .dq-link, .filter-clear { padding-top: 13px; padding-bottom: 13px; }
+    .dq-surprise { min-height: 44px; }
+    .add-fab { width: 40px; height: 40px; }
+    .pl-x { width: 40px; height: 40px; }
+    .sheet-close, .detail-close { width: 40px; height: 40px; }
+    .sev-btn { min-height: 40px; min-width: 40px; padding-left: 11px; padding-right: 11px; }
+    .li-btn { min-height: 40px; min-width: 40px; padding-left: 11px; padding-right: 11px; }
+    /* List rows: checkbox + photo + name + score + two buttons do not fit on one line
+       at phone width - the name was squeezed to a sliver and wrapped onto six lines.
+       The score and buttons drop to their own line under the name. */
+    .li { flex-wrap: wrap; row-gap: 6px; }
+    .li-right { flex: 1 1 100%; justify-content: flex-end; }
+    .li-check, .list-thumb-x { position: relative; }
+    .li-check::after, .list-thumb-x::after { content: ""; position: absolute; inset: -11px; }
+    .im-head h2 { font-size: 23px; }
+    .pl-head h2 { font-size: 23px; }
+    .pl-summary { top: 4px; }
+    .dq h2 { font-size: 23px; }
+    .dq-results-head h2 { font-size: 21px; }
+    .tab { padding: 8px 14px; font-size: 13px; }
+    .meal-hero { height: 120px; }
+    .meal-hero-txt b { font-size: 19px; }
+    .toast { bottom: 88px; }
+  }
+
+  /* Very narrow phones (iPhone SE and similar). */
+  @media (max-width: 400px) {
+    /* the score pill, price and per-ounce price do not fit on one line in a half-width card */
+    .card-foot-left { flex-wrap: wrap; row-gap: 1px; }
+  }
+  @media (max-width: 360px) {
+    .hero-search h1 { font-size: 19px; }
+    .card-img { height: 84px; }
+    .count-pill { font-size: 10px; }
+  }
+
+  /* ================================================================ theme v2
+     Design pass 2026-10-02, from the three sites the user likes:
+       Whole Foods - deep green + cream, big food photography, pill search, soft 8-12 px corners
+       Trader Joe's - serif headlines, generous white space, one confident accent
+       EWG         - a dark photo hero behind the search; scores on a best-to-worst scale
+     Kept as ONE override layer at the end of the stylesheet, so the old look is a delete away. */
+  :root {
+    --bg: #FAF6EE; --card: #FFFFFF; --line: #E7DFCF; --ink: #22302A; --ink-soft: #56625C; --ink-faint: #8A938D;
+    --brand: #0F5A43; --brand-dark: #0A4433; --brand-soft: #E4EFE8; --accent: #B8352B;
+    --coral: #0F5A43; --green: #2E8B57;
+    --display: 'Fraunces', Georgia, serif; --sans: 'DM Sans', system-ui, sans-serif;
+  }
+  body { font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  .logo, .hero-search h1, .im-head h2, .sheet-head h2, .meal-title, .meal-hero-txt b, .mk-title,
+  .pl-head h2, .dq h2, .dq-q, .list-total b, .detail-head h2 { font-weight: 650 !important; letter-spacing: -.01em; }
+
+  /* header: a full-width green band (Whole Foods' store bar) */
+  .top { background: var(--brand); color: #fff; margin: -24px 0 0; padding: 14px 0;
+    box-shadow: 0 0 0 100vmax var(--brand); clip-path: inset(0 -100vmax); }
+  .top { justify-content: flex-start; gap: 12px; }
+  .count-pill { margin-left: auto; }
+  .logo { color: #fff; font-size: 24px; }
+  .logo span { color: #F3D9A4; }
+  .count-pill { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.25); color: #fff; }
+  .back-btn { background: transparent; color: #fff; border-color: rgba(255,255,255,.45); }
+
+  /* tabs: quiet underline tabs instead of a pill switcher */
+  .tabs { background: transparent; border: none; border-bottom: 1px solid var(--line); border-radius: 0;
+    padding: 0; margin: 0 0 0; gap: 4px; overflow-x: auto; scrollbar-width: none; width: 100%; box-sizing: border-box; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { border-radius: 0; background: none !important; color: var(--ink-soft); font-weight: 600;
+    padding: 14px 12px 12px; border-bottom: 3px solid transparent; white-space: nowrap; }
+  .tab.active { color: var(--brand); border-bottom-color: var(--brand); }
+
+  /* hero: food photo with the question and the search on top of it (EWG / Whole Foods) */
+  .hero-search { position: relative; margin: 0 0 8px; padding: 64px 24px 58px; border-radius: 0 0 18px 18px;
+    background: #1F3A2E;
+    box-shadow: 0 0 0 100vmax transparent; }
+  .hero-search { overflow: hidden; isolation: isolate; }
+  .hero-bg { position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity 1.6s ease;
+    background: linear-gradient(180deg, rgba(12,30,22,.25), rgba(12,30,22,.62)), var(--img) center var(--y, 55%) / cover; }
+  .hero-bg.on { opacity: 1; }
+  .hero-search::before { content: 'Real ingredients · real scores · ShopRite of Cardiff'; display: block;
+    font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #F3D9A4; margin-bottom: 10px; }
+  .hero-search h1 { color: #fff; font-size: 40px; line-height: 1.1; margin-bottom: 22px; text-shadow: 0 2px 18px rgba(0,0,0,.25); }
+  .search-pill { border: none; box-shadow: 0 10px 30px rgba(0,0,0,.25); padding: 16px 22px; }
+
+  /* buttons: primary actions in brand green */
+  .tab.active, .filter-toggle.on { color: var(--brand); }
+  .filter-toggle.on { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .big-btn, .pl-add, .im-btn:not(.alt), .list-open-btn { background: var(--brand); }
+  .big-btn:hover, .pl-add:hover, .im-btn:not(.alt):hover, .list-open-btn:hover { background: var(--brand-dark); }
+  .filter-toggle, .profile-pick { border-color: var(--line); }
+
+  /* cards: white on cream, softer corners, a thin line instead of a thick border */
+  .card { border: 1px solid var(--line); border-radius: 14px; }
+  .card:hover { box-shadow: 0 12px 28px rgba(15,90,67,.10); }
+  .card-img { background: #F6F1E6; border-radius: 10px; }
+  .card-brand { color: var(--brand); opacity: .8; }
+  .card-name { font-weight: 500; font-size: 13.5px; }
+  .grade-chip { font-family: var(--sans); font-weight: 700; }
+
+  .detail-panel { border-radius: 18px; }
+  .detail-name { font-family: var(--display); font-weight: 600; font-size: 17px; }
+  .detail-brand, .detail-aisle { color: var(--brand); }
+  .detail-score { font-family: var(--sans); font-weight: 800; width: 52px; height: 52px; flex-basis: 52px; font-size: 19px; }
+  .detail-scale { margin: -4px 0 18px; }
+  .detail-scale-bar { position: relative; height: 10px; border-radius: 999px; margin: 20px 10px 6px;
+    background: linear-gradient(90deg, hsl(0,58%,45%), hsl(30,62%,48%), hsl(60,55%,42%), hsl(90,50%,40%), hsl(120,45%,36%)); }
+  .detail-scale-pin { position: absolute; top: 50%; transform: translate(-50%, -50%); min-width: 30px; height: 30px; padding: 0 6px;
+    border-radius: 999px; background: #fff; border: 2px solid var(--ink); display: grid; place-items: center;
+    font-weight: 800; font-size: 12px; color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+  .detail-scale-ends { display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-faint); padding: 0 4px; }
+  .detail-row { background: #F6F1E6; }
+  .detail-row-top { display: flex; justify-content: space-between; align-items: baseline; }
+  .detail-row-num { font-weight: 800; font-size: 13px; color: var(--ink-soft); }
+  .detail-row-bar { height: 5px; border-radius: 999px; background: #E7DFCF; margin: 4px 0 6px; overflow: hidden; }
+  .detail-row-bar i { display: block; height: 100%; border-radius: 999px; }
+  .detail-ings { margin: 0 0 16px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+  .detail-ings summary { display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+    min-height: 44px; padding: 0 14px; font-weight: 700; font-size: 14px; list-style: none; }
+  .detail-ings summary::-webkit-details-marker { display: none; }
+  .detail-ings summary::after { content: '▾'; color: var(--ink-faint); margin-left: 8px; transition: transform .15s; }
+  .detail-ings[open] summary::after { transform: rotate(180deg); }
+  .detail-ings-n { margin-left: auto; font-weight: 500; font-size: 12.5px; color: var(--ink-faint); }
+  .detail-ings[open] .detail-ings-n { visibility: hidden; }
+  .detail-ings-body { padding: 0 14px 12px; font-size: 13.5px; line-height: 1.6; color: var(--ink); text-transform: lowercase; }
+  .detail-ings-body::first-letter { text-transform: uppercase; }
+  .detail-ings mark { background: #FBE3DC; color: #8E2A1E; border-radius: 4px; padding: 0 3px; cursor: help; }
+  .detail-ings-key { padding: 0 14px 12px; font-size: 11.5px; color: var(--ink-faint); }
+  .detail-ings-none { padding: 12px 14px; font-size: 13px; color: var(--ink-faint); }
+  .meals-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .meals-actions .meals-more { margin: 0; min-height: 44px; border: 1px solid var(--line); }
+  #mealsShuffle { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .detail-gap { background: #FBF3D6; color: #6E5410; border-radius: 12px; padding: 10px 13px; font-size: 12.5px; line-height: 1.45; margin: 0 0 14px; }
+  .tab-list { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; }
+  .tab-count { background: var(--brand); color: #fff; border-radius: 999px; font-size: 11px; font-weight: 800;
+    min-width: 20px; height: 20px; padding: 0 6px; display: inline-grid; place-items: center; }
+  .tab-count[hidden] { display: none; }
+  .pick-back { background: none; border: none; color: var(--brand); font: inherit; font-weight: 700; font-size: 14px;
+    padding: 0; min-height: 40px; cursor: pointer; }
+  .pick-count { font-size: 12px; color: var(--ink-faint); margin: 2px 2px 8px; }
+  .pick-list { display: flex; flex-direction: column; gap: 8px; }
+  .pick-row { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: #fff;
+    border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; cursor: pointer; font: inherit; color: var(--ink); }
+  .pick-row:hover { border-color: var(--brand); }
+  .pick-row.current { border-color: var(--brand); background: var(--brand-soft); }
+  .pick-img { width: 48px; height: 48px; flex: 0 0 48px; border-radius: 8px; background: #F6F1E6; display: grid; place-items: center; overflow: hidden; }
+  .pick-img img { max-width: 90%; max-height: 90%; object-fit: contain; }
+  .pick-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .pick-rec { align-self: flex-start; background: var(--brand); color: #fff; font-size: 10.5px; font-weight: 800;
+    letter-spacing: .04em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; }
+  .pick-name { font-size: 13.5px; font-weight: 600; line-height: 1.3; }
+  .pick-meta { font-size: 12px; color: var(--ink-faint); }
+  .pick-more, .pick-text { display: block; width: 100%; margin-top: 10px; min-height: 44px; border: 1px dashed var(--line);
+    background: none; border-radius: 12px; font: inherit; font-weight: 700; color: var(--brand); cursor: pointer; }
+  .mk-actions { flex-wrap: wrap; gap: 10px; }
+  .mk-recipe { flex: 1 1 100%; display: flex; align-items: center; justify-content: center; min-height: 48px; border-radius: 999px;
+    background: #fff; border: 2px solid var(--brand); color: var(--brand); font-weight: 800; font-size: 15px; text-decoration: none; }
+  .mk-recipe:hover { background: var(--brand-soft); }
+  .scan-btn { display: inline-flex; align-items: center; gap: 8px; margin: 14px auto 0; min-height: 44px; padding: 0 18px;
+    border-radius: 999px; border: 1.5px solid rgba(255,255,255,.75); background: rgba(255,255,255,.12); color: #fff;
+    font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; backdrop-filter: blur(4px); }
+  .scan-btn[hidden] { display: none; }
+  .scan-btn:hover { background: rgba(255,255,255,.22); }
+  .searched .scan-btn { margin-top: 10px; }
+  .scan-wait { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; padding: 30px 10px; }
+  .scan-wait b { font-size: 16px; } .scan-wait span { color: var(--ink-soft); font-size: 13.5px; line-height: 1.5; }
+  .scan-wait .big-btn { margin-top: 10px; }
+  .scan-tip { font-size: 12.5px !important; color: var(--ink-faint) !important; max-width: 320px; }
+  .scan-spin { width: 34px; height: 34px; border-radius: 50%; border: 4px solid var(--brand-soft); border-top-color: var(--brand); animation: spin 0.9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .scan-thumb { display: grid; place-items: center; color: var(--brand); }
+  .scan-note { font-size: 12.5px; color: var(--ink-soft); background: var(--brand-soft); border-radius: 10px; padding: 9px 12px; line-height: 1.45; margin: 0 0 14px; }
+  .scan-nut { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+  .scan-nut span { background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; font-size: 12.5px; }
+  .pl-sug { cursor: default; padding: 0 10px 0 0; }
+  .pl-sug-open { flex: 1; min-width: 0; display: flex; align-items: center; gap: 11px; background: none; border: none;
+    padding: 9px 0 9px 10px; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+  .pl-plus { border: none; cursor: pointer; font-size: 20px; font-weight: 700; display: grid; place-items: center; background: var(--brand); width: 40px; height: 40px; }
+  .pl-row u { text-decoration: none; color: var(--brand); font-weight: 700; }
+  /* ---- theme v2, part 2 (overnight 2026-10-02): the list, dinner and planner screens
+     still had v1's thick borders and heavy display-font numbers. */
+  #dinnerTab, #planTab, #importTab { padding-top: 20px; }
+  .dq-opt, .pl-row, .pl-sug, .pl-input, .add-item input, .im-box, .meals-more, .list-export button { border-width: 1px !important; border-color: var(--line); }
+  .dq-opt { border-radius: 14px; transition: border-color .12s, background .12s; }
+  .dq-opt:hover, .pl-sug:hover { border-color: var(--brand) !important; background: #fff; }
+  .pl-input:focus, .im-box:focus, .add-item input:focus { border-color: var(--brand) !important; outline: none; box-shadow: 0 0 0 3px var(--brand-soft); }
+  .pl-sc, .mp-score, .li-score, .meal-score, .grade-chip { font-family: var(--sans) !important; font-weight: 800 !important; }
+  .pl-sc, .mp-score { border-radius: 999px; min-width: 36px; }
+  .pl-x { color: var(--ink-faint); }
+  .add-item button { background: var(--brand); }
+  .li { border-radius: 14px; }
+  .li-check { border-color: #C9D4CD; border-radius: 7px; }
+  .li.done .li-check { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .li-btn { border-radius: 999px; font-weight: 700; }
+  /* The list is a floating pill: what's on it and its average score, one tap to open. */
+  .list-bar { left: 50%; right: auto; bottom: calc(14px + env(safe-area-inset-bottom)); padding: 0; background: none;
+    border: none !important; box-shadow: none; transform: translate(-50%, 160%); z-index: 40; }
+  .list-bar.open { transform: translate(-50%, 0); }
+  .list-pill { display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 8px 8px 8px 18px; border: none;
+    border-radius: 999px; background: var(--brand); color: #fff; font-family: var(--sans); cursor: pointer;
+    box-shadow: 0 12px 30px rgba(15,90,67,.35), 0 2px 6px rgba(0,0,0,.12); white-space: nowrap; }
+  .list-pill:hover { filter: brightness(1.08); }
+  .lp-txt { text-align: left; font-size: 15px; font-weight: 700; line-height: 1.15; }
+  .lp-txt small { display: block; font-size: 12px; font-weight: 500; opacity: .82; }
+  .lp-score { min-width: 38px; height: 38px; padding: 0 6px; border-radius: 999px; background: #fff; display: grid; place-items: center;
+    font-weight: 800; font-size: 15px; }
+  .lp-score[hidden] { display: none; }
+  .list-bar.bump .list-pill { animation: lpBump .45s ease; }
+  @keyframes lpBump { 0% { transform: scale(1); } 35% { transform: scale(1.08); } 100% { transform: scale(1); } }
+  @media (prefers-reduced-motion: reduce) { .list-bar, .list-bar.bump .list-pill { transition: none; animation: none; } }
+  .list-thumb { border: 1px solid var(--line); background: #F6F1E6; border-radius: 10px; }
+  .list-summary { font-family: var(--sans) !important; }
+  .aisle-head { color: var(--brand); }
+  .dq-prog { color: var(--brand); }
+  .pl-slot h3 { color: var(--brand); }
+  .sheet-head h2 { font-size: 24px; }
+  .searched .hero-search { padding: 18px 24px; border-radius: 0 0 14px 14px; }
+  .searched .hero-search h1, .searched .hero-search::before { display: none; }
+  .add-fab { background: var(--brand); }
+  .add-fab:hover { background: var(--brand-dark); }
+  .add-fab.added { background: var(--green); }
+
+  .t-short { display: none; }
+  @media (max-width: 600px) {
+    .t-long { display: none; } .t-short { display: inline; }
+    .tabs { justify-content: space-between; }
+    .tab { padding: 13px 10px 11px; }
+    .count-pill { display: none; }
+    .hero-search::before { display: none !important; }
+    .top { margin-top: -24px; }
+    .hero-search { padding: 40px 16px 36px; border-radius: 0 0 14px 14px; }
+    .hero-search h1 { font-size: 29px; }
+    .hero-search::before { font-size: 10.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <button class="back-btn" id="backBtn" hidden aria-label="Go back">← Back</button>
+    <div class="logo">grocery<span>scorer</span></div>
+    <div class="count-pill" id="stat">loading…</div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="shop" role="tab">Shop</button>
+    <button class="tab" data-tab="dinner" role="tab"><span class="t-long">What's for dinner?</span><span class="t-short">Dinner</span></button>
+    <button class="tab" data-tab="plan" role="tab"><span class="t-long">Plan my week</span><span class="t-short">My week</span></button>
+    <button class="tab" data-tab="import" role="tab"><span class="t-long">Import recipe</span><span class="t-short">Import</span></button>
+    <button class="tab tab-list" id="listTab" type="button"><span class="t-long">My list</span><span class="t-short">List</span><span class="tab-count" id="listTabCount" hidden></span></button>
+  </div>
+
+  <div id="shopTab">
+  <div class="hero-search">
+    <div class="hero-bg" id="heroBgA"></div><div class="hero-bg" id="heroBgB"></div>
+    <h1>What are you shopping for today?</h1>
+    <div class="search-pill">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="q" type="text" placeholder="peanut butter, yogurt, brands…" autocomplete="off" enterkeyhint="search">
+    </div>
+    <button class="scan-btn" id="scanBtn" type="button" hidden>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+      Scan a label
+    </button>
+    <input type="file" id="scanFile" accept="image/*" capture="environment" hidden>
+  </div>
+
+  <div class="filter-bar">
+  <button class="filter-toggle" id="filterToggle">Filters</button>
+  <button class="profile-pick" id="profileBtn">Ingredients first</button>
+  <span class="filter-summary" id="filterSummary"></span>
+</div>
+<div class="profile-panel" id="profilePanel" hidden></div>
+<div class="filter-panel" id="filterPanel" hidden></div>
+<div class="grid" id="results">
+    <div class="empty-state">Search to see real products with photos, straight from the shelf.</div>
+  </div>
+  </div>
+
+  <div id="dinnerTab" hidden></div>
+  <div id="planTab" hidden></div>
+  <div id="importTab" hidden></div>
+</div>
+
+<div class="list-bar" id="listBar">
+  <button class="list-pill" id="listOpenBtn" aria-label="Open my shopping list">
+    <svg class="lp-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.4" fill="currentColor"/><circle cx="4.5" cy="12" r="1.4" fill="currentColor"/><circle cx="4.5" cy="18" r="1.4" fill="currentColor"/></svg>
+    <span class="lp-txt" id="listSummary"></span>
+    <span class="lp-score" id="listScore"></span>
+  </button>
+</div>
+
+<div class="sheet" id="listSheet" hidden></div>
+
+<div class="detail-overlay" id="detailOverlay" hidden></div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Version query is a one-time cache bust: entries cached BEFORE
+     scripts/serve.py started sending no-store keep their heuristic
+     freshness and are never revalidated. Bump it if a JS change ever
+     appears not to take effect. -->
+<script src="proto_shared.js?v=34"></script>
+<script>
+let MY_LIST = [];
+
+function cardImg(p) {
+  return p.image_url
+    ? `<img src="${p.image_url}" loading="lazy" onerror="this.parentElement.innerHTML=''">`
+    : '';
+}
+const WARN_ICON = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.2 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.2a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>`;
+
+/* Show only the MOST serious level on the card - a stack of chips on a small
+   card is noise, and the detail panel lists every one with its citation. */
+function warnChip(sku) {
+  const d = GS.scoredDetail(sku);
+  const w = d && d.carcinogens && d.carcinogens.length ? d.carcinogens[0] : null;
+  if (!w) return '';
+  const labels = { known: 'Carcinogen', probable: 'Probable', possible: 'Possible' };
+  const all = d.carcinogens.map(x => `${x.label} (${x.classification})`).join(' · ');
+  return `<span class="warn-chip warn-${w.level}" title="${all}">${WARN_ICON}${labels[w.level] || 'Warning'}</span>`;
+}
+
+/* One chip on the card (the most significant); the full set with numbers
+   lives in the detail panel. */
+function nutChip(sku) {
+  const d = GS.scoredDetail(sku);
+  if (!d) return '';
+  // Ingredient banners come first - "Seed oil" is a stronger statement about
+  // the product than "high in sodium", and only one chip fits on a card.
+  const ing = d.ingredient_banners || [];
+  if (ing.length) {
+    const all = ing.map(x => `${x.label} - ${x.detail}`).join(' · ');
+    return `<span class="nut-chip ing-chip" title="${all}">${ing[0].label}</span>`;
+  }
+  const f = (d.nutrition_flags || [])[0];
+  if (f) {
+    const all = d.nutrition_flags.map(x => `${x.label} - ${x.detail}`).join(' · ');
+    return `<span class="nut-chip" title="${all}">${f.label}</span>`;
+  }
+  // Weakest signal of the three, so it only claims the card's single chip
+  // slot when there is nothing more concrete to say. Absent entirely when
+  // scripts/price_signal.py is disabled or was never run.
+  const pf = (d.price_flags || [])[0];
+  if (!pf) return '';
+  return `<span class="nut-chip price-chip" title="${pf.detail} — ${pf.basis}">${pf.label}</span>`;
+}
+
+/* Price on the card, with a per-unit figure when the size is parseable -
+   that is the number you actually compare across brands. */
+function priceBit(sku) {
+  const price = GS.priceFor(sku);
+  if (!price) return '';
+  const u = GS.unitPrice(sku);
+  return `<span class="card-price">${price}</span>` +
+         (u ? `<span class="card-unit">$${u.perOz.toFixed(2)}/${u.unit}</span>` : '');
+}
+
+function gradeChip(sku) {
+  const s = GS.scoreFor(sku);
+  if (s == null) return `<div class="grade-chip none">—</div>`;
+  return `<div class="grade-chip" style="background:${GS.scoreColor(s)}">${Math.round(s)}</div>`;
+}
+
+/* ------------------------------------------------------------------ filters
+   Allergen/diet filters SHOW ONLY products ShopRite itself tags, because
+   inferring an allergen from an ingredient list is not safe enough to hand
+   someone who is filtering for a medical reason. Ingredient-preference
+   filters HIDE confirmed matches and leave unknowns visible, because the
+   cost of being wrong is only annoyance. See proto_shared.js. */
+const DIET_FILTERS = [
+  ['Gluten Free', 'gluten free'], ['Dairy Free', 'dairy free'], ['Lactose Free', 'lactose free'],
+  ['Peanut Free', 'peanut free'], ['Soy Free', 'soy free'], ['Egg Free', 'egg free'],
+  ['Vegan', 'vegan'], ['Keto Friendly', 'keto friendly'], ['Paleo', 'paleo'],
+  ['Organic', 'organic'], ['Non GMO', 'non gmo'], ['Kosher', 'kosher'], ['Halal', 'halal'],
+];
+// Labels must match scorer.py's flagged_ingredients.json exactly.
+const AVOID_FILTERS = [
+  ['Seed & added oils', 'added oil'], ['Palm oil', 'palm oil'],
+  ['Hydrogenated oil', 'hydrogenated oil'], ['Added sugar', 'added sugar'],
+  ['Added color', 'added color'], ['Preservatives', 'preservative'],
+  ['Added flavoring', 'added flavoring'], ['Emulsifiers', 'emulsifier'],
+  ['Thickeners/stabilizers', 'thickener/stabilizer'], ['Isolated protein', 'isolated protein'],
+  ['Dough conditioner', 'dough conditioner'], ['Hydrolyzed protein', 'hydrolyzed protein'],
+  ['Mech. separated meat', 'mechanically separated meat'],
+  ['Artificial sweeteners', 'artificial sweetener'], ['Phosphoric acid', 'phosphoric acid'],
+];
+/* ---------------------------------------------------------------- profiles
+   A profile re-weights the sub-scores; it never changes the underlying facts
+   about a product, and it cannot beat a score cap. Switching one re-renders
+   results and re-picks every by-name item on the shopping list, because the
+   best peanut butter for "low sodium" is a different jar. */
+const PROFILE_KEY = 'groceryscorer_profile_v1';
+
+function renderProfilePanel() {
+  const all = GS.profiles();
+  const cur = GS.currentProfile();
+  document.getElementById('profileBtn').textContent = (all[cur] || {}).label || 'Ingredients first';
+  document.getElementById('profileBtn').classList.toggle('on', cur !== 'default');
+  const pm = GS.priceMode();
+  const PRICE_LABEL = { off: 'Best score', balanced: 'Balanced', cheaper: 'Cheaper' };
+  document.getElementById('profileBtn').textContent += pm === 'off' ? '' : ' · ' + PRICE_LABEL[pm].toLowerCase();
+  document.getElementById('profileBtn').classList.toggle('on', cur !== 'default' || pm !== 'off');
+  document.getElementById('profilePanel').innerHTML =
+    `<div class="price-head"><b>Price.</b> Scores never change. Among products that are already
+      good (within 10 points of the best for Balanced, 20 for Cheaper), the cheapest per ounce comes first.</div>
+     <div class="price-row">${['off', 'balanced', 'cheaper'].map(m =>
+       `<button class="price-opt ${m === pm ? 'on' : ''}" data-price="${m}">${PRICE_LABEL[m]}</button>`).join('')}</div>` +
+    Object.values(all).map(p => `
+      <button class="profile-opt ${p.name === cur ? 'on' : ''}" data-profile="${p.name}">
+        <b>${p.label}</b><span>${p.blurb}</span>
+        ${p.coverage_note ? `<em>${p.coverage_note}</em>` : ''}
+      </button>`).join('') +
+    `<div class="profile-note">Only the weighting changes — the ingredient and nutrition
+     facts are the same. Caps still apply under every profile: no preference lifts
+     cured meat above 50, a bottle of seed oil above 25, or pure sugar above 40.
+     <br>Keto and high-protein are deliberately missing: carbohydrate data covers
+     36% of the catalog and protein 41%, so those profiles would rank mostly on
+     data we don't have.</div>`;
+}
+
+const FILTER_KEY = 'groceryscorer_filters_v1';
+let FILTERS = { requireTags: [], avoidFlags: [] };
+
+function loadFilters() {
+  try {
+    const raw = localStorage.getItem(FILTER_KEY);
+    if (raw) { const f = JSON.parse(raw);
+      FILTERS = { requireTags: f.requireTags || [], avoidFlags: f.avoidFlags || [] }; }
+  } catch (e) {}
+}
+function saveFilters() {
+  try { localStorage.setItem(FILTER_KEY, JSON.stringify(FILTERS)); } catch (e) {}
+}
+function activeFilterCount() { return FILTERS.requireTags.length + FILTERS.avoidFlags.length; }
+
+function renderFilterPanel() {
+  const opt = (label, value, list, cls) => {
+    const on = list.includes(value);
+    return `<label class="filter-opt ${on ? 'on ' + cls : ''}">
+      <input type="checkbox" data-kind="${cls}" data-value="${value}" ${on ? 'checked' : ''}>
+      ${label}</label>`;
+  };
+  const anyDiet = FILTERS.requireTags.length > 0;
+  document.getElementById('filterPanel').innerHTML = `
+    <div class="filter-group">
+      <h4>Only show products labelled</h4>
+      <p>Uses ShopRite's own product labelling, not a guess from the ingredient list.</p>
+      <div class="filter-opts">${DIET_FILTERS.map(([l, v]) => opt(l, v, FILTERS.requireTags, 'diet')).join('')}</div>
+      ${anyDiet ? `<div class="filter-note"><b>Products without this label are hidden, not judged.</b>
+        ShopRite labels most but not all of its catalog, so some safe products are hidden too —
+        and a missing label is not proof a product contains the allergen. If you are avoiding
+        something for a medical reason, always check the package itself.</div>` : ''}
+    </div>
+    <div class="filter-group">
+      <h4>Hide products containing</h4>
+      <p>Based on the ingredient list. Products with no ingredient list stay visible, since we can't confirm either way.</p>
+      <div class="filter-opts">${AVOID_FILTERS.map(([l, v]) => opt(l, v, FILTERS.avoidFlags, 'avoid')).join('')}</div>
+    </div>
+    <div class="filter-group">
+      <h4>How harshly each ingredient counts</h4>
+      <p>These severities are my opinion, not a fact. Turn one off or change how much
+         it bites — scores update everywhere, including what the shopping list picks.</p>
+      ${Object.keys(GS.flagDefs()).sort().map(label => {
+        const sev = GS.severityOf(label);
+        const def = GS.flagDefs()[label];
+        const btn = (v, txt) => `<button class="sev-btn ${sev === v ? 'on' : ''} ${v === 0 ? 'off' : ''}"
+            data-sev="${v}" data-label="${label}">${txt}</button>`;
+        return `<div class="sev-row">
+          <div class="sev-name">${label}<small>${sev === def ? 'default' : `changed from ${def}`}</small></div>
+          <div class="sev-btns">${btn(0,'off')}${btn(1,'mild')}${btn(2,'strong')}${btn(3,'severe')}</div>
+        </div>`;
+      }).join('')}
+      <div class="profile-note">"severe" also caps the product at 50 however well it
+        scores otherwise. Caps that come from what a thing <em>is</em> — cured meat,
+        a bottle of seed oil, pure sugar — are not editable here.</div>
+      ${GS.flagsCustomised() ? `<div style="margin-top:10px"><button class="filter-clear" id="flagReset">Reset ingredient severities to default</button></div>` : ''}
+    </div>
+    <div class="filter-group"><button class="filter-clear" id="filterClear">Clear all filters</button></div>`;
+}
+
+function updateFilterSummary(hidden, unknown) {
+  const n = activeFilterCount();
+  document.getElementById('filterToggle').classList.toggle('on', n > 0);
+  document.getElementById('filterToggle').textContent = n ? `Filters (${n})` : 'Filters';
+  const el = document.getElementById('filterSummary');
+  if (!n || hidden == null) { el.textContent = ''; return; }
+  el.textContent = hidden
+    ? `${hidden} hidden by filters${unknown ? ` — ${unknown} of them simply have no label` : ''}`
+    : 'nothing hidden by filters';
+}
+
+let CURRENT_RESULTS = [];
+let VISIBLE_COUNT = 30;
+const PAGE_SIZE = 30;
+
+function renderResults(q, resetPaging) {
+  const box = document.getElementById('results');
+  // The photo hero is for arriving; once there are results it shrinks to a search bar.
+  document.body.classList.toggle('searched', !!q.trim());
+  if (!q.trim()) { box.innerHTML = renderMeals(); CURRENT_RESULTS = []; return; }
+
+  if (resetPaging !== false) {
+    const raw = GS.search(q);
+    const { kept, hidden, unknown } = GS.applyFilters(raw, FILTERS);
+    CURRENT_RESULTS = kept;
+    updateFilterSummary(hidden, unknown);
+    VISIBLE_COUNT = PAGE_SIZE;
+  }
+  if (!CURRENT_RESULTS.length) {
+    box.innerHTML = activeFilterCount()
+      ? `<div class="empty-state">Nothing matches "${esc(q)}" with these filters on.<br>Try clearing a filter — products ShopRite hasn't labelled are hidden by the "only show" filters.</div>`
+      // The crawl covers the 14 FOOD departments only, so household, pet,
+      // beauty and pharmacy genuinely are not here. Saying so beats letting
+      // someone conclude the search is broken.
+      : `<div class="empty-state">Nothing found for "${esc(q)}".<br>
+           This covers food only — the 14 grocery departments, not household,
+           pet, beauty or pharmacy.<br>Try a simpler word, or a brand name.</div>`;
+    return;
+  }
+
+  const dropped = GS.relaxedWord();
+  const relaxedNote = dropped
+    ? `<div class="relaxed">Nothing matched all of that, so we dropped <b>"${dropped}"</b> and searched for the rest.</div>`
+    : '';
+
+  const shown = CURRENT_RESULTS.slice(0, VISIBLE_COUNT);
+  const remaining = CURRENT_RESULTS.length - shown.length;
+  const pmode = GS.priceMode();
+  const priceNote = pmode === 'off' ? ''
+    : `<div class="relaxed">Price mode <b>${pmode}</b>: of the good picks, cheapest per ounce first. <a href="#" data-price-off>Back to best score</a></div>`;
+  box.innerHTML = priceNote + relaxedNote + shown.map(p => `
+    <div class="card" data-sku="${p.sku}">
+      <div class="card-img">${cardImg(p)}</div>
+      <div class="card-brand">${p.brand || '—'}</div>
+      <div class="card-name">${p.name}</div>
+      <div class="card-foot">
+        <div class="card-foot-left">${gradeChip(p.sku)}${priceBit(p.sku)}${warnChip(p.sku)}${nutChip(p.sku)}</div>
+        <button class="add-fab ${onList(p.sku) ? 'added' : ''}" data-sku="${p.sku}">
+          ${onList(p.sku)
+            ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>`
+            : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>`}
+        </button>
+      </div>
+    </div>`).join('')
+    + (remaining > 0
+        ? `<button class="show-more" id="showMoreBtn">Show ${Math.min(remaining, PAGE_SIZE)} more (${remaining} left of ${CURRENT_RESULTS.length})</button>`
+        : (CURRENT_RESULTS.length > PAGE_SIZE ? `<div class="results-end">That's all ${CURRENT_RESULTS.length} matches.</div>` : ''));
+}
+
+/* -------------------------------------------------------- score breakdown
+   Click any card (not the + button) to see why it scored what it did - the
+   explanation strings already live on each applicable sub_score, computed
+   by scorer.py. Only available for the ~1,750 hand-curated products; a
+   full-catalog-only hit shows a plain "not yet scored" message instead of
+   guessing. Aisle is shown the same way - "if applicable", since the full
+   crawl deliberately doesn't carry it. */
+/* The full ingredient list, behind a tap, with every flagged term highlighted so you can
+   see exactly which words cost the product points. Terms come from the same
+   flagged_ingredients.json the scorer uses, fetched once. The list is escaped first and
+   only then marked up - it is third-party text. */
+let FLAG_TERMS = null;
+async function flagTerms() {
+  if (FLAG_TERMS) return FLAG_TERMS;
+  try {
+    const defs = await (await fetch('/scripts/flagged_ingredients.json')).json();
+    FLAG_TERMS = Object.values(defs).flatMap(d => (d.terms || []).map(t => ({ t: t.toLowerCase(), label: d.label })))
+      .sort((a, b) => b.t.length - a.t.length);       // longest first: "high fructose corn syrup" before "corn syrup"
+  } catch (e) { FLAG_TERMS = []; }
+  return FLAG_TERMS;
+}
+function ingredientsHtml(text, terms) {
+  if (!terms.length) return esc(text);
+  // ONE pass over the text with every term in one pattern, longest first, so a shorter
+  // term can never match inside a phrase (or a tooltip) that is already highlighted.
+  // Look-alikes the scorer ignores ("sugar snap peas", "honeydew") are in the pattern
+  // too, and left unmarked.
+  const label = new Map(terms.map(x => [x.t, x.label]));
+  const alt = ['sugar snap', 'honeydew', ...terms.map(x => x.t)]
+    .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+  const re = new RegExp(`(^|[^a-z])((?:${alt})(?:e?s)?)(?![a-z])`, 'gi');     // plurals too: "natural flavors"
+  let out = '', last = 0, m;
+  while ((m = re.exec(text))) {
+    const start = m.index + m[1].length, word = m[2], w = word.toLowerCase();
+    const lab = label.get(w) || label.get(w.replace(/s$/, '')) || label.get(w.replace(/es$/, ''));
+    out += esc(text.slice(last, start)) + (lab ? `<mark title="Flagged: ${esc(lab)}">${esc(word)}</mark>` : esc(word));
+    last = start + word.length;
+    re.lastIndex = last;
+  }
+  return out + esc(text.slice(last));
+}
+
+/* --------------------------------------------------------------- label scanner
+   Photograph an ingredient label - any product, including ones the catalog doesn't
+   have - and get it scored on the spot. The AI only READS the label; the score comes
+   from scorer.py on the server, by the same rules as every catalog product
+   (scripts/label_ai.py). The photo is shrunk here first (a phone photo is 3-12 MB;
+   1600 px is plenty to read print and keeps the upload small). */
+function shrinkPhoto(file, maxSide = 1600) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, maxSide / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      resolve(c.toDataURL('image/jpeg', 0.85).split(',')[1]);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('unreadable')); };
+    img.src = url;
+  });
+}
+function scanOverlay(inner) {
+  const overlay = document.getElementById('detailOverlay');
+  overlay.innerHTML = `<div class="detail-backdrop"></div><div class="detail-panel">
+    <button class="detail-close" aria-label="Close"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    ${inner}</div>`;
+  overlay.hidden = false;
+}
+async function scanLabel(file) {
+  scanOverlay(`<div class="scan-wait"><div class="scan-spin"></div><b>Reading the label…</b><span>Usually 3-8 seconds.</span></div>`);
+  let r;
+  try {
+    const image = await shrinkPhoto(file);
+    r = await (await fetch('/api/label', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image, media_type: 'image/jpeg' }) })).json();
+  } catch (e) { r = { ok: false, error: "Couldn't send the photo - is the app's server running?" }; }
+  if (!r.ok) {
+    scanOverlay(`<div class="scan-wait"><b>Couldn't score that photo</b><span>${esc(r.error || 'Try again.')}</span>
+      <button class="big-btn" data-scan-again>Try another photo</button>
+      <span class="scan-tip">Tip: fill the frame with the ingredient list, hold the phone flat, and include the Nutrition Facts panel if it fits.</span></div>`);
+    return;
+  }
+  const rd = r.reading, sc = r.score, total = sc.total_score;
+  const terms = rd.ingredients ? await flagTerms() : [];
+  const subs = Object.entries(sc.sub_scores || {}).filter(([, v]) => v && v.applicable && v.explanation);
+  const NUT = { 'calories': ['Calories', ''], 'added Sugars': ['Added sugar', 'g'], 'total Sugars': ['Total sugar', 'g'],
+    'sodium': ['Sodium', 'mg'], 'saturated Fat': ['Saturated fat', 'g'], 'protein': ['Protein', 'g'], 'dietary Fiber': ['Fiber', 'g'] };
+  const nut = Object.entries(rd.nutrition || {}).map(([k, v]) => NUT[k] ? `<span><b>${v}${NUT[k][1]}</b> ${NUT[k][0].toLowerCase()}</span>` : '').join('');
+  scanOverlay(`
+    <div class="detail-head">
+      <div class="detail-thumb scan-thumb"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
+      <div class="detail-meta"><div class="detail-brand">Scanned label</div>
+        <div class="detail-name">${esc(rd.product_name || 'Scanned label')}</div>
+        ${rd.serving_size ? `<div class="detail-price">Per serving: ${esc(rd.serving_size)}</div>` : ''}</div>
+      ${total != null ? `<div class="detail-score" style="background:${GS.scoreColor(total)}">${Math.round(total)}</div>` : ''}
+    </div>
+    ${total != null ? `<div class="detail-scale"><div class="detail-scale-bar"><span class="detail-scale-pin" style="left:${Math.max(0, Math.min(100, total))}%">${GS.grade(total)}</span></div>
+      <div class="detail-scale-ends"><span>0 · avoid</span><span>100 · best</span></div></div>` : '<div class="detail-gap">Not enough was readable to score this. Try a closer photo.</div>'}
+    <div class="scan-note">Read from your photo by AI and scored by the same rules as every product here. Check the list below matches the label.${rd.ingredients_complete ? '' : ' <b>Part of the list was unreadable</b>, so the score may be off.'}${rd.problem ? ' ' + esc(rd.problem) : ''}</div>
+    ${(sc.nutrition_flags || []).length ? `<div class="detail-nutflags">${sc.nutrition_flags.map(f => `<div class="detail-nutflag"><b>${esc(f.label)}</b><span>${esc(f.detail)}</span></div>`).join('')}</div>` : ''}
+    ${rd.ingredients ? `<details class="detail-ings" open><summary><span>Ingredients</span></summary>
+      <div class="detail-ings-body">${ingredientsHtml(rd.ingredients, terms)}</div></details>` : ''}
+    ${nut ? `<div class="scan-nut">${nut}</div>` : ''}
+    ${subs.length ? `<div class="detail-rows">${subs.map(([key, v]) => `
+      <div class="detail-row"><div class="detail-row-top"><div class="detail-row-label">${GS.pretty(key)}</div>
+        ${typeof v.score === 'number' ? `<div class="detail-row-num">${Math.round(v.score)}</div>` : ''}</div>
+        ${typeof v.score === 'number' ? `<div class="detail-row-bar"><i style="width:${Math.max(3, Math.min(100, v.score))}%;background:${GS.scoreColor(v.score)}"></i></div>` : ''}
+        <div class="detail-row-exp">${esc(v.explanation)}</div></div>`).join('')}</div>` : ''}
+    <div class="scan-note" style="margin-top:12px">A scanned product has no aisle category or outside processing grade, so only its ingredients and nutrition are scored.</div>
+    <button class="big-btn" data-scan-again style="margin-top:12px">Scan another label</button>`);
+}
+
+async function renderBreakdown(sku) {
+  // Explanations are not in the page-load data; the first tap fetches them once.
+  if (!GS.detailReady()) await GS.ensureDetail();
+  const p = GS.product(sku) || GS.scoredDetail(sku);
+  if (!p) return;
+  const detail = GS.scoredDetail(sku);
+  const overlay = document.getElementById('detailOverlay');
+  const ingText = String((GS.product(sku) || {}).ingredients || '').trim();
+  const ingCount = ((detail && detail.sub_scores && detail.sub_scores.ingredient_simplicity) || {}).top_level_count || 0;
+  const terms = ingText ? await flagTerms() : [];
+  const aisle = detail ? GS.aisleLabel(detail.aisle) : null;
+
+  let bodyHtml;
+  if (!detail) {
+    bodyHtml = `<div class="detail-empty">Not yet scored — this product hasn't been through the ingredient scorer yet.</div>`;
+  } else {
+    const warns = detail.carcinogens || [];
+    const warnHtml = warns.length ? `<div class="detail-warnings">${warns.map(w => `
+        <div class="detail-warn warn-${w.level}">
+          <div class="detail-warn-top">${WARN_ICON}<span>${w.label}</span>
+            <span class="detail-warn-class">${w.classification}</span></div>
+          <div class="detail-warn-note">${w.note || ''}</div>
+          <div class="detail-warn-src">Source: ${w.source}</div>
+        </div>`).join('')}</div>` : '';
+
+    const nf = [...(detail.ingredient_banners || []), ...(detail.nutrition_flags || []),
+                ...(detail.price_flags || [])];
+    const nutHtml = nf.length ? `<div class="detail-nutflags">${nf.map(f => `
+        <div class="detail-nutflag ${f.id === 'seed_oil' || f.id === 'contains_seed_oil' ? 'detail-ingflag' : (f.id === 'cheap_for_claim' ? 'detail-priceflag' : '')}" title="${f.basis}">
+          <b>${f.label}</b><span>${f.detail}</span>
+        </div>`).join('')}</div>` : '';
+
+    const subs = Object.entries(detail.sub_scores || {}).filter(([, v]) => v && v.applicable && v.explanation);
+    // Without a nutrition panel the sugar DOSE (and its cap) is invisible: a full-sugar soda
+    // can then score like a lightly sweetened one. Say so rather than look certain.
+    const nutOk = ((detail.sub_scores || {}).nutrition || {}).applicable;
+    const sugary = (((detail.sub_scores || {}).flagged_ingredients || {}).matched || []).includes('added sugar');
+    const gapHtml = (!nutOk && sugary) ? `<div class="detail-gap"><b>Sugar amount unknown.</b> This product has added sugar
+      but no nutrition panel in our data yet, so how MUCH sugar isn't counted - the score may be too high.</div>` : '';
+    bodyHtml = gapHtml + warnHtml + nutHtml + (subs.length ? `<div class="detail-rows">${subs.map(([key, v]) => `
+        <div class="detail-row">
+          <div class="detail-row-top"><div class="detail-row-label">${GS.pretty(key)}</div>
+            ${typeof v.score === 'number' ? `<div class="detail-row-num">${Math.round(v.score)}</div>` : ''}</div>
+          ${typeof v.score === 'number' ? `<div class="detail-row-bar"><i style="width:${Math.max(3, Math.min(100, v.score))}%;background:${GS.scoreColor(v.score)}"></i></div>` : ''}
+          <div class="detail-row-exp">${v.explanation}</div>
+        </div>`).join('')}</div>`
+      : `<div class="detail-empty">No breakdown available for this product.</div>`);
+  }
+
+  overlay.innerHTML = `
+    <div class="detail-backdrop"></div>
+    <div class="detail-panel">
+      <button class="detail-close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="detail-head">
+        ${p.image_url ? `<img class="detail-thumb" src="${p.image_url}">` : `<div class="detail-thumb"></div>`}
+        <div class="detail-meta">
+          <div class="detail-brand">${p.brand || ''}</div>
+          <div class="detail-name">${p.name}</div>
+          ${aisle ? `<div class="detail-aisle">${aisle}</div>` : ''}
+          ${(() => {
+            const price = GS.priceFor(sku); if (!price) return '';
+            const u = GS.unitPrice(sku);
+            return `<div class="detail-price"><b>${price}</b>${u ? ` · $${u.perOz.toFixed(2)} per ${u.unit}` : ''}</div>`;
+          })()}
+        </div>
+        ${detail ? `<div class="detail-score" style="background:${GS.scoreColor(GS.scoreFor(sku))}">${Math.round(GS.scoreFor(sku))}</div>` : ''}
+      </div>
+      ${detail && GS.scoreFor(sku) != null ? `<div class="detail-scale" aria-label="Score ${Math.round(GS.scoreFor(sku))} out of 100">
+        <div class="detail-scale-bar"><span class="detail-scale-pin" style="left:${Math.max(0, Math.min(100, GS.scoreFor(sku)))}%">${GS.grade(GS.scoreFor(sku))}</span></div>
+        <div class="detail-scale-ends"><span>0 · avoid</span><span>100 · best</span></div>
+      </div>` : ''}
+      ${ingText ? `<details class="detail-ings">
+        <summary><span>Ingredients</span><span class="detail-ings-n">${ingCount ? ingCount + ' · ' : ''}tap to see</span></summary>
+        <div class="detail-ings-body">${ingredientsHtml(ingText, terms)}</div>
+        ${/<mark/.test(ingredientsHtml(ingText, terms)) ? '<div class="detail-ings-key"><mark>Highlighted</mark> = flagged by the scorer. Tap a highlight to see why.</div>' : ''}
+      </details>` : (detail ? '<div class="detail-ings detail-ings-none">No ingredient list for this one' + (GS.aisleGroup(sku) === 'Produce' ? ' — it is the food itself.' : '.') + '</div>' : '')}
+      ${bodyHtml}
+    </div>`;
+  overlay.hidden = false;
+}
+function closeBreakdown() { document.getElementById('detailOverlay').hidden = true; }
+
+/* ------------------------------------------------------------- meal cards
+   A meal is a title and a list of ingredient NAMES. Everything else is the
+   shopping list's existing machinery: each name resolves to the best-scoring
+   product that passes your filters and diet profile, so a card automatically
+   respects both. Its score is the average of what it would actually put on
+   your list, which means the card re-scores itself when you change profile.
+
+   The picture is a collage of the real product photos rather than stock
+   food photography - it is honest about what you would be buying, and it
+   updates with the picks. */
+let MEALS = [];
+
+function mealPicks(meal) {
+  return meal.items.map(q => (GS.bestFor(q, FILTERS, 1)[0] || null));
+}
+
+function renderMeals() {
+  if (!MEALS.length) {
+    return `<div class="empty-state">Search to see real products with photos, straight from the shelf.</div>`;
+  }
+  // The buy-or-make shelf costs another ~30 searches. Let the meal cards paint
+  // first and fill it in on the next tick (measured: it was ~half of the 1.5 s
+  // first render on a cold load).
+  setTimeout(() => {
+    const slot = document.getElementById('makeSlot');
+    if (slot) slot.outerHTML = renderMakeShelf();
+  }, 0);
+  return renderMealShelf() + '<div id="makeSlot"></div>';
+}
+
+/* One card, two homes: the Shop tab's shelf and the dinner flowchart's results.
+   A meal with no photo yet gets its accent colour instead of a blank box. */
+function mealCard(m) {
+  const found = mealPicks(m).filter(Boolean);
+  const scores = found.map(p => GS.scoreFor(p.sku)).filter(v => v != null);
+  const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+  const bg = !m.image && m.accent ? ` style="background:linear-gradient(135deg, ${m.accent}, #2B2118)"` : '';
+  return { avg, html: `<button class="meal" data-meal="${m.id}"${bg}>
+    ${m.image ? `<img class="meal-photo" src="${m.image}" alt="" loading="lazy">` : ''}
+    <div class="meal-scrim"></div>
+    <div class="meal-body">
+      <div class="meal-title">${m.title}</div>
+      <div class="meal-sub">${m.subtitle}</div>
+      <div class="meal-foot">
+        ${avg != null ? `<span class="meal-score" style="background:${GS.scoreColor(avg)}">${avg}</span>` : ''}
+        <span class="meal-n">${m.items.length} ingredients</span>
+        <span class="meal-add">See ingredients</span>
+      </div>
+    </div>
+  </button>` };
+}
+
+let SHOW_ALL_MEALS = false;
+/* The shelf used to be the same 7 "featured" meals every visit. It now deals a fresh 6
+   each time the page opens (and on "Show me different meals"): always two of the meals
+   the user actually cooks (source: 'yours'), the rest from everything else with a photo,
+   never repeating the previous deal when there are enough to avoid it. */
+let MEAL_DEAL = null;
+function dealMeals() {
+  const pool = MEALS.filter(m => m.image);
+  const prev = new Set(MEAL_DEAL || []);
+  const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const fresh = list => { const f = list.filter(m => !prev.has(m.id)); return f.length >= 2 ? f : list; };
+  const yours = shuffle(fresh(pool.filter(m => m.source === 'yours'))).slice(0, 2);
+  const rest = shuffle(fresh(pool.filter(m => !yours.includes(m)))).slice(0, 6 - yours.length);
+  MEAL_DEAL = shuffle([...yours, ...rest]).map(m => m.id);
+}
+
+function renderMealShelf() {
+  // 27 cards would bury everything below the fold, so the shelf shows the
+  // featured ones and offers the rest; the dinner tab covers the whole set.
+  if (!MEAL_DEAL) dealMeals();
+  const shown = SHOW_ALL_MEALS ? MEALS : MEAL_DEAL.map(id => MEALS.find(m => m.id === id)).filter(Boolean);
+  return `<div class="meals">
+    <div class="meals-head">Start with a meal</div>
+    <div class="meals-sub">Each one fills your list with the best-scoring version of every
+      ingredient — under your filters and whichever diet profile you're using.
+      <button class="dq-link" data-tab="dinner">Can't decide? Help me pick dinner →</button></div>
+    <div class="meal-grid">${shown.map(m => mealCard(m).html).join('')}</div>
+    ${!SHOW_ALL_MEALS && shown.length < MEALS.length
+      ? `<div class="meals-actions"><button class="meals-more" id="mealsShuffle">↻ Show me different meals</button>
+         <button class="meals-more" id="mealsMore">See all ${MEALS.length} meals</button></div>` : ''}
+  </div>`;
+}
+
+/* ------------------------------------------------------ what's for dinner
+   A flowchart, not a quiz: four questions (craving, protein, spice, time - owner asked 2026-10-03 for mood and spice), each a few big buttons, each
+   narrowing the same list of meals. A button shows how many meals it would
+   leave and is disabled at zero, so you can never walk into a dead end.
+   "Anything works" skips a question; tapping an answer chip undoes it. */
+const DQ = [
+  { key: 'mood', q: 'What are you craving?', opts: [
+      ['cozy', 'Comfort food'], ['light', 'Fresh & light'], ['hearty', 'Big & hearty']] },
+  { key: 'protein', q: 'Any protein in mind?', opts: [
+      ['poultry', 'Chicken or turkey'], ['beef', 'Beef'], ['pork', 'Pork'],
+      ['fish', 'Fish & seafood'], ['veg', 'Meat-free']] },
+  { key: 'spice', q: 'How spicy?', opts: [
+      ['mild', 'Keep it mild'], ['kick', 'A little kick'], ['hot', 'Bring the heat']] },
+  { key: 'time', q: 'How much time do you have?', opts: [
+      ['quick', '30 minutes or less'], ['medium', 'About an hour'], ['long', 'Plenty — an hour or more']] },
+];
+let DINNER = { answers: {}, step: 0, trail: [] };   // trail = questions the user actually answered
+
+function dinnerMatches(answers) {
+  return MEALS.filter(m => m.course === 'dinner' &&
+    Object.entries(answers).every(([k, v]) => v == null || m[k] === v));
+}
+
+function renderDinner() {
+  const box = document.getElementById('dinnerTab');
+  if (!MEALS.length) { box.innerHTML = '<div class="empty-state">No meals loaded.</div>'; return; }
+  // A question with only one possible answer left is not a question - skip it.
+  // (beef + plenty of time leaves two meals that are both "cozy".)
+  while (DINNER.step < DQ.length) {
+    const k = DQ[DINNER.step].key;
+    const live = DQ[DINNER.step].opts.filter(([v]) => dinnerMatches({ ...DINNER.answers, [k]: v }).length);
+    if (live.length > 1) break;
+    DINNER.step++;
+  }
+  const { answers, step } = DINNER;
+  const left = dinnerMatches(answers);
+
+  // Finished (answered everything, or narrowed to one meal) -> show the meals.
+  if (step >= DQ.length || left.length <= 1) {
+    const cards = left.map(m => ({ m, c: mealCard(m) }))
+      .sort((a, b) => (b.c.avg ?? -1) - (a.c.avg ?? -1));
+    const chips = DQ.filter(d => answers[d.key] != null).map(d => {
+      const label = d.opts.find(o => o[0] === answers[d.key])[1];
+      return `<button class="dq-chip" data-dq-undo="${d.key}">${label}</button>`;
+    }).join('');
+    box.innerHTML = `<div class="dq">
+      <div class="dq-results-head">
+        <h2>${left.length ? `${left.length} dinner${left.length === 1 ? '' : 's'} to choose from` : 'Nothing matches'}</h2>
+        ${left.length > 1 ? '<button class="dq-surprise" id="dqSurprise">Surprise us</button>' : ''}
+      </div>
+      ${chips ? `<div class="dq-chips">${chips}</div>` : ''}
+    </div>
+    <div class="meal-grid">${cards.map(x => x.c.html).join('')}</div>
+    <div class="dq"><div class="dq-foot"><button class="dq-link" id="dqReset">Start over</button></div></div>`;
+    return;
+  }
+
+  const d = DQ[step];
+  // Each answer is a photo tile showing a dinner it leads to, so the choice looks like food
+  // rather than a form. No photo is used twice on one screen.
+  const used = new Set();
+  const PREFER = { veg: ['tofu', 'beanchili', 'lentil'] };   // a meat-free tile mustn't look like meat sauce
+  const photoFor = (list, val) => {
+    const m = (PREFER[val] || []).map(id => list.find(x => x.id === id && x.image)).find(Boolean)
+      || list.find(x => x.image && !used.has(x.image)) || list.find(x => x.image);
+    if (m) used.add(m.image);
+    return m ? m.image : '';
+  };
+  const tiles = d.opts.map(([val, label]) => {
+    const hits = dinnerMatches({ ...answers, [d.key]: val });
+    return { val, label, n: hits.length, img: hits.length ? photoFor(hits, val) : '' };
+  });
+  const collage = left.filter(m => m.image && !used.has(m.image)).slice(0, 4).map(m => m.image);
+  const bars = DQ.map((_, i) => `<i class="${i < step ? 'done' : i === step ? 'now' : ''}"></i>`).join('');
+  box.innerHTML = `<div class="dq dq-ask">
+    <div class="dq-top">
+      <div class="dq-bars" aria-hidden="true">${bars}</div>
+      <div class="dq-prog">Question ${step + 1} of ${DQ.length} · ${left.length} dinners left</div>
+    </div>
+    <h2>${d.q}</h2>
+    <div class="dq-tiles">
+      ${tiles.filter(t => t.n).map(t => `<button class="dq-tile" data-dq="${t.val}">
+          ${t.img ? `<img src="${t.img}" alt="" loading="lazy">` : ''}
+          <span class="dq-tile-txt"><b>${t.label}</b><small>${t.n ? `${t.n} meal${t.n === 1 ? '' : 's'}` : 'none tonight'}</small></span>
+        </button>`).join('')}
+      <button class="dq-tile dq-any" data-dq="__any">
+        <span class="dq-collage">${collage.map(src => `<img src="${src}" alt="" loading="lazy">`).join('')}</span>
+        <span class="dq-tile-txt"><b>Anything works</b><small>all ${left.length}</small></span>
+      </button>
+    </div>
+    <div class="dq-foot">
+      ${DINNER.trail.length ? '<button class="dq-link" id="dqBack">← Back</button>' : ''}
+      <button class="dq-link" id="dqShow">Just show me the ${left.length}</button>
+      ${DINNER.trail.length ? '<button class="dq-link" id="dqReset">Start over</button>' : ''}
+    </div>
+  </div>`;
+}
+
+/* ------------------------------------------------------------ recipe import
+   A recipe line -> { amount, term }. Deterministic on purpose (no AI, no key): the
+   matcher already copes with over-specific terms by dropping words from the FRONT
+   until something matches, so the cleaner only has to strip what is certainly not
+   part of the product - quantity, unit, prep notes after a comma, parentheses,
+   "or" alternatives - and must NOT over-simplify ("diced tomatoes" is a product;
+   "tomatoes" is a different one). */
+const ING_UNITS = 'cups?|c|tablespoons?|tbsps?|tbs|teaspoons?|tsps?|ounces?|oz|fl\\.?\\s?oz|pounds?|lbs?|grams?|g|kilograms?|kgs?|kg|milliliters?|ml|liters?|litres?|l|cloves?|cans?|jars?|packages?|pkgs?|packets?|sticks?|pinch(?:es)?|dash(?:es)?|bunch(?:es)?|heads?|slices?|pieces?|sprigs?|stalks?|cubes?|bottles?|bags?|boxes|box|containers?|handfuls?|quarts?|qt|pints?|pt|gallons?';
+const ING_QTY = '(?:\\d+\\s+\\d+\\/\\d+|\\d+\\/\\d+|\\d+(?:\\.\\d+)?|\\.\\d+)';
+const ING_AMOUNT_RE = new RegExp('^(' + ING_QTY + '(?:\\s*(?:-|–|to)\\s*' + ING_QTY + ')?)\\s*(?:\\(([^)]*)\\))?\\s*((?:' + ING_UNITS + ')\\.?(?=\\s|$))?\\s*', 'i');
+const ING_VULGAR = { '½': ' 1/2', '¼': ' 1/4', '¾': ' 3/4', '⅓': ' 1/3', '⅔': ' 2/3', '⅛': ' 1/8', '⅜': ' 3/8', '⅝': ' 5/8', '⅞': ' 7/8' };
+const ING_PREP = /\b(finely|roughly|thinly|coarsely|freshly|lightly|firmly|loosely|chopped|minced|cubed|peeled|seeded|deseeded|halved|quartered|trimmed|softened|melted|beaten|mashed|pitted|divided|packed|drained|rinsed|thawed|optional|to taste|for serving|for garnish|for topping|as needed|room temperature|plus more[^,]*|about|approximately)\b/g;
+const ING_COLOURS = new Set(['green', 'red', 'yellow', 'orange', 'white', 'black', 'fresh', 'dried', 'frozen', 'canned', 'large', 'small', 'medium', 'sweet', 'hot', 'mild', 'sharp']);
+/* Words that find the WRONG product when used bare - each one was a real failure in
+   this project (check_meals.py history): butter -> butter LETTUCE, honey -> Honeycrisp
+   APPLES, baking powder -> baking COCOA, bacon -> a chicken Caesar salad kit, tortilla ->
+   tortilla CHIPS, garlic -> garlic bread/powder. */
+const ING_SYNONYMS = [
+  [/^(?:garlic|garlic cloves?|cloves? (?:of )?garlic|minced garlic|fresh garlic)$/, 'fresh garlic'],
+  [/^(?:onions?|yellow onions?|sweet onions?|white onions?)$/, 'yellow onion'],
+  [/^butter$/, 'unsalted butter'], [/^bacon$/, 'sliced bacon'], [/^honey$/, 'raw honey'],
+  [/^baking powder$/, 'double acting baking powder'],
+  [/^(?:flour )?tortillas?$/, 'flour tortillas'],
+  [/^(?:potatoes?|russet potato(?:es)?)$/, 'russet potatoes'],
+  [/^chicken$/, 'chicken breast'],
+  [/^(limes?|lemons?|avocados?)$/, (m) => m[1].replace(/s$/, '')],
+  [/^(?:beef )?stew(?:ing)? (?:meat|beef)$/, 'chuck roast'],
+  // found by running 90 bare recipe words through the catalog (2026-09-30): each of these
+  // matched the WRONG kind of product on a strict match
+  [/^milk$/, 'whole milk'],                                              // -> buttermilk
+  [/^(?:heavy |whipping |heavy whipping )?cream$/, 'heavy whipping cream'], // -> sour cream
+  [/^(?:granulated |white |cane )?sugar$/, 'granulated sugar'],          // -> "no added sugar" orange juice
+  [/^(light |dark )?brown sugar$/, (m) => (m[1] || 'light ') + 'brown sugar'], // -> instant oatmeal, K-cups
+  [/^(?:long[- ]grain )?white rice$/, 'long grain white rice'],          // -> white QUINOA
+  [/^rice$/, 'brown rice'],                                              // -> quinoa
+  [/^(?:sandwich |white |wheat )?bread$/, 'whole wheat bread'],          // -> crispbread crackers
+  [/^(?:whole kernel |frozen |fresh )?corn$/, 'sweet corn'],             // -> peppercorns
+  [/^(?:yellow |prepared )?mustard$/, 'yellow mustard'],                 // -> mustard powder
+  [/^(?:(?:large|medium|extra[- ]large|whole|fresh) )*eggs?$/, 'eggs'],         // "egg" -> a fruit-and-veggie wash
+  [/^(?:panko|plain|italian|seasoned)?\s?bread ?crumbs?$|^panko(?: bread ?crumbs)?$/, 'bread crumbs'],
+  [/^scallions?$/, 'green onions'],
+  [/^(?:crushed )?red pepper flakes?$/, 'crushed red pepper'],
+  [/^(?:red |green |yellow |orange )?bell peppers?$/, 'bell peppers'],   // -> jarred ROASTED peppers
+  [/^cilantro$/, 'fresh cilantro'],                                      // -> freeze-dried
+  [/^(?:grated|shredded) cheddar(?: cheese)?$/, 'shredded cheddar'],
+  [/^(?:fresh )?ginger ?root$/, 'fresh ginger'],
+  [/^(?:all[- ]purpose )?flour$/, 'all purpose flour'],
+];
+const ING_STAPLES = [
+  /^(?:(?:kosher|sea|table|coarse|fine|flaky)\s+)?salt(?:\s+and\s+(?:(?:freshly|ground|cracked)\s+)*(?:black\s+)?pepper)?$/,
+  /^(?:(?:freshly|ground|cracked)\s+)*(?:black\s+|white\s+)?pepper$/,
+  /^(?:(?:cold|warm|hot|boiling|ice|lukewarm)\s+)?water$/, /^ice$/,
+];
+
+function parseIngredientLine(rawLine) {
+  let s = String(rawLine || '').replace(/[½¼¾⅓⅔⅛⅜⅝⅞]/g, m => ING_VULGAR[m]).replace(/ /g, ' ');
+  s = s.replace(/^[\s▢☐□•·*\-–—✓✔▪►]+/, '').replace(/\s+/g, ' ').trim();
+  if (!s) return { raw: rawLine, header: true };
+  // "SAUCE:", "For the marinade:" - a heading, not an ingredient
+  if ((/:$/.test(s) || /^for the\b/i.test(s)) && !/\d/.test(s)) return { raw: rawLine, header: true };
+
+  // Method steps, not ingredients: someone pasting a whole recipe pastes the instructions too.
+  // Starts with a cooking verb (whole word - "cooked rice" and "heavy cream" are not steps) and
+  // has no quantity, or is simply a long sentence with no quantity.
+  const words = s.split(/\s+/).length;
+  const hasQty = new RegExp('^(?:a\\s+)?(?:' + ING_QTY + '|pinch|dash|handful)', 'i').test(s);
+  const stepVerb = /^(?:step\s*\d+[:.)]?\s*|\d+[.)]\s+)?(?:preheat|mix|stir|bake|cook|heat|add|combine|whisk|serve|bring|place|pour|season|let|remove|cover|simmer|blend|fold|grease|line|transfer|drain|toss|sprinkle|top (?:with|each|the|it)|garnish|enjoy|slice|chop|cut|roast|grill|fry|saute|boil|meanwhile|once|when|in a|on a|over|while|using|directions?|instructions?|method|notes?|tip)\b(?![- ](?:fry|and|proof|off|of)\b)/i;
+  if (/^(?:ingredients?|directions?|instructions?|method|notes?|steps?|for serving|to serve|toppings?|garnish(?:es)?)$/i.test(s)) return { raw: rawLine, header: true };
+  if (/^(?:additional|other|extra|any other)\s+(?:seasonings?|toppings?|ingredients?|spices|add-ins?)\b/i.test(s) && !/\d/.test(s)) return { raw: rawLine, header: true };   // "additional seasonings optional!" is a note, not a product
+  if ((stepVerb.test(s) && words >= 3 && !/^\d+\s+(?:\d+\/\d+\s+)?(?:cups?|tbsp|tsp|oz|lb)/i.test(s)) || (!hasQty && words > 12)) {
+    return { raw: rawLine, header: true };
+  }
+
+  let amount = '';
+  const loose = s.match(/^(?:a\s+)?(pinch|dash|handful|splash|drizzle)(?:\s+of)?\s+/i);
+  if (loose) { amount = loose[1].toLowerCase(); s = s.slice(loose[0].length); }
+  else {
+    const m = s.match(ING_AMOUNT_RE);
+    if (m) {
+      amount = [m[1], (m[3] || '').replace(/\.$/, ''), m[2] ? '(' + m[2] + ')' : ''].filter(Boolean).join(' ').trim();
+      s = s.slice(m[0].length);
+    }
+  }
+  while (/\([^()]*\)/.test(s)) s = s.replace(/\([^()]*\)/g, ' ');   // incl. "((or any broth))"
+  // accents off (jalapeño -> jalapeno) so they are not stripped to a gap later
+  s = s.split(/[,;]| - | – /)[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  // "butter or margarine" -> butter; "green or red bell pepper" -> red bell pepper
+  const alt = s.match(/^(\S+)\s+or\s+(.+)$/);
+  if (alt && ING_COLOURS.has(alt[1])) s = alt[2];
+  else {
+    // "chicken or beef stock" -> chicken stock (share the last word); "butter or margarine" -> butter
+    const shared = s.match(/^(\S+)\s+or\s+\S+(?:\s+\S+)*?\s+(\S+)$/);
+    s = shared ? shared[1] + ' ' + shared[2] : s.replace(/\s+(?:or|and\/or)\s+.*$/, '');
+  }
+  s = s.replace(/^cut\b.*$/, '').replace(/^hot cooked\b/, 'cooked').replace(ING_PREP, ' ');
+  // lean ratios ("90/10") and sizes are not searchable product words; the store writes "93% lean"
+  s = s.replace(/\b\d{2}\/\d{2}\b/g, ' ').replace(/^\s*(?:extra[- ]large|large|medium|small|big)\s+/, '');
+  s = s.replace(/[^a-z0-9%&' .-]/g, ' ').replace(/\s+/g, ' ').replace(/^(?:of|a|an|the)\s+/, '').replace(/\bof\b\s*$/, '').trim();
+  for (const [re, to] of ING_SYNONYMS) {
+    const m = s.match(re);
+    if (m) { s = typeof to === 'function' ? to(m) : to; break; }
+  }
+  return { raw: rawLine, header: false, amount, term: s, staple: ING_STAPLES.some(re => re.test(s)) };
+}
+
+/* ------------------------------------------------------------ plan my week
+   Type the kinds of meals you want for each part of the day and get ONE
+   shopping list. Nothing touches the list until "Add the week" is pressed, and
+   an ingredient two meals share becomes a single line that says how many meals
+   need it - the list has items, not amounts, so that is the honest way to say
+   "buy enough for both". */
+const PLAN_KEY = 'groceryscorer_plan_v1';
+const SLOTS = [
+  { key: 'breakfast', label: 'Breakfasts', ph: 'overnight oats, french toast…' },
+  { key: 'lunch',     label: 'Lunches',    ph: 'sandwiches, pasta…' },
+  { key: 'dinner',    label: 'Dinners',    ph: 'tacos, chili…' },
+];
+const PLAN_STOP = new Set(['and', 'the', 'a', 'some', 'for', 'with', 'of']);
+let PLAN = { breakfast: [], lunch: [], dinner: [] };
+
+function loadPlan() {
+  const empty = { breakfast: [], lunch: [], dinner: [] };
+  try {
+    const s = JSON.parse(localStorage.getItem(PLAN_KEY) || '{}');
+    for (const k of Object.keys(empty)) if (Array.isArray(s[k])) empty[k] = s[k].filter(x => typeof x === 'string');
+  } catch (e) {}
+  return empty;
+}
+function savePlan() { try { localStorage.setItem(PLAN_KEY, JSON.stringify(PLAN)); } catch (e) {} }
+
+const planNorm = t => (t || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+// "sandwiches" -> "sandwich", "tacos" -> "taco", "pancakes" -> "pancake", "berries" -> "berry"
+const planSingular = w => w.endsWith('ies') ? w.slice(0, -3) + 'y'
+  : /(ch|sh|ss|x)es$/.test(w) ? w.slice(0, -2)
+  : (w.endsWith('s') && !w.endsWith('ss')) ? w.slice(0, -1) : w;
+const planWords = t => planNorm(t).split(' ').filter(w => w && !PLAN_STOP.has(w));
+const planSing = t => planWords(t).map(planSingular).join(' ');
+
+function slotMeals(slot) {
+  return MEALS.filter(m => m.course === slot || (m.also || []).includes(slot));
+}
+function mealAvg(m) {
+  const sc = mealPicks(m).filter(Boolean).map(p => GS.scoreFor(p.sku)).filter(v => v != null);
+  return sc.length ? Math.round(sc.reduce((a, b) => a + b, 0) / sc.length) : null;
+}
+
+/* Matches for one typed phrase, best first. Relevance: 0 = the phrase IS a
+   title or tag ("tacos"), 1 = every word is in the title/tags, 2 = only the
+   subtitle mentions it. Ties go to the healthiest meal. An empty phrase returns
+   the slot's healthiest meals as ideas. */
+function planMatches(slot, phrase) {
+  const pool = slotMeals(slot);
+  const words = planWords(phrase);
+  const score = m => mealAvg(m) ?? -1;
+  if (!words.length) return pool.map(m => ({ m, r: 1 })).sort((a, b) => score(b.m) - score(a.m));
+  const want = planSing(phrase);
+  const hit = (hay, w) => hay.includes(w) || hay.includes(planSingular(w));
+  return pool.map(m => {
+    const core = planNorm([m.title, ...(m.tags || [])].join(' '));
+    const all = planNorm([m.title, ...(m.tags || []), m.subtitle || ''].join(' '));
+    if (!words.every(w => hit(all, w))) return null;
+    const exact = [m.title, ...(m.tags || [])].some(t => planSing(t) === want);
+    const r = exact ? 0 : words.every(w => hit(core, w)) ? 1 : 2;
+    return { m, r };
+  }).filter(Boolean).sort((a, b) => a.r - b.r || score(b.m) - score(a.m) || a.m.title.localeCompare(b.m.title));
+}
+
+// term -> Set of meal ids that need it, across the whole plan (each meal once)
+const AMOUNTS = new Map();     // ingredient -> { meal id: amount }, rebuilt by planIngredients()
+function planIngredients() {
+  AMOUNTS.clear();
+  const ids = new Set([...PLAN.breakfast, ...PLAN.lunch, ...PLAN.dinner]);
+  const out = new Map();
+  for (const id of ids) {
+    const m = MEALS.find(x => x.id === id);
+    if (!m) continue;
+    m.items.forEach((q, i) => {
+      if (!out.has(q)) out.set(q, new Set());
+      out.get(q).add(id);
+      const a = mealAmount(m, i);
+      if (a) { if (!AMOUNTS.has(q)) AMOUNTS.set(q, {}); AMOUNTS.get(q)[id] = a; }
+    });
+  }
+  return out;
+}
+
+const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function mealThumb(m) {
+  return m.image ? `<img src="${m.image}" alt="" loading="lazy">`
+    : `<div style="width:52px;height:52px;border-radius:10px;flex:0 0 auto;background:${m.accent || '#999'}"></div>`;
+}
+function scorePill(v) {
+  return v == null ? '<span class="pl-sc" style="background:#CFC3AC">—</span>'
+    : `<span class="pl-sc" style="background:${GS.scoreColor(v)}">${v}</span>`;
+}
+
+function refreshChosen(slot) {
+  const box = document.getElementById('plChosen_' + slot); if (!box) return;
+  const meals = PLAN[slot].map(id => MEALS.find(m => m.id === id)).filter(Boolean);
+  box.innerHTML = meals.length ? meals.map(m => `
+    <div class="pl-row">
+      <button class="pl-row" style="border:none;padding:0;margin:0;background:none;flex:1" data-plan-open="${m.id}">
+        ${mealThumb(m)}<span class="pl-t">${esc(m.title)}<small>${m.items.length} ingredients · <u>see products &amp; recipe</u></small></span>${scorePill(mealAvg(m))}
+      </button>
+      <button class="pl-x" data-plan-remove="${slot}|${m.id}" aria-label="Remove ${esc(m.title)}">✕</button>
+    </div>`).join('') : '<div class="pl-empty">Nothing picked yet.</div>';
+  const c = document.getElementById('plCount_' + slot); if (c) c.textContent = meals.length ? `· ${meals.length}` : '';
+}
+
+function refreshSugg(slot, typed) {
+  const box = document.getElementById('plSugg_' + slot); if (!box) return;
+  const last = (typed || '').split(/[,;\n+]/).pop();
+  const chosen = new Set(PLAN[slot]);
+  const found = planMatches(slot, last).filter(x => !chosen.has(x.m.id));
+  const words = planWords(last);
+  box.innerHTML = (words.length ? `<div class="pl-sugg-h">${found.length ? 'Matches — tap one to see it, + to add' : 'Nothing else matches'}</div>`
+                                : '<div class="pl-sugg-h">Ideas — tap one to see it, + to add</div>')
+    + found.slice(0, 6).map(({ m }) => `
+      <div class="pl-sug">
+        <button class="pl-sug-open" data-plan-open="${m.id}" aria-label="See ${esc(m.title)}">
+          ${mealThumb(m)}<span class="pl-t">${esc(m.title)}<small>${esc(m.subtitle || '')}</small></span>${scorePill(mealAvg(m))}
+        </button>
+        <button class="pl-plus" data-plan-add="${slot}|${m.id}" aria-label="Add ${esc(m.title)}">+</button>
+      </div>`).join('');
+}
+
+function refreshSummary() {
+  const box = document.getElementById('plSummary'); if (!box) return;
+  const ids = new Set([...PLAN.breakfast, ...PLAN.lunch, ...PLAN.dinner]);
+  const meals = [...ids].filter(id => MEALS.some(m => m.id === id));
+  if (!meals.length) {
+    box.innerHTML = `<div class="pl-stats">Pick a few meals below and I'll build <b>one</b> shopping list for the week.</div>
+      <button class="pl-add" disabled>Add the week to my shopping list</button>`;
+    return;
+  }
+  const ing = planIngredients();
+  const scores = [...ing.keys()].map(q => (GS.bestFor(q, FILTERS, 1)[0])).filter(Boolean)
+    .map(p => GS.scoreFor(p.sku)).filter(v => v != null);
+  const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+  const shared = [...ing.values()].filter(s => s.size > 1).length;
+  const onList = [...ing.keys()].filter(q => MY_LIST.some(e => e.q === q)).length;
+  box.innerHTML = `<div class="pl-stats"><b>${meals.length}</b> meal${meals.length === 1 ? '' : 's'} ·
+      <b>${ing.size}</b> ingredients${shared ? ` (${shared} shared)` : ''}${avg != null ? ` · <b style="color:${GS.scoreColor(avg)}">${avg}</b> avg score` : ''}
+      ${onList ? `<br>${onList} already on your list` : ''}</div>
+    <button class="pl-add" id="plAddWeek">Add the week to my shopping list</button>`;
+}
+
+function renderPlan() {
+  const box = document.getElementById('planTab');
+  if (!MEALS.length) { box.innerHTML = '<div class="empty-state">No meals loaded.</div>'; return; }
+  PLAN = loadPlan();
+  box.innerHTML = `<div class="pl">
+    <div class="pl-head"><h2>Plan your week</h2>
+      <p>Type the kinds of meals you want — “tacos”, “sandwiches”, “overnight oats” — for each part of the day,
+      press Enter, and pick from what matches. Then add the whole week to your shopping list at once.</p></div>
+    <div class="pl-summary" id="plSummary"></div>
+    ${SLOTS.map(s => `<section class="pl-slot">
+      <h3>${s.label}<span id="plCount_${s.key}"></span></h3>
+      <div id="plChosen_${s.key}"></div>
+      <input class="pl-input" data-slot="${s.key}" placeholder="${s.ph}" autocomplete="off" enterkeyhint="done">
+      <div class="pl-msg" id="plMsg_${s.key}"></div>
+      <div id="plSugg_${s.key}"></div>
+    </section>`).join('')}
+    <div class="pl-foot"><button class="dq-link" id="plClear">Clear the plan</button></div>
+  </div>`;
+  SLOTS.forEach(s => { refreshChosen(s.key); refreshSugg(s.key, ''); });
+  refreshSummary();
+}
+
+function planChanged(slot) {
+  savePlan();
+  refreshChosen(slot);
+  const inp = document.querySelector(`.pl-input[data-slot="${slot}"]`);
+  refreshSugg(slot, inp ? inp.value : '');
+  refreshSummary();
+}
+
+// Enter: add the best match for each comma-separated phrase; keep what matched nothing.
+function planCommit(slot) {
+  const inp = document.querySelector(`.pl-input[data-slot="${slot}"]`);
+  const msg = document.getElementById('plMsg_' + slot);
+  const phrases = inp.value.split(/[,;\n+]/).map(s => s.trim()).filter(Boolean);
+  const unmatched = [], dupes = [];
+  for (const ph of phrases) {
+    const found = planMatches(slot, ph);
+    if (!found.length) { unmatched.push(ph); continue; }
+    const next = found.find(x => !PLAN[slot].includes(x.m.id));
+    if (!next) { dupes.push(ph); continue; }
+    PLAN[slot].push(next.m.id);
+  }
+  inp.value = unmatched.join(', ');
+  msg.textContent = unmatched.length ? `No meal matches “${unmatched.join('”, “')}” — try another word.`
+    : dupes.length ? `Already in your plan: ${dupes.join(', ')}.` : '';
+  planChanged(slot);
+}
+
+function addWeekToList() {
+  const ing = planIngredients();
+  let added = 0, merged = 0;
+  for (const [q, ids] of ing) {
+    const uses = ids.size;
+    const ex = MY_LIST.find(e => e.q === q);
+    const amts = AMOUNTS.get(q) || {};
+    const target = ex || { q, sku: (GS.bestFor(q, FILTERS, 1)[0] || {}).sku || null, checked: false };
+    for (const [mid, a] of Object.entries(amts)) if (!(target.amts && mid in target.amts)) addAmount(target, mid, a);
+    if (uses > (target.uses || 1)) target.uses = uses;
+    if (ex) { merged++; continue; }
+    MY_LIST.push(target);
+    added++;
+  }
+  GS.saveMyList(MY_LIST);
+  renderListBar();
+  toast(added || merged ? `${added} added${merged ? `, ${merged} already on your list` : ''}` : 'Nothing to add');
+  openList();
+  refreshSummary();
+}
+
+function planClick(e) {
+  const add = e.target.closest('[data-plan-add]');
+  if (add) { const [slot, id] = add.dataset.planAdd.split('|'); if (!PLAN[slot].includes(id)) PLAN[slot].push(id); planChanged(slot); return; }
+  const rm = e.target.closest('[data-plan-remove]');
+  if (rm) { const [slot, id] = rm.dataset.planRemove.split('|'); PLAN[slot] = PLAN[slot].filter(x => x !== id); planChanged(slot); return; }
+  const open = e.target.closest('[data-plan-open]');
+  if (open) { renderMeal(open.dataset.planOpen); return; }
+  if (e.target.closest('#plAddWeek')) { addWeekToList(); return; }
+  if (e.target.closest('#plClear')) {
+    PLAN = { breakfast: [], lunch: [], dinner: [] }; savePlan(); renderPlan();
+  }
+}
+
+/* ----------------------------------------------------------- import screen
+   Link or pasted text -> a REVIEW list, never straight to the shopping list. Every line
+   shows what was understood (amount + search word, editable), which ShopRite product it
+   matched, and whether the match is shaky - because matching loose words to products has
+   gone wrong here before (butter -> butter lettuce) and only a person looking at the
+   product can catch a match that is strict but wrong. */
+let IMPORT = { title: '', source: '', via: '', rows: [], skipStaples: true, open: null };
+let IMPORT_AI = null;       // null = not asked yet, then true/false: is an API key set up?
+let IMPORT_SERVER = true;   // false on the hosted copy: no serve.py behind it, so no /api/* routes yet
+const VIDEO_HOSTS = /(?:tiktok|instagram|youtube|youtu\.be|facebook|fb\.watch|vimeo|snapchat)/i;
+const looksLikeUrl = t => /^(?:https?:\/\/|www\.)\S+$/i.test(String(t).trim());
+
+async function importStatus() {
+  try { const st = await (await fetch('/api/status')).json(); IMPORT_AI = !!st.ai_key; SHARE_LAN = st.lan || null; }
+  catch (e) { IMPORT_AI = false; IMPORT_SERVER = false; }
+  renderShareSetup();
+}
+function refreshImportAi() {
+  const b = document.getElementById('imAi'), n = document.getElementById('imAiNote');
+  if (!b) return;
+  b.hidden = !IMPORT_AI;
+  n.textContent = !IMPORT_SERVER ? HOSTED_IMPORT_NOTE
+    : IMPORT_AI ? 'The AI helper is on - use it if the ingredients below look wrong or missing.'
+    : 'The AI helper is off (no key set up yet). Links and pasted ingredient lists work without it.';
+}
+function importMsg(text, err) {
+  const m = document.getElementById('imMsg'); if (!m) return;
+  m.textContent = text; m.classList.toggle('err', !!err);
+}
+
+/* ------------------------------------------------- share from your own browser
+   Some recipe sites refuse to hand their pages to a program, so a pasted link can come back
+   empty. These two tools read the recipe in the person's OWN browser instead - on a page
+   they are already looking at - and open the app with what they found:
+     - iPhone: a Shortcut in Safari's Share sheet ("Run JavaScript on Web Page", then open
+       the URL it returns)
+     - laptop: a bookmarklet, the same code behind a bookmark
+   shareGrab() is that code. It is turned into a string with toString(), so it must not use
+   anything from outside itself. It prefers the page's structured recipe data, then the
+   recipe card's ingredient list, and only then sends the page's text for the AI helper.
+   Everything it sends arrives in the URL's #fragment, which is never sent to a server. */
+function shareGrab(base) {
+  function clean(s) { return String(s || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(); }
+  var out = { u: location.href, t: '', i: [], x: '' };
+  function walk(n, f) {
+    if (!n || typeof n !== 'object') return;
+    if (Array.isArray(n)) { for (var a = 0; a < n.length; a++) walk(n[a], f); return; }
+    f(n);
+    for (var k in n) if (n[k] && typeof n[k] === 'object') walk(n[k], f);
+  }
+  var ss = document.querySelectorAll('script[type="application/ld+json"]');
+  for (var j = 0; j < ss.length && !out.i.length; j++) {
+    try {
+      walk(JSON.parse(ss[j].textContent), function (d) {
+        var t = [].concat(d['@type']);
+        if (!out.i.length && t.indexOf('Recipe') >= 0 && d.recipeIngredient) {
+          out.i = [].concat(d.recipeIngredient).map(clean).filter(Boolean).slice(0, 60);
+          out.t = clean(d.name);
+        }
+      });
+    } catch (e) {}
+  }
+  if (!out.i.length) {
+    var li = document.querySelectorAll('[itemprop="recipeIngredient"],[itemprop="ingredients"],li[class*="ingredient"],[class*="ingredients"] li');
+    var seen = {};
+    for (var m = 0; m < li.length && out.i.length < 60; m++) {
+      var s = clean(li[m].innerText || li[m].textContent);
+      if (s && s.length < 200 && !seen[s]) { seen[s] = 1; out.i.push(s); }
+    }
+  }
+  if (!out.t) out.t = clean(document.title).slice(0, 120);
+  if (!out.i.length) out.x = String(document.body.innerText || '').slice(0, 20000);
+  return base + '/home.html#share=' + encodeURIComponent(JSON.stringify(out));
+}
+const shareCode = base => '(' + shareGrab.toString() + ')(' + JSON.stringify(base) + ')';
+const shortcutCode = base => 'completion(' + shareCode(base) + ');';
+const bookmarkletCode = base => 'javascript:' + encodeURIComponent('window.open(' + shareCode(base) + ',"_blank");void 0');
+let SHARE_LAN = null;
+
+function renderShareSetup() {
+  const el = document.getElementById('imShare'); if (!el) return;
+  const phoneBase = SHARE_LAN ? `http://${SHARE_LAN}:${location.port || 80}` : location.origin;
+  el.innerHTML = `<details class="im-share"><summary>Recipe site won't let the link work? Share it from your browser</summary>
+    <p>Some sites block apps from reading them. These read the recipe in <b>your own</b> browser,
+       on the page you're already looking at, then open it here. Set up once.</p>
+    <h4>iPhone (Safari)</h4>
+    <ol>
+      <li>On the iPhone: <b>Settings → Apps → Shortcuts → Advanced</b>, turn on <b>Allow Running Scripts</b>.</li>
+      <li>Open <b>Shortcuts</b>, tap <b>+</b>, name it <b>GroceryScorer</b>.</li>
+      <li>Tap the <b>ⓘ</b> (or the name) → turn on <b>Show in Share Sheet</b>, and set the input to <b>Safari web pages</b> only.</li>
+      <li>Add the action <b>Run JavaScript on Web Page</b>. Delete the sample code and paste the code below.</li>
+      <li>Add the action <b>Open URLs</b> (it uses the JavaScript result automatically).</li>
+      <li>Done. On any recipe in Safari: <b>Share → GroceryScorer</b>.</li>
+    </ol>
+    <button class="im-btn alt" id="imCopyShortcut">Copy the iPhone code</button>
+    <div class="im-ai">${SHARE_LAN ? `Points at ${esc(phoneBase)} — your phone must be on the same Wi-Fi as this computer.` : 'Open this page from your phone to set it up there.'}</div>
+    <h4>Laptop (Safari or Chrome)</h4>
+    <p>Drag this button to your bookmarks bar, then click the bookmark on any recipe page:
+       <a class="im-bookmarklet" href="${esc(bookmarkletCode(location.origin))}">GroceryScorer: import</a></p>
+    <p class="im-ai">Safari: show the bar with View → Show Favorites Bar. If dragging doesn't work, add any bookmark, edit it, and paste the copied link as its address.</p>
+    <button class="im-btn alt" id="imCopyBookmarklet">Copy the bookmark link</button>
+  </details>`;
+}
+
+async function copyText(t) {
+  try { await navigator.clipboard.writeText(t); toast('Copied'); }
+  catch (e) {
+    const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta);
+    ta.select(); try { document.execCommand('copy'); toast('Copied'); } catch (err) { toast("Couldn't copy - select and copy by hand"); }
+    ta.remove();
+  }
+}
+
+// The app was opened by the Shortcut or bookmarklet: #share=<json>. Untrusted input - a
+// link anyone could craft - so it is size-capped, only used as text, and escaped on display.
+async function handleShare() {
+  const ml = /^#meal=([a-z]+)$/.exec(location.hash);
+  if (ml) {
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    if (MEALS.some(x => x.id === ml[1])) addMeal(ml[1]);
+    return;
+  }
+  const mk = /^#make=([a-z]+)$/.exec(location.hash);
+  if (mk) {
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    if (MAKEABLE.some(x => x.id === mk[1])) addMakeIngredients(mk[1]);
+    return;
+  }
+  const m = /^#share=(.+)$/.exec(location.hash);
+  if (!m) return;
+  let d;
+  try { d = JSON.parse(decodeURIComponent(m[1])); } catch (e) { d = null; }
+  try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+  setTab('import');
+  if (!d || typeof d !== 'object') { importMsg("That share didn't come through - try again.", true); return; }
+  const str = (v, n) => String(v == null ? '' : v).slice(0, n);
+  const lines = Array.isArray(d.i) ? d.i.slice(0, 60).map(v => str(v, 200)).filter(Boolean) : [];
+  let host = ''; try { host = new URL(str(d.u, 2000)).hostname.replace(/^www\./, ''); } catch (e) {}
+  if (lines.length) { importShowLines(lines, str(d.t, 120), host, 'your browser'); return; }
+  const text = str(d.x, 20000);
+  if (!text.trim()) { importMsg("Couldn't find a recipe on that page.", true); return; }
+  if (IMPORT_AI === null) await importStatus();
+  refreshImportAi();
+  document.getElementById('imBox').value = text;
+  if (IMPORT_AI) importAi();
+  else importMsg("That page had no recipe card I could read. Paste just the ingredient list, or set up the AI helper.", true);
+}
+
+function renderImport() {
+  const box = document.getElementById('importTab');
+  if (!box.dataset.ready) {             // build the shell once so the box keeps what you typed
+    box.dataset.ready = '1';
+    box.innerHTML = `<div class="im">
+      <div class="im-head"><h2>Import a recipe</h2>
+        <p>Paste a recipe link, or paste the ingredient list from anywhere — a caption, a note, a message.
+        I'll find the healthiest ShopRite version of each ingredient, and you check every one before
+        anything goes on your list.</p></div>
+      <textarea class="im-box" id="imBox" placeholder="https://… or paste the ingredients — or a whole recipe page (Cmd+A, Cmd+C on the page, then paste here)"></textarea>
+      <div class="im-actions"><button class="im-btn" id="imGo">Get ingredients</button>
+        <button class="im-btn alt" id="imAi" hidden>Clean up with AI</button></div>
+      <div class="im-msg" id="imMsg"></div><div class="im-ai" id="imAiNote"></div>
+      <div id="imShare"></div>
+      <div id="imResult"></div></div>`;
+  }
+  if (IMPORT_AI === null) importStatus().then(refreshImportAi); else { refreshImportAi(); if (!document.querySelector('#imShare details')) renderShareSetup(); }
+}
+
+function importRematch(r) {
+  r.alts = GS.bestFor(r.term, FILTERS, 5);
+  r.relaxed = r.alts.length ? GS.relaxedWord() : null;    // the words dropped to find anything
+  if (r.pick && !r.alts.some(a => a.sku === r.pick)) r.pick = null;
+}
+
+// rows: [{raw, amount, term, staple}] -> matched, pre-ticked, rendered
+function importFinishRows(rows, title, source, via) {
+  IMPORT.title = title || ''; IMPORT.source = source || ''; IMPORT.via = via || ''; IMPORT.open = null;
+  IMPORT.rows = rows.map((r, i) => ({ ...r, id: i, pick: null }));
+  IMPORT.rows.forEach(importRematch);
+  IMPORT.rows.forEach(r => { r.include = !!r.alts.length && !(IMPORT.skipStaples && r.staple); });
+  if (!IMPORT.rows.length) {
+    importMsg("I couldn't find any ingredients in that. Try pasting just the ingredient lines." + (IMPORT_AI ? ' Or use the AI helper.' : ''), true);
+    document.getElementById('imResult').innerHTML = '';
+    return;
+  }
+  importMsg('');
+  renderImportResult();
+}
+function importShowLines(lines, title, source, via) {
+  importFinishRows(lines.map(parseIngredientLine).filter(r => !r.header && r.term), title, source, via);
+}
+
+const HOSTED_IMPORT_NOTE = "On this version, paste the ingredient list (copy it from the recipe page). Reading a recipe straight from a link, and the AI helper, are coming here soon.";
+async function importGo() {
+  const v = document.getElementById('imBox').value.trim();
+  if (!v) { importMsg('Paste a link or the ingredients first.', true); return; }
+  if (looksLikeUrl(v) && VIDEO_HOSTS.test(v)) {
+    importMsg("Video links can't be read yet — the recipe is spoken or shown on screen. Copy the recipe from the video's caption or description and paste that here.", true);
+    return;
+  }
+  if (looksLikeUrl(v) && !IMPORT_SERVER) { importMsg(HOSTED_IMPORT_NOTE, true); return; }
+  if (looksLikeUrl(v)) {
+    importMsg('Reading the page…');
+    try {
+      const r = await (await fetch('/api/recipe?url=' + encodeURIComponent(/^www\./i.test(v) ? 'https://' + v : v))).json();
+      if (!r.ok) { importMsg(r.error, true); return; }
+      importShowLines(r.ingredients, r.title, r.source, r.via);
+    } catch (e) { importMsg("Couldn't reach the app's server. Is it running?", true); }
+    return;
+  }
+  // A whole page is far too long to be an ingredient list. The line-by-line cleaner would turn
+  // menus and comments into "ingredients", so hand it to the AI helper, which finds the recipe.
+  if (v.length > 2500) {
+    if (IMPORT_AI) { importAi(); return; }
+    importMsg("That looks like a whole web page. Reading a page needs the AI helper (no key is set up), so paste just the ingredient list instead.", true);
+    return;
+  }
+  let lines = v.split(/\r?\n/);
+  if (lines.length === 1 && (v.match(/,/g) || []).length >= 2 && !/\d/.test(v)) lines = v.split(',');
+  importShowLines(lines, '', '', 'pasted text');
+}
+
+async function importAi() {
+  const v = document.getElementById('imBox').value.trim();
+  if (!v) { importMsg('Paste the recipe text first.', true); return; }
+  if (looksLikeUrl(v)) { importMsg('The AI helper reads text. Paste the recipe text here instead of a link.', true); return; }
+  importMsg('Asking the AI helper…');
+  try {
+    const r = await (await fetch('/api/recipe_ai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: v }) })).json();
+    if (!r.ok) { importMsg(r.error, true); return; }
+    importFinishRows(r.ingredients.map(it => {
+      const c = parseIngredientLine(it.term);
+      return { raw: '', amount: it.amount, term: c.term || it.term, staple: c.staple };
+    }), r.title, '', 'AI helper');
+  } catch (e) { importMsg("Couldn't reach the app's server. Is it running?", true); }
+}
+
+/* A strict match can still be the wrong KIND of product ("canola oil" -> a butter spread
+   that lists canola oil; "vegetable oil" -> tuna packed in it). When the word names a
+   basic, check that the product is filed where that basic lives, and say so if not. */
+const ING_SANITY = [
+  [/\boil$/, /oils|vinegar/i, 'an oil'], [/\b(?:broth|stock)$/, /broth|stock|soup/i, 'a broth'],
+  [/\bsugar$/, /sugar|sweeten|baking/i, 'a sugar'], [/\bflour$/, /flour|baking/i, 'a flour'],
+  [/\bmilk$/, /milk|dairy/i, 'a milk'], [/\bbutter$/, /butter/i, 'butter'],
+  [/\b(?:cheddar|mozzarella|parmesan|cheese)$/, /cheese/i, 'a cheese'],
+  [/^(?:fresh )?(?:parsley|basil|mint|dill|thyme|rosemary|sage|oregano|chives|cilantro)$/, /herb|spice|season/i, 'a herb'],
+];
+function importOddlyFiled(term, p) {
+  const crumb = p.category_breadcrumb || '';
+  for (const [re, ok, what] of ING_SANITY)
+    if (re.test(term) && !ok.test(crumb)) return { what, crumb: crumb.replace(/^Grocery\//, '').split('/').slice(0, 2).join(' › ') };
+  return null;
+}
+
+function importRow(r, i) {
+  const sku = r.pick || (r.alts[0] || {}).sku;
+  const p = sku ? GS.product(sku) : null, sc = sku ? GS.scoreFor(sku) : null;
+  const match = p ? `<div class="im-match">${p.image_url ? `<img src="${p.image_url}" alt="">` : '<div class="im-noimg"></div>'}
+      <div class="im-mname">${esc(p.name)}<small>${GS.priceFor(sku) || ''}</small></div>
+      ${scorePill(sc == null ? null : Math.round(sc))}
+      <button class="im-swap" data-im-swap="${i}">${IMPORT.open === i ? 'Close' : 'Swap'}</button></div>` : '';
+  let odd;
+  const wantsFresh = /\b(bunch|sprigs?|fresh|leaves)\b/i.test((r.amount || '') + ' ' + r.raw + ' ' + r.term);
+  const herb = /^(?:fresh )?(?:parsley|basil|mint|dill|thyme|rosemary|sage|oregano|chives)$/.test(r.term);
+  const dried = p && wantsFresh && herb && !/\b(fresh|bunch)\b/i.test(p.name);
+  const tag = !p ? '<span class="im-tag none">Nothing found — try a simpler word above</span>'
+    : dried ? '<span class="im-tag warn">You asked for fresh — this is the dried jar. Fresh herbs are in the produce section.</span>'
+    : (odd = importOddlyFiled(r.term, p)) ? `<span class="im-tag warn">This is filed under ${esc(odd.crumb)} — not ${odd.what}. Check it, or try another word.</span>`
+    : r.relaxed ? `<span class="im-tag warn">No exact match — searched without “${esc(r.relaxed)}”. Check this one.</span>` : '';
+  const alts = IMPORT.open === i ? `<div class="im-alts">${r.alts.map(a => {
+      const s = GS.scoreFor(a.sku);
+      return `<button class="im-alt ${a.sku === sku ? 'cur' : ''}" data-im-pick="${i}|${a.sku}">${scorePill(s == null ? null : Math.round(s))}
+        <span style="flex:1">${esc(a.name)}</span><span>${GS.priceFor(a.sku) || ''}</span></button>`;
+    }).join('')}</div>` : '';
+  return `<div class="im-row ${r.include ? '' : 'off'}">
+    <label class="im-inc"><input type="checkbox" data-im-inc="${i}" ${r.include ? 'checked' : ''} aria-label="Include ${esc(r.term)}"></label>
+    <div class="im-body"><input class="im-term" data-im-term="${i}" value="${esc(r.term)}" aria-label="Ingredient search word">
+      ${r.amount || r.raw ? `<div class="im-raw">${r.amount ? `<span class="im-amt">${esc(r.amount)}</span>` : ''}${esc(r.raw)}</div>` : ''}
+      ${match}${tag}${alts}</div></div>`;
+}
+
+function renderImportResult() {
+  const box = document.getElementById('imResult'), rows = IMPORT.rows;
+  const on = rows.filter(r => r.include);
+  const scores = on.map(r => { const s = r.pick || (r.alts[0] || {}).sku; return s ? GS.scoreFor(s) : null; }).filter(v => v != null);
+  const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+  box.innerHTML = `${IMPORT.title ? `<div class="im-title">${esc(IMPORT.title)}</div>` : ''}
+    <div class="im-sub">${IMPORT.source ? esc(IMPORT.source) + ' · ' : ''}read from ${esc(IMPORT.via)} · ${rows.length} ingredients found</div>
+    <div class="pl-summary"><div class="pl-stats"><b>${on.length}</b> of ${rows.length} ticked${avg != null ? ` · <b style="color:${GS.scoreColor(avg)}">${avg}</b> avg score` : ''}</div>
+      <button class="pl-add" id="imAdd" ${on.length ? '' : 'disabled'}>Add ${on.length} to my shopping list</button></div>
+    <label class="im-toggle"><input type="checkbox" id="imSkip" ${IMPORT.skipStaples ? 'checked' : ''}> Skip salt, pepper and water</label>
+    ${rows.map(importRow).join('')}`;
+}
+
+function importAdd() {
+  let added = 0, merged = 0;
+  for (const r of IMPORT.rows) {
+    if (!r.include || !r.term) continue;
+    const sku = r.pick || (r.alts[0] || {}).sku || null, note = r.amount || '';
+    const ex = MY_LIST.find(e => e.q === r.term);
+    if (ex) {                        // already on the list: keep one line, remember both amounts
+      if (note && !(ex.note || '').includes(note)) ex.note = [ex.note, note].filter(Boolean).join(' + ').slice(0, 60);
+      merged++; continue;
+    }
+    const swapped = r.pick && r.alts[0] && r.pick !== r.alts[0].sku;
+    MY_LIST.push({ q: r.term, sku, checked: false, ...(swapped ? { pinned: true } : {}), ...(note ? { note: note.slice(0, 60) } : {}) });
+    added++;
+  }
+  GS.saveMyList(MY_LIST);
+  renderListBar();
+  toast(added || merged ? `${added} added${merged ? `, ${merged} already on your list` : ''}` : 'Nothing ticked');
+  openList();
+}
+
+function importClick(e) {
+  if (e.target.closest('#imGo')) return importGo();
+  if (e.target.closest('#imAi')) return importAi();
+  if (e.target.closest('#imCopyShortcut')) return copyText(shortcutCode(SHARE_LAN ? `http://${SHARE_LAN}:${location.port || 80}` : location.origin));
+  if (e.target.closest('#imCopyBookmarklet')) return copyText(bookmarkletCode(location.origin));
+  if (e.target.closest('.im-bookmarklet')) { e.preventDefault(); return toast('Drag it to your bookmarks bar - it runs on recipe pages, not here'); }
+  const sw = e.target.closest('[data-im-swap]');
+  if (sw) { const i = +sw.dataset.imSwap; IMPORT.open = IMPORT.open === i ? null : i; return renderImportResult(); }
+  const pk = e.target.closest('[data-im-pick]');
+  if (pk) { const [i, sku] = pk.dataset.imPick.split('|'); IMPORT.rows[+i].pick = sku; IMPORT.open = null; return renderImportResult(); }
+  if (e.target.closest('#imAdd')) return importAdd();
+}
+function importChange(e) {
+  const inc = e.target.closest('[data-im-inc]');
+  if (inc) { IMPORT.rows[+inc.dataset.imInc].include = inc.checked; return renderImportResult(); }
+  const t = e.target.closest('[data-im-term]');
+  if (t) { const r = IMPORT.rows[+t.dataset.imTerm]; r.term = t.value.trim(); r.pick = null; importRematch(r); r.include = !!r.alts.length; return renderImportResult(); }
+  if (e.target.id === 'imSkip') {
+    IMPORT.skipStaples = e.target.checked;
+    IMPORT.rows.forEach(r => { if (r.staple) r.include = !IMPORT.skipStaples && !!r.alts.length; });
+    return renderImportResult();
+  }
+}
+
+/* ------------------------------------------------------------ back button
+   A phone's Back gesture used to leave the whole site, because every screen
+   here (tabs, the shopping list / meal sheet, the product breakdown) is the
+   same page. Each of those now pushes one history entry when it opens, so
+   Back closes the top layer instead. `NAV.stack` mirrors the entries we
+   pushed; `skip` counts the popstates we caused ourselves with history.back()
+   so they are not handled twice. */
+const NAV = { stack: [], skip: 0, restoring: false, tab: 'shop' };
+function navPush(entry) {
+  NAV.stack.push(entry);
+  try { history.pushState({ gs: NAV.stack.length }, ''); } catch (e) {}
+  navUpdate();
+}
+function navUpdate() {
+  const b = document.getElementById('backBtn');
+  if (b) b.hidden = NAV.stack.length === 0;
+}
+// A layer was closed by something other than Back (the X, the backdrop, Escape).
+function navClosedByUI(kind) {
+  const i = NAV.stack.map(e => e.kind).lastIndexOf(kind);
+  if (i < 0) return;                        // Back itself closed it; already handled
+  if (i === NAV.stack.length - 1) { NAV.stack.pop(); NAV.skip++; try { history.back(); } catch (e) {} }
+  else NAV.stack.splice(i, 1);              // buried: drop it, leaving one harmless extra entry
+  navUpdate();
+}
+function navWatch(id, kind) {
+  const el = document.getElementById(id);
+  let open = !el.hidden;
+  new MutationObserver(() => {
+    const now = !el.hidden;
+    if (now === open) return;
+    open = now;
+    if (now) navPush({ kind }); else navClosedByUI(kind);
+  }).observe(el, { attributes: true, attributeFilter: ['hidden'] });
+}
+window.addEventListener('popstate', e => {
+  if (NAV.skip > 0) { NAV.skip--; return; }
+  const top = NAV.stack.pop();
+  if (!top) {
+    // An entry left over from before a reload: keep going rather than appear stuck.
+    if (e.state && e.state.gs > 0) { NAV.skip++; try { history.back(); } catch (err) {} }
+    return;
+  }
+  if (top.kind === 'detail') document.getElementById('detailOverlay').hidden = true;
+  else if (top.kind === 'sheet') { document.getElementById('listSheet').hidden = true; SWAP_OPEN = null; CLEAR_ARMED = false; LIST_PICK = null; }
+  else if (top.kind === 'tab') { NAV.restoring = true; setTab(top.prev); NAV.restoring = false; }
+  navUpdate();
+});
+
+function setTab(name) {
+  if (!NAV.restoring && name !== NAV.tab) {
+    const top = NAV.stack[NAV.stack.length - 1];
+    // Tapping the tab you just came from is just Back.
+    if (top && top.kind === 'tab' && top.prev === name) {
+      // Undo the step now rather than waiting for popstate, so quick taps can't race it.
+      NAV.stack.pop(); NAV.skip++; try { history.back(); } catch (e) {}
+      NAV.restoring = true; setTab(name); NAV.restoring = false; navUpdate();
+      return;
+    }
+    // Hopping between tabs keeps ONE step: Back goes to where you started, not
+    // through every tab you passed (60 switches used to mean 60 Backs).
+    if (!(top && top.kind === 'tab')) navPush({ kind: 'tab', prev: NAV.tab });
+  }
+  NAV.tab = name;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.getElementById('shopTab').hidden = name !== 'shop';
+  document.getElementById('dinnerTab').hidden = name !== 'dinner';
+  document.getElementById('planTab').hidden = name !== 'plan';
+  document.getElementById('importTab').hidden = name !== 'import';
+  if (name === 'dinner') renderDinner();
+  if (name === 'plan') renderPlan();
+  if (name === 'import') renderImport();
+  window.scrollTo(0, 0);
+}
+
+function dinnerClick(e) {
+  const opt = e.target.closest('[data-dq]');
+  if (opt) {
+    const d = DQ[DINNER.step];
+    DINNER.answers[d.key] = opt.dataset.dq === '__any' ? null : opt.dataset.dq;
+    DINNER.trail.push(DINNER.step);
+    DINNER.step++;
+    renderDinner(); return true;
+  }
+  if (e.target.closest('#dqBack')) {
+    // Back goes to the last question they answered, not the last one numbered.
+    DINNER.step = DINNER.trail.pop() ?? 0;
+    delete DINNER.answers[DQ[DINNER.step].key];
+    renderDinner(); return true;
+  }
+  if (e.target.closest('#dqReset')) { DINNER = { answers: {}, step: 0, trail: [] }; renderDinner(); return true; }
+  if (e.target.closest('#dqShow')) { DINNER.step = DQ.length; renderDinner(); return true; }
+  const undo = e.target.closest('[data-dq-undo]');
+  if (undo) {
+    // Going back to a question means forgetting it and everything after it.
+    const i = DQ.findIndex(d => d.key === undo.dataset.dqUndo);
+    DQ.slice(i).forEach(d => delete DINNER.answers[d.key]);
+    DINNER.trail = DINNER.trail.filter(t => t < i);
+    DINNER.step = i; renderDinner(); return true;
+  }
+  if (e.target.closest('#dqSurprise')) {
+    const pool = dinnerMatches(DINNER.answers);
+    renderMeal(pool[Math.floor(Math.random() * pool.length)].id); return true;
+  }
+  const meal = e.target.closest('[data-meal]');
+  if (meal) { renderMeal(meal.dataset.meal); return true; }
+  return false;
+}
+
+/* Tapping a meal used to dump its ingredients straight onto the list and throw
+   the list open, which made the list look like that meal's own checklist. It
+   opens a preview instead: here is what this meal would put on your list, one
+   button to send it there. The list stays the single place you shop from. */
+/* Amounts are rough buy-for-two figures (meals.json `amounts`, parallel to
+   `items`). When several meals need the same ingredient the notes are joined
+   ("1 lb + 1.5 lb") rather than summed: the units differ too often to add. */
+function mealAmount(meal, i) { return (meal.amounts && meal.amounts[i]) || ''; }
+/* Each list line remembers WHICH meal asked for how much (e.amts: meal id -> "1 can"), so
+   adding a meal twice changes nothing and two meals that each need a can make "2 cans".
+   Amounts in the same unit are added; different units are listed side by side. */
+const AMT_NOUNS = { cup: 'cups', slice: 'slices', clove: 'cloves', can: 'cans', handful: 'handfuls', stalk: 'stalks',
+  crown: 'crowns', leaf: 'leaves', chop: 'chops', roll: 'rolls', head: 'heads', heart: 'hearts', bunch: 'bunches',
+  jar: 'jars', bag: 'bags', box: 'boxes', bottle: 'bottles', pack: 'packs', pint: 'pints', tub: 'tubs', block: 'blocks' };
+const AMT_SINGULAR = { ...Object.fromEntries(Object.entries(AMT_NOUNS).map(([a, b]) => [b, a])), lbs: 'lb', pounds: 'lb', pound: 'lb' };  // "1 lb" + "1.5 lbs" = "2 1/2 lb"
+function parseAmount(t) {
+  const m = /^(\d+(?:\.\d+)?)(?:\s+(\d+)\/(\d+)|\/(\d+))?\s*(.*)$/.exec(String(t).trim());
+  if (!m) return null;
+  let n = parseFloat(m[1]);
+  if (m[2]) n += +m[2] / +m[3];
+  else if (m[4]) n = n / +m[4];
+  const words = m[5].toLowerCase().split(' ');
+  words[0] = AMT_SINGULAR[words[0]] || words[0];
+  return { n, unit: words.join(' ').trim() };
+}
+function fmtAmount(n, unit) {
+  const whole = Math.floor(n + 1e-9), frac = n - whole;
+  const F = [[0.25, '1/4'], [0.333, '1/3'], [0.5, '1/2'], [0.667, '2/3'], [0.75, '3/4']].find(([v]) => Math.abs(frac - v) < 0.02);
+  const num = frac < 0.02 ? String(whole) : F ? (whole ? whole + ' ' : '') + F[1] : String(Math.round(n * 10) / 10);
+  const words = unit.split(' ');
+  if (n > 1 && AMT_NOUNS[words[0]]) words[0] = AMT_NOUNS[words[0]];
+  return (num + ' ' + words.join(' ')).trim();
+}
+function sumAmounts(list) {
+  const totals = new Map(), other = [];
+  for (const a of list) {
+    const p = parseAmount(a);
+    if (!p) { if (!other.includes(a)) other.push(a); continue; }
+    totals.set(p.unit, (totals.get(p.unit) || 0) + p.n);
+  }
+  return [...[...totals].map(([u, n]) => fmtAmount(n, u)), ...other].join(' + ');
+}
+// Record what one source (a meal id) needs on a list line, and re-derive the note.
+function addAmount(e, key, amount) {
+  if (!amount) return;
+  e.amts = e.amts || (e.note ? { _: e.note } : {});      // keep an amount that came from a recipe import
+  e.amts[key] = amount;
+  e.note = sumAmounts(Object.values(e.amts)).slice(0, 60);
+  const meals = Object.keys(e.amts).filter(k => k !== '_').length;
+  if (meals > 1) e.uses = Math.max(e.uses || 1, meals);
+}
+function mealParts(meal) {
+  return meal.items.map((q, i) => {
+    const p = GS.bestFor(q, FILTERS, 1)[0] || null;
+    return { q, amount: mealAmount(meal, i), p, score: p ? GS.scoreFor(p.sku) : null,
+             already: MY_LIST.some(e => e.q === q) };
+  });
+}
+
+function renderMeal(id) {
+  const meal = MEALS.find(m => m.id === id);
+  if (!meal) return;
+  const parts = mealParts(meal);
+  const scores = parts.map(x => x.score).filter(v => v != null);
+  const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+  const toAdd = parts.filter(x => !x.already).length;
+
+  const sheet = document.getElementById('listSheet');
+  SHEET_MODE = 'meal';
+  sheet.innerHTML = `
+    <div class="sheet-backdrop"></div>
+    <div class="sheet-panel">
+      <div class="sheet-head">
+        <button class="sheet-close" aria-label="Close">✕</button>
+        <h2>${meal.title}</h2>
+        <p>${meal.items.length} ingredients${avg != null ? ` · ${avg} average score` : ''}</p>
+      </div>
+      <div class="sheet-body">
+        <div class="meal-hero">
+          ${meal.image ? `<img src="${meal.image}" alt="">` : ''}
+          <div class="meal-hero-scrim"></div>
+          <div class="meal-hero-txt"><b>${meal.title}</b><span>${meal.subtitle}</span></div>
+        </div>
+        <div class="mp-head">
+          <span>What this would put on your list</span>
+          ${avg != null ? `<span><b style="color:${GS.scoreColor(avg)}">${avg}</b> avg</span>` : ''}
+        </div>
+        ${parts.map(x => `
+          <div class="mp-row">
+            <div class="mp-score ${x.score == null ? 'none' : ''}" ${x.score != null ? `style="background:${GS.scoreColor(x.score)}"` : ''}>${x.score == null ? '—' : Math.round(x.score)}</div>
+            <div class="mp-main">
+              <div class="mp-want">${x.q}${x.amount ? ` <span class="mp-amt">${esc(x.amount)}</span>` : ''}</div>
+              <div class="mp-pick">${x.p ? x.p.name : 'nothing scored matched'}${x.p && GS.priceFor(x.p.sku) ? ` · ${GS.priceFor(x.p.sku)}` : ''}</div>
+            </div>
+            ${x.already ? '<div class="mp-on">on your list</div>' : ''}
+          </div>`).join('')}
+        <a class="mk-recipe" href="recipe.html?meal=${encodeURIComponent(meal.id)}" style="margin:6px 0 10px">How to make it →</a>
+        <button class="big-btn" data-meal-add="${meal.id}" ${toAdd ? '' : 'disabled'}>
+          ${toAdd ? `Add ${toAdd} ingredient${toAdd === 1 ? '' : 's'} to shopping list` : 'Already on your shopping list'}
+        </button>
+        ${meal.amounts ? '<div class="profile-note">Amounts are rough, for two people, and will come onto your list as a note. Adjust to taste.</div>' : ''}
+        <div class="profile-note">These go onto your one shopping list, the same one search
+          adds to — not a separate checklist for this meal. Each pick is the best-scoring
+          product that passes your filters, and you can swap any of them on the list.</div>
+      </div>
+    </div>`;
+  sheet.hidden = false;
+}
+
+function addMeal(id) {
+  const meal = MEALS.find(m => m.id === id);
+  if (!meal) return;
+  let added = 0;
+  meal.items.forEach((q, i) => {
+    const amount = mealAmount(meal, i);
+    // Don't duplicate something already on the list under the same name -
+    // but if another meal put it there, keep both meals' amounts.
+    const ex = MY_LIST.find(e => e.q === q);
+    if (ex) { if (!(ex.amts && meal.id in ex.amts)) addAmount(ex, meal.id, amount); return; }
+    const best = GS.bestFor(q, FILTERS, 1);
+    const entry = { q, sku: best.length ? best[0].sku : null, checked: false };
+    addAmount(entry, meal.id, amount);
+    MY_LIST.push(entry);
+    added++;
+  });
+  GS.saveMyList(MY_LIST);              // also saves amounts added to lines already on the list
+  renderListBar();
+  toast(added
+    ? `${added} ingredient${added === 1 ? '' : 's'} added to your shopping list`
+    : 'Everything was already on your list');
+  openList();
+}
+
+/* ------------------------------------------------------- buy it or make it
+   Two honest numbers side by side: the best store version, and the average
+   score of the things you would buy to make it instead. The second is NOT
+   "homemade scores 96" - there is no such product to score. It is the score
+   of the actual ingredients, which is a fact, and the ingredient lists below
+   it are what really makes the case.
+
+   Cost per batch comes from each ingredient's real unit price times the
+   fraction of the package a batch uses, so it is an estimate with its
+   arithmetic shown rather than a claim. */
+let MAKEABLE = [];
+
+function makeParts(item) {
+  const store = GS.bestFor(item.store_query, FILTERS, 1)[0] || null;
+  const parts = item.ingredients.map(ing => {
+    const p = GS.bestFor(ing.q, FILTERS, 1)[0] || null;
+    const u = p ? GS.unitPrice(p.sku) : null;
+    const priceStr = p ? GS.priceFor(p.sku) : null;
+    const full = priceStr ? parseFloat(String(priceStr).replace(/[^0-9.]/g, '')) : null;
+    return { ing, p, score: p ? GS.scoreFor(p.sku) : null,
+             batchCost: (full != null && isFinite(full)) ? full * ing.uses : null };
+  });
+  const scores = parts.map(x => x.score).filter(v => v != null);
+  const avg = scores.length ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length) : null;
+  const costs = parts.map(x => x.batchCost).filter(v => v != null);
+  return { store, storeScore: store ? GS.scoreFor(store.sku) : null, parts, avg,
+           batchCost: costs.length === parts.length ? costs.reduce((a,b)=>a+b,0) : null };
+}
+
+function renderMakeShelf() {
+  if (!MAKEABLE.length) return '';
+  /* Two groups, because they answer different questions. "Buy it or make it"
+     is a close call worth thinking about. "Nothing good here" is a category
+     where the app's usual job - find you the best one - has no useful answer,
+     because the best one is still bad. */
+  return makeGroup(MAKEABLE.filter(m => !m.no_good_option),
+      'Buy it or make it',
+      'Where the store version and the version you would make are furthest apart.')
+    + makeGroup(MAKEABLE.filter(m => m.no_good_option),
+      'Nothing good here',
+      'Categories where even the best product in the store scores badly — so the honest answer is a recipe.');
+}
+
+function makeGroup(items, heading, sub) {
+  if (!items.length) return '';
+  return `<div class="meals">
+    <div class="meals-head">${heading}</div>
+    <div class="meals-sub">${sub}</div>
+    <div class="mk-grid">
+      ${items.map(m => {
+        const r = makeParts(m);
+        return `<button class="mk-card" data-make="${m.id}">
+          <div class="mk-title">${m.title}</div>
+          <div class="mk-vs">
+            ${r.storeScore != null ? `<span class="mk-pill" style="background:${GS.scoreColor(r.storeScore)}">${Math.round(r.storeScore)}</span>` : ''}
+            <span class="mk-arrow">→</span>
+            ${r.avg != null ? `<span class="mk-pill" style="background:${GS.scoreColor(r.avg)}">${r.avg}</span>` : ''}
+            <span class="mk-note">buy vs make</span>
+          </div>
+          <div class="mk-note">${m.effort}</div>
+        </button>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+async function renderCompare(id) {
+  // The store product's raw ingredient list comes with the lazy detail.
+  if (!GS.detailReady()) await GS.ensureDetail();
+  const item = MAKEABLE.find(m => m.id === id);
+  if (!item) return;
+  const r = makeParts(item);
+  const sheet = document.getElementById('listSheet');
+  SHEET_MODE = 'compare';
+  const makeWins = r.avg != null && r.storeScore != null && r.avg > r.storeScore;
+
+  const storeUnit = r.store ? GS.unitPrice(r.store.sku) : null;
+  const storeIngs = r.store ? (GS.product(r.store.sku) || {}).ingredients : null;
+  const storeCount = storeIngs ? storeIngs.split(/[,;]/).filter(x => x.trim()).length : null;
+
+  sheet.innerHTML = `
+    <div class="sheet-backdrop"></div>
+    <div class="sheet-panel">
+      <div class="sheet-head">
+        <button class="sheet-close" aria-label="Close">✕</button>
+        <h2>${item.title} — buy it or make it</h2>
+        <p>${item.effort} · makes ${item.yields}</p>
+      </div>
+      <div class="sheet-body">
+        <div class="cmp-cols">
+          <div class="cmp-col ${makeWins ? '' : 'win'}">
+            <div class="cmp-h">Best in the store</div>
+            ${r.storeScore != null ? `<span class="cmp-score" style="background:${GS.scoreColor(r.storeScore)}">${Math.round(r.storeScore)}</span>` : ''}
+            <div class="cmp-name">${r.store ? r.store.name : 'nothing scored found'}</div>
+            <div class="cmp-meta">${r.store ? (GS.priceFor(r.store.sku) || '') : ''}${storeUnit ? ` · $${storeUnit.perOz.toFixed(2)}/oz` : ''}${storeCount ? ` · ${storeCount} ingredients` : ''}</div>
+            ${storeIngs ? `<div class="cmp-ings">${storeIngs}</div>` : ''}
+          </div>
+          <div class="cmp-col ${makeWins ? 'win' : ''}">
+            <div class="cmp-h">What you'd buy instead</div>
+            ${r.avg != null ? `<span class="cmp-score" style="background:${GS.scoreColor(r.avg)}">${r.avg}</span>` : ''}
+            <div class="cmp-name">${item.ingredients.length} ingredients</div>
+            <div class="cmp-meta">${r.batchCost != null
+              ? `about $${r.batchCost.toFixed(2)} per batch${item.yield_oz ? ` · $${(r.batchCost / item.yield_oz).toFixed(2)}/oz` : ''}`
+              : 'cost unavailable'}</div>
+            <div class="cmp-ings">
+              ${r.parts.map(x => `<div class="cmp-li">
+                 ${x.score != null ? `<b style="background:${GS.scoreColor(x.score)}">${Math.round(x.score)}</b>` : '<b style="background:#CFC3AC">—</b>'}
+                 <span>${x.ing.amount} ${x.p ? x.p.name : x.ing.q}</span>
+               </div>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="cmp-why">${item.why}</div>
+        <div class="add-item mk-actions" style="margin-top:14px">
+          ${item.recipe ? `<a class="mk-recipe" href="recipe.html?id=${encodeURIComponent(item.id)}">How to make it →</a>` : ''}
+          <button id="mkAdd" data-make-add="${item.id}" style="flex:1;background:var(--brand);color:#fff;border:none;border-radius:999px;padding:12px;font-size:14px;font-weight:800;font-family:var(--sans);cursor:pointer;min-height:44px">Add the ingredients to my list</button>
+        </div>
+        <div class="profile-note">The right-hand score is the average of the ingredients you would buy —
+          there is no homemade product to score, so nothing here pretends otherwise. Cost is each
+          ingredient's real price times the share of the package one batch uses — compare the
+          per-ounce figures, not the totals, since a batch and a package are rarely the same size.</div>
+      </div>
+    </div>`;
+  sheet.hidden = false;
+}
+
+function addMakeIngredients(id) {
+  const item = MAKEABLE.find(m => m.id === id);
+  if (!item) return;
+  let added = 0;
+  item.ingredients.forEach(ing => {
+    if (MY_LIST.some(e => e.q === ing.q)) return;
+    const best = GS.bestFor(ing.q, FILTERS, 1);
+    MY_LIST.push({ q: ing.q, sku: best.length ? best[0].sku : null, checked: false });
+    added++;
+  });
+  if (added) GS.saveMyList(MY_LIST);
+  renderListBar();
+  toast(added
+    ? `${added} ingredient${added === 1 ? '' : 's'} added to your shopping list`
+    : 'Everything was already on your list');
+  openList();
+}
+
+function onList(sku) { return MY_LIST.some(e => e.sku === sku); }
+
+function renderListBar() {
+  const cnt = document.getElementById('listTabCount');
+  if (cnt) { cnt.textContent = MY_LIST.length; cnt.hidden = !MY_LIST.length; }
+  const bar = document.getElementById('listBar');
+  bar.classList.toggle('open', MY_LIST.length > 0);
+  if (!MY_LIST.length) { if (!document.getElementById('listSheet').hidden) renderListSheet(); return; }
+  // A pill, not a strip of thumbnails: at phone size a dozen 46 px photos were too small
+  // to recognise and their remove buttons got clipped. The list tab and sheet do that job.
+  const picked = MY_LIST.filter(e => e.sku).map(e => GS.product(e.sku)).filter(Boolean);
+  const scored = picked.map(p => GS.scoreFor(p.sku)).filter(s => s != null);
+  const n = MY_LIST.length, left = MY_LIST.filter(e => !e.checked).length;
+  document.getElementById('listSummary').innerHTML = `My list<small>${n} item${n===1?'':'s'}${left < n ? ` · ${left} to get` : ''}</small>`;
+  const sc = document.getElementById('listScore');
+  if (scored.length) {
+    const avg = Math.round(scored.reduce((a,b)=>a+b,0)/scored.length);
+    sc.textContent = avg; sc.style.color = GS.scoreColor(avg); sc.title = 'Average score'; sc.hidden = false;
+  } else sc.hidden = true;
+  if (n > (renderListBar.last || 0)) { bar.classList.remove('bump'); void bar.offsetWidth; bar.classList.add('bump'); }
+  renderListBar.last = n;
+  if (!document.getElementById('listSheet').hidden) renderListSheet();
+}
+
+/* ------------------------------------------------------------ shopping list
+   You shop for "peanut butter", not for a barcode. Adding an item by name
+   picks the best-scoring product that passes your filters, shows why, and
+   lets you swap it - the pick is a suggestion, not a decision.
+
+   Grouped by aisle because that is the order you walk the store in. The
+   grouping is honest about ShopRite's patchy aisle data (see README): a real
+   aisle when there is one, otherwise the department. */
+let SWAP_OPEN = null;   // index of the row whose alternatives are expanded
+
+/* The sheet is one container showing three different things. Without this,
+   any renderListBar() while a meal or comparison was open would quietly
+   replace it with the shopping list. */
+let SHEET_MODE = 'list';
+
+/* Clearing is two taps on purpose: one tap arms the button, a second confirms.
+   A list built from a whole meal is several minutes of work, and a stray tap
+   with a thumb on a phone is exactly how it would get wiped. */
+let CLEAR_ARMED = false, CLEAR_T;
+function clearList() {
+  if (!MY_LIST.length) return;
+  if (!CLEAR_ARMED) {
+    CLEAR_ARMED = true;
+    renderListSheet();
+    clearTimeout(CLEAR_T);
+    CLEAR_T = setTimeout(() => { CLEAR_ARMED = false; renderListSheet(); }, 4000);
+    return;
+  }
+  clearTimeout(CLEAR_T);
+  CLEAR_ARMED = false;
+  SWAP_OPEN = null;
+  MY_LIST = [];
+  GS.saveMyList(MY_LIST);
+  renderListBar();
+  renderListSheet();
+  renderResults(document.getElementById('q').value, false);
+  toast('List cleared');
+}
+
+function openList() {
+  SHEET_MODE = 'list';
+  LIST_PICK = null;
+  const sheet = document.getElementById('listSheet');
+  sheet.hidden = false;
+  sheet.dataset.view = '';      // opening fresh starts at the top
+  renderListSheet();
+}
+
+let TOAST_T;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(TOAST_T);
+  TOAST_T = setTimeout(() => el.classList.remove('show'), 2600);
+}
+
+/* Getting the list off this website and into whatever they actually hold in
+   the store. Grouped the same way the on-screen list is, because that is the
+   order you walk the aisles in. */
+function listAsText() {
+  const groups = new Map();
+  MY_LIST.forEach(e => {
+    const g = e.sku ? GS.aisleGroup(e.sku) : 'Other';
+    if (!groups.has(g)) groups.set(g, []);
+    const p = e.sku ? GS.product(e.sku) : null;
+    const price = p ? GS.priceFor(p.sku) : null;
+    groups.get(g).push(`- ${p ? p.name : (e.q || 'item')}${price ? ` (${price})` : ''}`);
+  });
+  const names = [...groups.keys()].sort((a, b) =>
+    a === 'Other' ? 1 : b === 'Other' ? -1 : a.localeCompare(b));
+  return 'Shopping list\n\n' + names.map(n => `${n}\n${groups.get(n).join('\n')}`).join('\n\n');
+}
+
+async function exportList(mode) {
+  const text = listAsText();
+  if (!MY_LIST.length) { toast('Nothing on the list yet'); return; }
+  if (mode === 'share' && navigator.share) {
+    // The OS share sheet is what reaches Notes, Reminders, Messages - there is
+    // no import URL for Apple Notes, so this is the honest route.
+    try { await navigator.share({ title: 'Shopping list', text }); }
+    catch (err) { /* cancelling the share sheet throws; that is not an error */ }
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    toast('List copied — paste it into Notes');
+  } catch (err) {
+    // clipboard needs a secure context; localhost qualifies, but not every browser agrees
+    window.prompt('Copy your shopping list:', text);
+  }
+}
+
+/* Adding by name used to drop the best-scoring product straight onto the list. That
+   decided for you - "olive oil" became one particular bottle. Now it opens a picker in the
+   same pop-up: every match, best score first, the top one tagged Recommended, and nothing
+   goes on the list until you tap one. Swap on a list line opens the same picker. */
+let LIST_PICK = null;          // { q, n, replace: list index or null } while picking
+function addItemByName(query) {
+  const q = (query || '').trim();
+  if (!q) return;
+  LIST_PICK = { q, n: 30, replace: null };
+  renderListSheet();
+  const body = document.querySelector('#listSheet .sheet-body'); if (body) body.scrollTop = 0;
+}
+function renderPicker() {
+  const { q, n, replace } = LIST_PICK;
+  const { kept, hidden } = GS.applyFilters(GS.search(q), FILTERS);
+  const relaxed = GS.relaxedWord();
+  const rec = (GS.bestFor(q, FILTERS, 1)[0] || {}).sku;
+  const onList = new Set(MY_LIST.map(e => e.sku).filter(Boolean));
+  const current = replace != null ? (MY_LIST[replace] || {}).sku : null;
+  if (!kept.length) return `<div class="list-empty">No products match "${esc(q)}"${hidden ? ` (${hidden} hidden by your filters)` : ''}.<br>
+      Try a simpler word - "yogurt" rather than "vanilla bean yogurt".</div>
+    ${replace == null ? `<button class="pick-text" data-pick-text>Add "${esc(q)}" to the list anyway</button>` : ''}`;
+  const rows = kept.slice(0, n).map(p => {
+    const sc = GS.scoreFor(p.sku), u = GS.unitPrice(p.sku), price = GS.priceFor(p.sku);
+    return `<button class="pick-row ${p.sku === current ? 'current' : ''}" data-pick="${p.sku}">
+      <span class="pick-img">${p.image_url ? `<img src="${esc(p.image_url)}" alt="" loading="lazy">` : ''}</span>
+      <span class="pick-main">
+        ${p.sku === rec ? '<span class="pick-rec">Recommended</span>' : ''}
+        <span class="pick-name">${esc(p.name)}</span>
+        <span class="pick-meta">${price ? esc(price) : ''}${u ? ` · $${u.perOz.toFixed(2)}/${u.unit}` : ''}${p.sku === current ? ' · your current pick' : (onList.has(p.sku) ? ' · on your list' : '')}</span>
+      </span>
+      <span class="li-score ${sc == null ? 'none' : ''}" ${sc != null ? `style="background:${GS.scoreColor(sc)}"` : ''}>${sc == null ? '—' : Math.round(sc)}</span>
+    </button>`;
+  }).join('');
+  return `${relaxed ? `<div class="relaxed">Nothing matched all of that, so we dropped <b>"${esc(relaxed)}"</b> and searched for the rest.</div>` : ''}
+    <div class="pick-count">${kept.length} product${kept.length === 1 ? '' : 's'}, best score first${hidden ? ` · ${hidden} hidden by your filters` : ''}</div>
+    <div class="pick-list">${rows}</div>
+    ${kept.length > n ? `<button class="pick-more" data-pick-more>Show ${Math.min(30, kept.length - n)} more</button>` : ''}`;
+}
+
+function renderListSheet() {
+  const sheet = document.getElementById('listSheet');
+  if (sheet.hidden || SHEET_MODE !== 'list') return;
+
+  let body;
+  if (LIST_PICK) {
+    body = renderPicker();
+  } else if (!MY_LIST.length) {
+    body = `<div class="list-empty">Nothing on the list yet.<br>
+      Search for what you need above — "peanut butter", "greek yogurt" — and pick
+      from every match, best score first.</div>`;
+  } else {
+    // Group by aisle, keeping the order items were added within each group.
+    const groups = new Map();
+    MY_LIST.forEach((e, i) => {
+      const g = e.sku ? GS.aisleGroup(e.sku) : 'Not found';
+      if (!groups.has(g)) groups.set(g, []);
+      groups.get(g).push(i);
+    });
+    // Unfound items last; everything else alphabetical so the order is stable.
+    const names = [...groups.keys()].sort((a, b) =>
+      a === 'Not found' ? 1 : b === 'Not found' ? -1 : a.localeCompare(b));
+
+    body = names.map(name => `
+      <div class="aisle-group">
+        <div class="aisle-head">${name}</div>
+        ${groups.get(name).map(i => listRow(i)).join('')}
+      </div>`).join('');
+
+    const scored = MY_LIST.map(e => e.sku ? GS.scoreFor(e.sku) : null).filter(v => v != null);
+    const left = MY_LIST.filter(e => !e.checked).length;
+    body += `<div class="list-total">
+      <span>${left} left to get${left !== MY_LIST.length ? ` · ${MY_LIST.length - left} got` : ''}</span>
+      ${scored.length ? `<span><b style="color:${GS.scoreColor(scored.reduce((a,b)=>a+b,0)/scored.length)}">${Math.round(scored.reduce((a,b)=>a+b,0)/scored.length)}</b> avg score</span>` : ''}
+    </div>`;
+  }
+
+  // Keep the scroll position when the same view re-renders (ticking an item, the first tap on
+  // "Clear list"), so a confirm button at the bottom doesn't jump back to the top.
+  const view = LIST_PICK ? 'pick:' + LIST_PICK.q : 'list';
+  const prevBody = sheet.querySelector('.sheet-body');
+  const keep = prevBody && sheet.dataset.view === view ? prevBody.scrollTop : null;
+  sheet.innerHTML = `
+    <div class="sheet-backdrop"></div>
+    <div class="sheet-panel">
+      <div class="sheet-head">
+        <button class="sheet-close" aria-label="Close">✕</button>
+        ${LIST_PICK ? `<button class="pick-back" data-pick-back>← Back to list</button>
+          <h2>${LIST_PICK.replace != null ? 'Swap' : 'Pick'}: ${esc(LIST_PICK.q)}</h2>
+          <p>Every match, best score first. Tap one to ${LIST_PICK.replace != null ? 'use it instead' : 'add it to your list'}.</p>`
+        : `<h2>Shopping list</h2>
+          <p>Your one list — meals, comparisons and search all add here. Tick items off as you shop.</p>`}
+      </div>
+      <div class="sheet-body">
+        <div class="add-item">
+          <input id="addItemInput" placeholder="Search to add — milk, bread, olive oil…" autocomplete="off" enterkeyhint="search" value="${LIST_PICK ? esc(LIST_PICK.q) : ''}">
+          <button id="addItemBtn">Search</button>
+        </div>
+        ${body}
+        ${MY_LIST.length && !LIST_PICK ? `<div class="list-export">
+          <button data-export="share">${navigator.share ? 'Send to Notes / other app' : 'Copy list'}</button>
+          ${navigator.share ? '<button data-export="copy">Copy</button>' : ''}
+        </div>
+        <div class="list-export">
+          <button class="clear-btn ${CLEAR_ARMED ? 'armed' : ''}" data-clear>${CLEAR_ARMED ? `Tap again to remove all ${MY_LIST.length}` : 'Clear list'}</button>
+        </div>` : ''}
+      </div>
+    </div>`;
+  sheet.dataset.view = view;
+  if (keep != null) { const nb = sheet.querySelector('.sheet-body'); if (nb) nb.scrollTop = keep; }
+}
+
+function listRow(i) {
+  const e = MY_LIST[i];
+  const p = e.sku ? GS.product(e.sku) : null;
+  const score = e.sku ? GS.scoreFor(e.sku) : null;
+  const u = e.sku ? GS.unitPrice(e.sku) : null;
+  const price = e.sku ? GS.priceFor(e.sku) : null;
+
+  const swap = SWAP_OPEN === i && e.q ? `
+    <div class="swap-row">
+      ${GS.bestFor(e.q, FILTERS, 5).map(alt => {
+        const s = GS.scoreFor(alt.sku);
+        return `<div class="swap-opt ${alt.sku === e.sku ? 'current' : ''}" data-swap="${i}" data-sku="${alt.sku}">
+          <div class="li-score ${s == null ? 'none' : ''}" ${s != null ? `style="background:${GS.scoreColor(s)}"` : ''}>${s == null ? '—' : Math.round(s)}</div>
+          <div class="li-main"><div class="li-name">${esc(alt.name)}</div>
+            <div class="li-meta">${GS.priceFor(alt.sku) || ''}</div></div>
+        </div>`;
+      }).join('')}
+    </div>` : '';
+
+  if (!p) {
+    return `<div class="li" data-i="${i}">
+      <button class="li-check" data-check="${i}"></button>
+      <div class="li-main"><div class="li-want">${esc(e.q || 'item')}</div>
+        <div class="li-meta">No scored product matched — try a different word.</div></div>
+      <div class="li-right"><button class="li-btn" data-remove="${i}">Remove</button></div>
+    </div>`;
+  }
+
+  return `<div class="li ${e.checked ? 'done' : ''}" data-i="${i}">
+      <button class="li-check" data-check="${i}">${e.checked ? '✓' : ''}</button>
+      <div class="li-img">${p.image_url ? `<img src="${p.image_url}">` : ''}</div>
+      <div class="li-main">
+        ${e.q ? `<div class="li-want">${esc(e.q)}</div>` : ''}
+        <div class="li-name">${esc(p.name)}</div>
+        <div class="li-meta">${price || ''}${u ? ` · $${u.perOz.toFixed(2)}/${u.unit}` : ''}${e.uses > 1 ? ` · needed for ${e.uses} meals` : ''}${e.note ? ` · ${esc(e.note)}` : ''}</div>
+      </div>
+      <div class="li-right">
+        <div class="li-score ${score == null ? 'none' : ''}" ${score != null ? `style="background:${GS.scoreColor(score)}"` : ''}>${score == null ? '—' : Math.round(score)}</div>
+        ${e.q ? `<button class="li-btn" data-swapbtn="${i}">${SWAP_OPEN === i ? 'Close' : (e.pinned ? 'Your pick' : 'Swap')}</button>` : ''}
+        <button class="li-btn" data-remove="${i}">✕</button>
+      </div>
+    </div>${swap}`;
+}
+
+/* Cover photos: the user picked these four (2026-10-02) - burrito bowl, yogurt parfait,
+   berries and oats, farm produce on marble. One is chosen at random per visit and the
+   rest crossfade in every 8 s while the Shop tab's landing is showing. Two layers swap so
+   the change is a fade, not a jump. Stops for a search, and never moves for people who
+   ask their device for reduced motion. ?hero=<meal id> still previews a single photo. */
+const HERO_PHOTOS = [
+  { img: 'assets/meals/burritobowl.jpg', y: 58 },   // hero 'A' as picked; the photo moved here from greekbowl.jpg 2026-10-03
+  { img: 'assets/meals/parfait.jpg', y: 60 },
+  { img: 'assets/meals/oats.jpg', y: 50 },
+  { img: 'assets/hero/produce-marble.jpg', y: 50 },
+];
+(function heroRotate() {
+  const a = document.getElementById('heroBgA'), b = document.getElementById('heroBgB');
+  if (!a || !b) return;
+  const preview = new URLSearchParams(location.search).get('hero');
+  const list = preview ? [{ img: `assets/meals/${preview.replace(/[^a-z]/g, '')}.jpg`, y: 55 }] : HERO_PHOTOS;
+  const set = (el, p) => { el.style.setProperty('--img', `url('${p.img}')`); el.style.setProperty('--y', p.y + '%'); };
+  let i = Math.floor(Math.random() * list.length), front = a;
+  set(a, list[i]); a.classList.add('on');
+  // Load the next one ahead so a fade never shows a half-loaded image.
+  list.forEach(p => { const im = new Image(); im.src = p.img; });
+  if (list.length < 2 || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  setInterval(() => {
+    if (document.hidden || document.body.classList.contains('searched')) return;
+    if (document.getElementById('shopTab').hidden) return;
+    i = (i + 1) % list.length;
+    const back = front === a ? b : a;
+    set(back, list[i]); back.classList.add('on'); front.classList.remove('on'); front = back;
+  }, 8000);
+})();
+
+// Offline support (sw.js) once hosted on https. Not on the laptop's localhost by default: there
+// it would serve the previous night's data for one load after every rebuild. ?sw=1 tests it locally.
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || (location.hostname === 'localhost' && /[?&]sw=1/.test(location.search)))) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+
+(async function init() {
+  const info = await GS.loadData();
+  const scoredTotal = info.scoredCount + info.broaderScoredCount;
+  document.getElementById('stat').textContent = `${info.totalCount.toLocaleString()} products · ${scoredTotal.toLocaleString()} scored`;
+  MY_LIST = GS.loadMyList();
+  renderListBar();
+
+  try {
+    MEALS = (await (await fetch('/data/meals.json', { cache: 'no-store' })).json()).meals || [];
+  } catch (e) { MEALS = []; }
+  try {
+    MAKEABLE = (await (await fetch('/data/makeable.json', { cache: 'no-store' })).json()).items || [];
+  } catch (e) { MAKEABLE = []; }
+  // The results box ships with a static empty state, and renderResults was
+  // only ever called on input - so the meal shelf never appeared on load.
+  performance.mark('app:before-first-render');
+  renderResults(document.getElementById('q').value || '');
+  performance.mark('app:first-render-done');
+  handleShare();
+  window.addEventListener('hashchange', handleShare);
+
+  renderProfilePanel();
+  document.getElementById('results').addEventListener('click', e => {
+    if (!e.target.closest('[data-price-off]')) return;
+    e.preventDefault();
+    // Same path as picking it in the panel, so the list re-picks too.
+    document.querySelector('#profilePanel [data-price="off"]').click();
+  });
+  document.getElementById('profileBtn').addEventListener('click', () => {
+    const panel = document.getElementById('profilePanel');
+    panel.hidden = !panel.hidden;
+  });
+  document.getElementById('profilePanel').addEventListener('click', e => {
+    const price = e.target.closest('[data-price]');
+    const opt = e.target.closest('[data-profile]');
+    if (!opt && !price) return;
+    if (price) GS.setPriceMode(price.dataset.price);
+    else {
+      GS.setProfile(opt.dataset.profile);
+      try { localStorage.setItem(PROFILE_KEY, opt.dataset.profile); } catch (err) {}
+    }
+    renderProfilePanel();
+    document.getElementById('profilePanel').hidden = true;
+    // Re-pick every by-name list item: the best product under a new profile
+    // is a different product, which is the whole point of switching.
+    let repicked = 0;
+    MY_LIST.forEach(en => {
+      if (!en.q || en.pinned) return;          // never override a manual swap
+      const best = GS.bestFor(en.q, FILTERS, 1);
+      if (best.length && best[0].sku !== en.sku) { en.sku = best[0].sku; repicked++; }
+    });
+    if (repicked) GS.saveMyList(MY_LIST);
+    renderResults(document.getElementById('q').value);
+    renderListBar();
+    if (!document.getElementById('listSheet').hidden) renderListSheet();
+  });
+
+  navWatch('listSheet', 'sheet');
+  navWatch('detailOverlay', 'detail');
+  document.getElementById('backBtn').addEventListener('click', () => history.back());
+
+  loadFilters();
+  renderFilterPanel();
+  updateFilterSummary(null, null);
+
+  document.getElementById('filterToggle').addEventListener('click', () => {
+    const panel = document.getElementById('filterPanel');
+    panel.hidden = !panel.hidden;
+  });
+  document.getElementById('filterPanel').addEventListener('change', e => {
+    const cb = e.target.closest('input[type=checkbox]');
+    if (!cb) return;
+    const list = cb.dataset.kind === 'diet' ? FILTERS.requireTags : FILTERS.avoidFlags;
+    const i = list.indexOf(cb.dataset.value);
+    if (cb.checked) { if (i < 0) list.push(cb.dataset.value); }
+    else if (i >= 0) list.splice(i, 1);
+    saveFilters();
+    renderFilterPanel();
+    renderResults(document.getElementById('q').value);
+  });
+  document.getElementById('filterPanel').addEventListener('click', e => {
+    const sev = e.target.closest('[data-sev]');
+    if (sev) {
+      GS.setFlagPref(sev.dataset.label, +sev.dataset.sev);
+      renderFilterPanel();
+      renderResults(document.getElementById('q').value);
+      renderListBar();
+      if (!document.getElementById('listSheet').hidden) renderListSheet();
+      return;
+    }
+    if (e.target.closest('#flagReset')) {
+      GS.resetFlagPrefs();
+      renderFilterPanel();
+      renderResults(document.getElementById('q').value);
+      renderListBar();
+      if (!document.getElementById('listSheet').hidden) renderListSheet();
+      return;
+    }
+    if (!e.target.closest('#filterClear')) return;
+    FILTERS = { requireTags: [], avoidFlags: [] };
+    saveFilters();
+    renderFilterPanel();
+    renderResults(document.getElementById('q').value);
+  });
+
+  // ---- shopping list sheet ----
+  const sheet = document.getElementById('listSheet');
+  document.getElementById('listTab').addEventListener('click', () => openList());
+  document.getElementById('listOpenBtn').addEventListener('click', () => openList());
+
+  sheet.addEventListener('click', e => {
+    if (e.target.closest('.sheet-backdrop') || e.target.closest('.sheet-close')) {
+      sheet.hidden = true; SWAP_OPEN = null; CLEAR_ARMED = false; LIST_PICK = null; return;
+    }
+    if (e.target.closest('[data-pick-back]')) { LIST_PICK = null; renderListSheet(); return; }
+    if (e.target.closest('[data-pick-more]')) { LIST_PICK.n += 30; renderListSheet(); return; }
+    if (e.target.closest('[data-pick-text]')) {
+      MY_LIST.push({ q: LIST_PICK.q, sku: null, checked: false });
+      LIST_PICK = null; GS.saveMyList(MY_LIST); renderListBar(); renderListSheet(); return;
+    }
+    const pick = e.target.closest('[data-pick]');
+    if (pick) {
+      const sku = pick.dataset.pick, { q, replace } = LIST_PICK;
+      if (replace != null && MY_LIST[replace]) { MY_LIST[replace].sku = sku; MY_LIST[replace].pinned = true; }
+      else MY_LIST.push({ q, sku, checked: false, pinned: true });     // your choice: never re-picked
+      LIST_PICK = null;
+      GS.saveMyList(MY_LIST); renderListBar(); renderListSheet();
+      const p = GS.product(sku); toast(`${replace != null ? 'Swapped to' : 'Added'} ${p ? p.name.slice(0, 40) : 'item'}`);
+      return;
+    }
+    const mkAdd = e.target.closest('[data-make-add]');
+    if (mkAdd) { addMakeIngredients(mkAdd.dataset.makeAdd); return; }
+    const mealAdd = e.target.closest('[data-meal-add]');
+    if (mealAdd) { addMeal(mealAdd.dataset.mealAdd); return; }
+    if (e.target.closest('[data-clear]')) { clearList(); return; }
+    const exp = e.target.closest('[data-export]');
+    if (exp) { exportList(exp.dataset.export); return; }
+    const add = e.target.closest('#addItemBtn');
+    if (add) {
+      const box = document.getElementById('addItemInput');
+      if (LIST_PICK && box.value.trim()) { LIST_PICK.q = box.value.trim(); LIST_PICK.n = 30; renderListSheet(); }
+      else addItemByName(box.value);
+      return;
+    }
+    const check = e.target.closest('[data-check]');
+    if (check) {
+      const i = +check.dataset.check;
+      MY_LIST[i].checked = !MY_LIST[i].checked;
+      GS.saveMyList(MY_LIST); renderListSheet(); return;
+    }
+    const rm = e.target.closest('[data-remove]');
+    if (rm) {
+      MY_LIST.splice(+rm.dataset.remove, 1);
+      SWAP_OPEN = null;
+      GS.saveMyList(MY_LIST); renderListBar(); renderListSheet(); return;
+    }
+    const sw = e.target.closest('[data-swapbtn]');
+    if (sw) {
+      const i = +sw.dataset.swapbtn;
+      LIST_PICK = { q: MY_LIST[i].q, n: 30, replace: i };
+      renderListSheet();
+      const body = document.querySelector('#listSheet .sheet-body'); if (body) body.scrollTop = 0;
+      return;
+    }
+    const opt = e.target.closest('[data-swap]');
+    if (opt) {
+      const en = MY_LIST[+opt.dataset.swap];
+      en.sku = opt.dataset.sku;
+      // You picked this deliberately, so stop re-picking it. Without the pin,
+      // switching diet profiles silently threw away a manual choice, which is
+      // exactly the kind of thing that makes a tool feel untrustworthy.
+      en.pinned = true;
+      SWAP_OPEN = null;
+      GS.saveMyList(MY_LIST); renderListBar(); renderListSheet(); return;
+    }
+  });
+
+  sheet.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const box = e.target.closest('#addItemInput');
+    if (!box) return;
+    e.preventDefault();
+    if (LIST_PICK && box.value.trim()) { LIST_PICK.q = box.value.trim(); LIST_PICK.n = 30; renderListSheet(); }
+    else addItemByName(box.value);
+    box.blur();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !sheet.hidden) { sheet.hidden = true; SWAP_OPEN = null; LIST_PICK = null; }
+  });
+
+  // Results appear when you press Enter, not on every letter: the page reshuffling under
+  // each keystroke looked jumpy. Emptying the box still returns to the home screen at once.
+  document.getElementById('q').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); renderResults(e.target.value); e.target.blur(); }
+  });
+  document.getElementById('q').addEventListener('input', e => {
+    if (!e.target.value.trim()) renderResults('');
+  });
+  document.addEventListener('click', e => {
+    const tab = e.target.closest('[data-tab]');
+    if (tab) setTab(tab.dataset.tab);
+  });
+  document.getElementById('dinnerTab').addEventListener('click', dinnerClick);
+  document.querySelector('.search-pill').addEventListener('click', () => document.getElementById('q').focus());
+  const importTab = document.getElementById('importTab');
+  importTab.addEventListener('click', importClick);
+  importTab.addEventListener('change', importChange);
+  const planTab = document.getElementById('planTab');
+  planTab.addEventListener('click', planClick);
+  planTab.addEventListener('input', e => {
+    const inp = e.target.closest('.pl-input'); if (!inp) return;
+    document.getElementById('plMsg_' + inp.dataset.slot).textContent = '';
+    refreshSugg(inp.dataset.slot, inp.value);
+  });
+  planTab.addEventListener('keydown', e => {
+    const inp = e.target.closest('.pl-input');
+    if (inp && e.key === 'Enter') { e.preventDefault(); planCommit(inp.dataset.slot); }
+  });
+  document.getElementById('results').addEventListener('click', e => {
+    if (e.target.closest('#mealsShuffle')) {
+      dealMeals();
+      renderResults(document.getElementById('q').value, false);
+      const head = document.querySelector('.meals-head'); if (head) head.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    if (e.target.closest('#mealsMore')) {
+      SHOW_ALL_MEALS = true;
+      renderResults(document.getElementById('q').value, false);
+      return;
+    }
+    const meal = e.target.closest('[data-meal]');
+    if (meal) { renderMeal(meal.dataset.meal); return; }
+    const mk = e.target.closest('[data-make]');
+    if (mk) { renderCompare(mk.dataset.make); return; }
+    if (e.target.closest('#showMoreBtn')) {
+      VISIBLE_COUNT += PAGE_SIZE;
+      renderResults(document.getElementById('q').value, false);
+      return;
+    }
+    const addBtn = e.target.closest('.add-fab');
+    if (addBtn) {
+      const sku = addBtn.dataset.sku;
+      if (!onList(sku)) MY_LIST.push({ q: null, sku, checked: false });
+      GS.saveMyList(MY_LIST);
+      renderResults(document.getElementById('q').value, false);
+      renderListBar();
+      return;
+    }
+    const card = e.target.closest('.card');
+    if (card) renderBreakdown(card.dataset.sku);
+  });
+  const scanFile = document.getElementById('scanFile');
+  document.getElementById('scanBtn').addEventListener('click', () => scanFile.click());
+  scanFile.addEventListener('change', () => { const f = scanFile.files && scanFile.files[0]; scanFile.value = ''; if (f) scanLabel(f); });
+  importStatus().then(() => { document.getElementById('scanBtn').hidden = !IMPORT_AI; });
+  document.getElementById('detailOverlay').addEventListener('click', e => {
+    if (e.target.closest('[data-scan-again]')) { scanFile.click(); return; }
+    const mk = e.target.closest('.detail-ings mark[title]');
+    if (mk) { toast(mk.title); return; }          // phones have no hover tooltip
+    if (e.target.closest('.detail-close') || e.target.classList.contains('detail-backdrop')) closeBreakdown();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBreakdown(); });
+})();
+</script>
+</body>
+</html>
